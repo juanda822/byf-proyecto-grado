@@ -133,40 +133,29 @@
   <section class="hero-section" id="inicio">
     <div class="hero-content">
 
-      <!-- Etiqueta superior MARCA LÍDER -->
-      <div class="hero-badge-wrap">
-        <span class="hero-badge-tag">MARCA LÍDER</span>
-      </div>
+      <!-- Texto Superior de Bienvenida -->
+      <p class="hero-welcome">Bienvenidos a</p>
 
-      <!-- Emblema Planeta B&F Central Oficial -->
-      <div class="hero-emblem">
-        <img src="assets/logos/byf-hero-emblem.png" alt="Emblema B&F Planeta y Estrellas Oficial">
+      <!-- Logo B&F Completo Oficial (Planeta, Destellos y Tipografía) -->
+      <div class="hero-brand-wrap">
+        <img src="assets/logos/byf-logo-dark.png" alt="B&F Textil, Uniformes, Moda & Merchandising" class="hero-brand-logo">
       </div>
 
       <!-- Titular Principal -->
       <h1 class="hero-title">Líderes en el sector textil,</h1>
 
-      <!-- Subtitular con colores resaltados idénticos a la foto -->
+      <!-- Subtitular con colores resaltados idénticos a la foto de referencia -->
       <div class="hero-categories-line">
-        <span class="hero-word-uniformes">Uniformes, </span>
-        <span class="hero-word-moda">Moda, </span>
-        <span class="hero-word-joyeria">Joyería &amp; </span>
-        <span class="hero-word-merch">Merchandising</span>
+        <span class="hero-word-uniformes">Uniformes, </span><span class="hero-word-moda">Moda</span><span class="hero-word-joyeria">, Joyería &amp; </span><span class="hero-word-merch">Merchandising</span>
       </div>
 
-      <!-- Botones de Acción -->
+      <!-- Frase Tagline -->
+      <p class="hero-tagline">Imagínalo y nosotros lo hacemos realidad</p>
+
+      <!-- Botones de Acción idénticos a la imagen de referencia -->
       <div class="hero-actions">
-        <a href="#productos" class="btn btn-gold hero-btn-catalog">
-          <i class="fa-solid fa-layer-group"></i> Ver Catálogo
-        </a>
-        <a href="#corporativo" class="btn btn-dark hero-btn-contact">
-          <i class="fa-solid fa-circle-play"></i> Conócenos
-        </a>
-      </div>
-
-      <!-- Nota sutil de garantía -->
-      <div class="hero-guarantee-note">
-        <i class="fa-solid fa-award"></i> Confección 100% Colombiana de Exportación
+        <a href="#productos" class="hero-btn-readmore">Read More</a>
+        <a href="#corporativo" class="hero-btn-conocenos">Conócenos</a>
       </div>
 
     </div>
@@ -179,76 +168,85 @@
   <section class="products-section" id="productos">
     <div class="container">
 
-      <!-- Título de Sección con Divisor Iconográfico -->
-      <div class="section-title-wrap">
-        <h2 class="section-title">DESCUBRE NUESTRAS LÍNEAS</h2>
-        <div class="section-divider">
-          <span class="section-divider-icon"><i class="fa-solid fa-scissors"></i></span>
+      <!-- Título de Sección con Divisor Iconográfico de Máquina de Coser -->
+      <div class="section-title-wrap products-header-wrap">
+        <h2 class="section-title products-main-title">DESCUBRE NUESTRAS LÍNEAS</h2>
+        <div class="products-sewing-divider">
+          <span class="divider-double-line"></span>
+          <span class="divider-sewing-box">
+            <svg class="sewing-machine-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 19h18v2H3z"/>
+              <path d="M5 19V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v2h-5a2 2 0 0 0-2 2v2h2v4H5z"/>
+              <circle cx="17.5" cy="8" r="1.5" fill="currentColor"/>
+              <path d="M10 7v2"/>
+              <path d="M13 13v3"/>
+              <line x1="12" y1="16" x2="14" y2="16"/>
+            </svg>
+          </span>
+          <span class="divider-double-line"></span>
         </div>
-        <p class="section-subtitle-text">Innovación textil de alta durabilidad, diseño ergonómico y acabados de
-          categoría premium para cada sector productivo.</p>
       </div>
 
       <!-- Grid de 4 Líneas de Producto -->
       <div class="products-grid">
 
         <!-- Línea 1: Uniformes (D1) -->
-        <article class="product-card" data-product-id="uniformes">
+        <article class="product-card" data-product-id="uniformes" title="Ver detalles de Uniformes B&F">
           <div class="product-image-wrap">
-            <img src="/artifacts/uniformes_line_1790547525555.jpg"
-              alt="Uniformes empresariales, médicos, industriales y escolares B&F" class="product-image">
+            <img src="assets/productos/linea-uniformes.jpg"
+              alt="Línea Uniformes B&F - Dotaciones Empresariales e Industriales" class="product-image">
             <div class="product-card-overlay">
               <span>Dotaciones integrales de alta durabilidad</span>
-              <button class="product-overlay-btn">Ver Ficha Técnica</button>
+              <button class="product-overlay-btn" type="button">Ver Ficha Técnica</button>
             </div>
           </div>
           <div class="product-card-footer">
-            <img src="assets/logos/byf-uniformes.svg" alt="B&F Uniformes" class="product-badge-logo">
+            <img src="assets/productos/logo-uniforms.png" alt="B&F Uniforms" class="product-badge-logo">
           </div>
         </article>
 
         <!-- Línea 2: Moda & Accesorios (D2) -->
-        <article class="product-card" data-product-id="moda-accesorios">
+        <article class="product-card" data-product-id="moda-accesorios" title="Ver colección Moda & Accesorios">
           <div class="product-image-wrap">
-            <img src="/artifacts/moda_accesorios_1790547541896.jpg" alt="Moda, Joyería fina y accesorios B&F"
+            <img src="assets/productos/linea-moda.jpg" alt="Moda & Accesorios Diana Barón"
               class="product-image">
             <div class="product-card-overlay">
               <span>Colección de joyería fina y tendencias</span>
-              <button class="product-overlay-btn">Ver Colección</button>
+              <button class="product-overlay-btn" type="button">Ver Colección</button>
             </div>
           </div>
           <div class="product-card-footer">
-            <img src="assets/logos/byf-moda.svg" alt="B&F Moda & Accesorios" class="product-badge-logo">
+            <img src="assets/productos/logo-diana-baron.png" alt="Diana Barón" class="product-badge-logo">
           </div>
         </article>
 
         <!-- Línea 3: Ropa Reflectiva (D3) -->
-        <article class="product-card" data-product-id="ropa-reflectiva">
+        <article class="product-card" data-product-id="ropa-reflectiva" title="Ver certificados Ropa Reflectiva">
           <div class="product-image-wrap">
-            <img src="/artifacts/ropa_reflectiva_1790547560327.jpg" alt="Ropa reflectiva y seguridad industrial B&F"
+            <img src="assets/productos/linea-reflectivo.png" alt="Prendas y Materiales Reflectivos B&F"
               class="product-image">
             <div class="product-card-overlay">
               <span>Seguridad vial y cintas reflectivas 3M</span>
-              <button class="product-overlay-btn">Ver Certificaciones</button>
+              <button class="product-overlay-btn" type="button">Ver Certificaciones</button>
             </div>
           </div>
           <div class="product-card-footer">
-            <img src="assets/logos/byf-reflectivo.svg" alt="B&F Ropa Reflectiva" class="product-badge-logo">
+            <img src="assets/productos/logo-reflective.png" alt="B&F REFLECTIVE" class="product-badge-logo">
           </div>
         </article>
 
         <!-- Línea 4: Impresión / Merchandising (D4) -->
-        <article class="product-card" data-product-id="merchandising">
+        <article class="product-card" data-product-id="merchandising" title="Cotizar Merchandising e Impresión">
           <div class="product-image-wrap">
-            <img src="/artifacts/merchandising_sublimado_1790547580797.jpg"
-              alt="Impresión, Sublimado y Merchandising promocional B&F" class="product-image">
+            <img src="assets/productos/linea-merch.png"
+              alt="Impresión, Sublimado y Estampado B&F PRINT" class="product-image">
             <div class="product-card-overlay">
               <span>Artículos promocionales y sublimación digital</span>
-              <button class="product-overlay-btn">Cotizar Volumen</button>
+              <button class="product-overlay-btn" type="button">Cotizar Volumen</button>
             </div>
           </div>
           <div class="product-card-footer">
-            <img src="assets/logos/byf-merchandising.svg" alt="B&F Merchandising" class="product-badge-logo">
+            <img src="assets/productos/logo-print.png" alt="B&F PRINT" class="product-badge-logo logo-badge-round">
           </div>
         </article>
 
@@ -256,7 +254,7 @@
 
       <!-- Botón Flecha Inferior para Seguir Explorando -->
       <div class="products-explore-more">
-        <a href="#corporativo" class="products-dropdown-btn" title="Conocer Más de B&F">
+        <a href="#corporativo" class="products-dropdown-btn" aria-label="Ir a sección corporativa">
           <i class="fa-solid fa-chevron-down"></i>
         </a>
       </div>
@@ -282,8 +280,8 @@
       <div class="corporate-container">
 
         <!-- Columna Izquierda: Tarjeta de Video Neón Holo B&F con Botón Play -->
-        <div class="corporate-video-wrap" id="playCorporateVideo">
-          <img src="/artifacts/video_fabricamos_amor_1790547605583.jpg"
+        <div class="corporate-video-wrap" id="playCorporateVideo" title="Reproducir Video Institucional B&F">
+          <img src="assets/video-poster.jpg"
             alt="Video Institucional Fabricamos con Amor B&F" class="corporate-video-poster">
           <div class="corporate-video-glow"></div>
           <div class="corporate-play-btn" title="Reproducir Video">
@@ -734,7 +732,7 @@
               <img src="/artifacts/blog_ciclismo_evento_1790547633752.jpg" alt="Ciclismo B&F">
             </a>
             <a href="#corporativo" class="instagram-thumb">
-              <img src="/artifacts/video_fabricamos_amor_1790547605583.jpg" alt="Taller B&F">
+              <img src="assets/video-poster.jpg" alt="Video B&F">
             </a>
           </div>
         </div>
@@ -760,9 +758,19 @@
     <div class="modal-container modal-video-container">
       <button class="modal-close-btn" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
       <div class="modal-video-box">
-        <iframe id="corporateVideoFrame" src="" title="Video B&F"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        <iframe id="corporateVideoFrame" src="" title="Video Institucional B&F"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen></iframe>
+        <video id="corporateVideoLocal" controls style="display:none;">
+          <source src="assets/VIDEO BYF.mp4" type="video/mp4">
+          Tu navegador no soporta reproducción de video local HTML5.
+        </video>
+      </div>
+      <div class="modal-video-footer">
+        <span class="modal-video-badge"><i class="fa-solid fa-circle-play"></i> Video Institucional B&amp;F</span>
+        <button type="button" id="switchVideoSourceBtn" class="btn-video-source">
+          <i class="fa-solid fa-hard-drive"></i> Cambiar a Archivo Local HD
+        </button>
       </div>
     </div>
   </div>

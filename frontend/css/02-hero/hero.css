@@ -1,157 +1,166 @@
 /* ==========================================================================
    02-HERO.CSS - BANNER PRINCIPAL B&F
-   Fondo de seda blanca, Emblema B&F, Tipografías destacadas y Botones de acción
+   Fondo de seda blanca oficial, Logo completo B&F, Tipografías y Botones
    ========================================================================== */
 
 .hero-section {
   position: relative;
   width: 100%;
-  min-height: 520px;
+  min-height: 480px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 80px 20px 90px 20px;
-  background-color: #ffffff;
-  /* Textura de seda blanca ondulada idéntica a la imagen */
-  background-image: 
-    radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.4) 0%, rgba(248, 250, 252, 0.95) 100%),
-    url('/artifacts/hero_silk_background_1790547505433.jpg');
+  background-color: #f1f5f9;
+  /* Textura de seda blanca ondulada oficial subida por el usuario */
+  background-image: url('../../assets/hero-silk-bg.png');
   background-size: cover;
-  background-position: center top;
+  background-position: center center;
   background-repeat: no-repeat;
   overflow: hidden;
-  box-shadow: inset 0 -15px 30px rgba(0, 0, 0, 0.03);
-}
-
-/* Fallback sutil si no carga la imagen de fondo */
-.hero-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.7) 0%, rgba(241, 245, 249, 0.4) 80%);
-  pointer-events: none;
-  z-index: 1;
+  box-shadow: inset 0 -10px 25px rgba(0, 0, 0, 0.03);
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Etiqueta superior MARCA LÍDER */
-.hero-badge-wrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.hero-badge-tag {
+/* 1. Texto superior "Bienvenidos a" */
+.hero-welcome {
   font-family: var(--font-subheading);
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #475569;
-  position: relative;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
 }
 
-.hero-badge-tag::before,
-.hero-badge-tag::after {
-  content: "✦";
-  color: var(--color-primary-gold);
-  font-size: 0.65rem;
-  margin: 0 6px;
-}
-
-/* Emblema B&F Central en Hero */
-.hero-emblem {
+/* 2. Logo Completo B&F (Planeta + Destellos + Letras B&F) */
+.hero-brand-wrap {
   width: 100%;
-  max-width: 175px;
-  margin: 0 auto 14px auto;
-  filter: drop-shadow(0 6px 14px rgba(2, 55, 70, 0.16));
+  max-width: 320px;
+  margin: 0 auto 16px auto;
   transition: transform var(--transition-normal);
 }
 
-.hero-emblem img {
+.hero-brand-logo {
   width: 100%;
   height: auto;
   display: block;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
 }
 
-.hero-emblem:hover {
-  transform: translateY(-3px) scale(1.03);
+.hero-brand-wrap:hover {
+  transform: translateY(-2px) scale(1.02);
 }
 
-/* Titular Principal */
+/* 3. Titular Principal */
 .hero-title {
   font-family: var(--font-subheading);
-  font-size: 1.85rem;
-  font-weight: 700;
+  font-size: 1.95rem;
+  font-weight: 800;
   color: #1e293b;
-  margin-bottom: 6px;
-  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+  line-height: 1.25;
 }
 
-/* Subtitular Multicolor como en la foto de referencia */
+/* 4. Subtitular Multicolor idéntico a la imagen de referencia */
 .hero-categories-line {
   font-family: var(--font-subheading);
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 800;
-  color: #0f172a;
-  letter-spacing: 0.5px;
-  margin-bottom: 28px;
+  color: #1e293b;
+  letter-spacing: -0.2px;
+  margin-bottom: 16px;
+  line-height: 1.25;
 }
 
 .hero-word-uniformes {
-  color: #0f172a;
+  color: #1e293b;
 }
 
 .hero-word-moda {
-  color: #e5a910; /* Amarillo dorado destacado */
+  color: #f59e0b; /* Amarillo/naranja dorado idéntico a la referencia */
 }
 
 .hero-word-joyeria {
-  color: #0f172a;
+  color: #1e293b;
 }
 
 .hero-word-merch {
-  color: #0284c7; /* Azul / cian destacado */
+  color: #00a4e4; /* Azul cian / celeste idéntico a la referencia */
 }
 
-/* Botones del Hero */
+/* 5. Frase "Imagínalo y nosotros lo hacemos realidad" */
+.hero-tagline {
+  font-family: var(--font-subheading);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 24px;
+  letter-spacing: 0.2px;
+}
+
+/* 6. Botones de Acción idénticos al mockup */
 .hero-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin-top: 6px;
+  gap: 14px;
 }
 
-.hero-btn-catalog {
-  padding: 12px 30px;
-  background-color: var(--color-primary-gold);
-  color: #1e293b;
-  font-size: 0.85rem;
-  font-weight: 800;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
-}
-
-.hero-btn-contact {
-  padding: 12px 30px;
-  background-color: #1e293b;
+.hero-btn-readmore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 26px;
+  background-color: #f59e0b;
   color: #ffffff;
+  font-family: var(--font-subheading);
   font-size: 0.85rem;
   font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+  transition: all var(--transition-fast);
+}
+
+.hero-btn-readmore:hover {
+  background-color: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.5);
+  color: #ffffff;
+}
+
+.hero-btn-conocenos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 26px;
+  background-color: #1e293b;
+  color: #ffffff;
+  font-family: var(--font-subheading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.25);
+  transition: all var(--transition-fast);
+}
+
+.hero-btn-conocenos:hover {
+  background-color: #0f172a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.35);
+  color: #ffffff;
 }
 
 .hero-guarantee-note {

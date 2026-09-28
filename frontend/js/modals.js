@@ -25,13 +25,68 @@ document.addEventListener('DOMContentLoaded', () => {
   const videoTrigger = document.getElementById('playCorporateVideo');
   const videoModal = document.getElementById('videoModal');
   const videoFrame = document.getElementById('corporateVideoFrame');
+  const localVideo = document.getElementById('corporateVideoLocal');
+  const switchVideoBtn = document.getElementById('switchVideoSourceBtn');
+
+  const YOUTUBE_EMBED_URL = 'https://www.youtube-nocookie.com/embed/uWHnjV3EY5k?autoplay=1&rel=0';
+  let isLocalVideoActive = false;
+
+  function stopAllVideos() {
+    if (videoFrame) {
+      videoFrame.src = '';
+      videoFrame.style.display = 'block';
+    }
+    if (localVideo) {
+      localVideo.pause();
+      localVideo.currentTime = 0;
+      localVideo.style.display = 'none';
+    }
+    isLocalVideoActive = false;
+    if (switchVideoBtn) {
+      switchVideoBtn.innerHTML = '<i class="fa-solid fa-hard-drive"></i> Cambiar a Archivo Local HD';
+    }
+  }
 
   if (videoTrigger && videoModal) {
     videoTrigger.addEventListener('click', () => {
       videoModal.classList.add('active');
-      // Video showcase de fábrica textil de alta resolución
       if (videoFrame) {
-        videoFrame.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1'; // o fallback institucional
+        videoFrame.src = YOUTUBE_EMBED_URL;
+        videoFrame.style.display = 'block';
+      }
+      if (localVideo) {
+        localVideo.style.display = 'none';
+      }
+      isLocalVideoActive = false;
+      if (switchVideoBtn) {
+        switchVideoBtn.innerHTML = '<i class="fa-solid fa-hard-drive"></i> Cambiar a Archivo Local HD';
+      }
+    });
+  }
+
+  if (switchVideoBtn) {
+    switchVideoBtn.addEventListener('click', () => {
+      isLocalVideoActive = !isLocalVideoActive;
+      if (isLocalVideoActive) {
+        if (videoFrame) {
+          videoFrame.src = '';
+          videoFrame.style.display = 'none';
+        }
+        if (localVideo) {
+          localVideo.style.display = 'block';
+          localVideo.play();
+        }
+        switchVideoBtn.innerHTML = '<i class="fa-brands fa-youtube"></i> Cambiar a YouTube Oficial';
+      } else {
+        if (localVideo) {
+          localVideo.pause();
+          localVideo.style.display = 'none';
+        }
+        if (videoFrame) {
+          videoFrame.style.display = 'block';
+          videoFrame.src = YOUTUBE_EMBED_URL;
+        }
+        switchVideoBtn.innerHTML = '<i class="fa-solid fa-hard-drive"></i> Cambiar a Archivo Local HD';
       }
     });
   }
@@ -62,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'uniformes': {
       title: 'Línea de Uniformes & Dotaciones',
       category: 'Dotaciones Empresariales e Industriales',
-      image: '/artifacts/uniformes_line_1790547525555.jpg',
+      image: 'assets/productos/linea-uniformes.jpg',
       desc: 'Soluciones integrales de dotación para los sectores médico, industrial, escolar y corporativo con telas de la más alta tecnología: antifluidos, dril pesado, dacrón y gabardina.',
       specs: [
         'Telas con tecnología antifluido y protección UV',
@@ -74,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'moda-accesorios': {
       title: 'Línea Moda & Accesorios',
       category: 'Joyería Fina y Tendencias',
-      image: '/artifacts/moda_accesorios_1790547541896.jpg',
+      image: 'assets/productos/linea-moda.jpg',
       desc: 'Colecciones de joyería fina artesanal con baño de oro de 18k y rodio, pulseras de tendencia, collares, cadenas y accesorios para complementar estilos sofisticados.',
       specs: [
         'Baño de oro de 18 quilates con laca protectora',
@@ -86,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'ropa-reflectiva': {
       title: 'Línea de Ropa Reflectiva & Seguridad',
       category: 'Protección Personal y Vial',
-      image: '/artifacts/ropa_reflectiva_1790547560327.jpg',
+      image: 'assets/productos/linea-reflectivo.png',
       desc: 'Indumentaria de alta visibilidad para cuadrillas, ingenieros, personal vial y logístico con cintas microprismáticas y reflectivas de grado industrial.',
       specs: [
         'Cintas reflectivas 3M Scotchlite de 2 pulgadas',
@@ -98,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'merchandising': {
       title: 'Impresión / Sublimado & Merchandising',
       category: 'Artículos Promocionales y Marca',
-      image: '/artifacts/merchandising_sublimado_1790547580797.jpg',
+      image: 'assets/productos/linea-merch.png',
       desc: 'Transformamos tu marca en experiencias tangibles a través de productos promocionales personalizados: tazas cerámicas, botilitos deportivos, tulas ecológicas, termos y gorras bordadas.',
       specs: [
         'Sublimación digital fotográfica de alta resolución',
@@ -139,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.modal-backdrop').forEach(modal => {
         modal.classList.remove('active');
       });
-      if (videoFrame) videoFrame.src = '';
+      stopAllVideos();
     });
   });
 
@@ -147,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     backdrop.addEventListener('click', (e) => {
       if (e.target === backdrop) {
         backdrop.classList.remove('active');
-        if (videoFrame) videoFrame.src = '';
+        stopAllVideos();
       }
     });
   });

@@ -6,8 +6,8 @@
     "tagline": "Dotaciones empresariales, industriales, escolares y de salud",
     "description": "Fabricación de uniformes de alta resistencia con telas antifluidos, dril, oxford y gabardina. Confección a medida con bordados de alta precisión para consolidar la imagen corporativa de su empresa.",
     "category": "Dotaciones",
-    "image": "assets/images/productos/uniformes.png",
-    "logoBadge": "assets/logos/byf-uniformes.svg",
+    "image": "assets/productos/linea-uniformes.jpg",
+    "logoBadge": "assets/productos/logo-uniforms.png",
     "items": [
       "Overoles y conjuntos industriales",
       "Camisas tipo polo y camisas Oxford",
@@ -23,8 +23,8 @@
     "tagline": "Joyería fina, accesorios exclusivos y prendas de tendencia",
     "description": "Línea exclusiva de bisutería fina, joyería artesanal, cadenas, pulseras y accesorios de moda para complementar estilos contemporáneos con acabados elegantes y duraderos.",
     "category": "Moda & Tendencias",
-    "image": "assets/images/productos/moda.png",
-    "logoBadge": "assets/logos/byf-moda.svg",
+    "image": "assets/productos/linea-moda.jpg",
+    "logoBadge": "assets/productos/logo-diana-baron.png",
     "items": [
       "Joyería artesanal y dorada",
       "Pulseras, dijes y cadenas",
@@ -40,8 +40,8 @@
     "tagline": "Seguridad industrial y prendas de alta visibilidad certificadas",
     "description": "Prendas de protección personal y seguridad vial con cintas reflectivas 3M que cumplen normativas nacionales e internacionales de visibilidad y durabilidad en condiciones extremas.",
     "category": "Seguridad Industrial",
-    "image": "assets/images/productos/reflectivo.png",
-    "logoBadge": "assets/logos/byf-reflectivo.svg",
+    "image": "assets/productos/linea-reflectivo.png",
+    "logoBadge": "assets/productos/logo-reflective.png",
     "items": [
       "Chalecos reflectivos tipo brigadista y malla",
       "Chaquetas térmicas e impermeables reflectivas",
@@ -57,8 +57,8 @@
     "tagline": "Sublimado, artículos promocionales y marca con nosotros",
     "description": "Personalización y estampado en gran variedad de soportes promocionales: tulas, botilitos, termos metálicos, gorras, tazas cerámicas y material publicitario para campañas de marca.",
     "category": "Publicidad & Sublimación",
-    "image": "assets/images/productos/sublimado.png",
-    "logoBadge": "assets/logos/byf-merchandising.svg",
+    "image": "assets/productos/linea-merch.png",
+    "logoBadge": "assets/productos/logo-print.png",
     "items": [
       "Tulas deportivas y bolsas ecológicas",
       "Termos metálicos y botilitos deportivos",

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" fill="none">
+  <!-- Center Planet Icon -->
+  <g transform="translate(180, 10)">
+    <!-- Back ring -->
+    <path d="M 0 50 C 20 20, 110 20, 138 46" stroke="#1e293b" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.4"/>
+    
+    <!-- Planet body -->
+    <circle cx="68" cy="55" r="42" fill="#0f172a" />
+    <circle cx="58" cy="46" r="36" fill="#1e293b" />
+    
+    <!-- Front tilted ring with star/sparkle -->
+    <ellipse cx="68" cy="55" rx="66" ry="22" transform="rotate(-26 68 55)" stroke="#0f172a" stroke-width="9" fill="none" stroke-linecap="round"/>
+    
+    <!-- Sparkle on upper-left ring -->
+    <polygon points="18,32 22,44 34,48 22,52 18,64 14,52 2,48 14,44" fill="#f59e0b" />
+    <circle cx="18" cy="48" r="3" fill="#ffffff" />
+  </g>
+  
+  <!-- Big B&F text -->
+  <text x="250" y="165" text-anchor="middle" font-family="'Cinzel', 'Playfair Display', Georgia, serif" font-size="82" font-weight="900" letter-spacing="4" fill="#0f172a">B&amp;F</text>
+</svg>
