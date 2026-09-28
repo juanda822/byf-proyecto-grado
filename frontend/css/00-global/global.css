@@ -1,0 +1,242 @@
+/* ==========================================================================
+   00-GLOBAL.CSS - SISTEMA DE DISEÑO BASE B&F
+   Proyecto de Grado - Confecciones, Dotaciones, Joyería & Merchandising
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Paleta Cromática Oficial B&F */
+  --color-primary-gold: #f59e0b;       /* Amarillo dorado corporativo */
+  --color-primary-gold-dark: #d97706;  /* Oro oscuro para hover */
+  --color-primary-gold-light: #fef3c7; /* Fondo dorado suave */
+  --color-dark-bg: #0f172a;           /* Azul noche / Negro grafito */
+  --color-dark-surface: #1e293b;      /* Superficie oscura */
+  --color-dark-card: #334155;         /* Tarjeta oscura */
+  --color-text-main: #0f172a;         /* Texto principal de alto contraste */
+  --color-text-muted: #64748b;        /* Texto secundario */
+  --color-text-light: #94a3b8;        /* Texto sutil */
+  --color-bg-light: #f8fafc;          /* Blanco roto / Gris tenue */
+  --color-bg-grey: #f1f5f9;           /* Gris para secciones alternas (Clientes) */
+  --color-white: #ffffff;
+  --color-border: #e2e8f0;
+  
+  /* Acentos de Categorías */
+  --color-accent-uniformes: #0284c7;  /* Azul petróleo */
+  --color-accent-moda: #d97706;       /* Oro champagne */
+  --color-accent-reflectivo: #84cc16; /* Verde lima flúor */
+  --color-accent-merch: #8b5cf6;      /* Púrpura sublimación */
+  --color-accent-cyan: #06b6d4;       /* Cian para branding */
+
+  /* Tipografías */
+  --font-heading: 'Cinzel', Georgia, serif;
+  --font-subheading: 'Montserrat', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Elevaciones & Sombras */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 20px 30px -10px rgba(0, 0, 0, 0.18);
+  --shadow-gold: 0 8px 20px rgba(245, 158, 11, 0.35);
+
+  /* Transiciones Suaves */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Radio de bordes */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+}
+
+/* Reset Universal */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-main);
+  background-color: var(--color-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-fast);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+}
+
+/* Contenedor Centrado */
+.container {
+  width: 100%;
+  max-width: 1220px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Encabezados de Sección Idénticos a la Foto */
+.section-title-wrap {
+  text-align: center;
+  margin-bottom: 45px;
+  position: relative;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #1e293b;
+  text-transform: uppercase;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+/* Divisor decorativo con icono al centro */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  height: 1.5px;
+  width: 60px;
+  background-color: #cbd5e1;
+}
+
+.section-divider-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  border: 1.5px solid #94a3b8;
+  border-radius: 3px;
+  padding: 3px;
+  color: #64748b;
+  font-size: 10px;
+}
+
+.section-subtitle-text {
+  font-family: var(--font-subheading);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  max-width: 640px;
+  margin: 10px auto 0 auto;
+}
+
+/* Botones Principales */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 26px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-subheading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+}
+
+.btn-gold {
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.btn-gold:hover {
+  background-color: var(--color-primary-gold-dark);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-dark {
+  background-color: var(--color-dark-surface);
+  color: var(--color-white);
+}
+
+.btn-dark:hover {
+  background-color: var(--color-dark-bg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-outline-gold {
+  border: 2px solid var(--color-primary-gold);
+  color: var(--color-dark-bg);
+  background-color: transparent;
+}
+
+.btn-outline-gold:hover {
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+}
+
+/* Animaciones sutiles */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}

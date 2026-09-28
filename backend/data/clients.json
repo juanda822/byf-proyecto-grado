@@ -1,0 +1,13 @@
+[
+  { "id": "caribe-cargo", "name": "Caribe Cargo S.A.S.", "category": "Aeronáutica & Carga", "logoImg": "assets/clientes/caribe-cargo.png", "logoText": "CARIBE CARGO S.A.S." },
+  { "id": "byd", "name": "BYD", "category": "Movilidad Eléctrica", "logoImg": "assets/clientes/byd.png", "logoText": "BYD" },
+  { "id": "menzies", "name": "Menzies Aviation", "category": "Servicios Aeroportuarios", "logoImg": "assets/clientes/menzies-aviation.png", "logoText": "MENZIES AVIATION" },
+  { "id": "scania", "name": "SCANIA", "category": "Transporte Pesado", "logoImg": "assets/clientes/scania.png", "logoText": "SCANIA" },
+  { "id": "krones", "name": "KRONES", "category": "Industria Maquinaria", "logoImg": "assets/clientes/krones.png", "logoText": "KRONES" },
+  { "id": "colombian-air-cargo", "name": "Colombian Air Cargo S.A.S.", "category": "Logística & Carga Aérea", "logoImg": "assets/clientes/colombian-air-cargo.png", "logoText": "COLOMBIAN AIR CARGO S.A.S." },
+  { "id": "pelikan", "name": "Pelikan", "category": "Papelería & Oficina", "logoImg": "assets/clientes/pelikan.png", "logoText": "Pelikan" },
+  { "id": "blas", "name": "BLAS Panama Airport Services", "category": "Servicios Aeroportuarios", "logoImg": "assets/clientes/blas.png", "logoText": "BLAS" },
+  { "id": "vialcor", "name": "VIALCOR Soluciones Arquitectónicas", "category": "Ingeniería & Soluciones", "logoImg": "assets/clientes/vialcor.png", "logoText": "VIALCOR" },
+  { "id": "andres-carne-de-res", "name": "Andrés Carne de Res", "category": "Gastronomía & Entretenimiento", "logoImg": "assets/clientes/andres.png", "logoText": "Andrés" },
+  { "id": "aerosur", "name": "Aerosur S.A.S.", "category": "Transporte Aéreo & Carga", "logoImg": "assets/clientes/aerosur.png", "logoText": "AEROSUR S.A.S." }
+]

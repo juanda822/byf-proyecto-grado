@@ -1,0 +1,54 @@
+[
+  {
+    "id": "diseno",
+    "name": "Diseño",
+    "title": "Diseño y Patronaje Textil",
+    "icon": "fa-pencil-ruler",
+    "description": "Desarrollo de moldes digitales, selección de paletas corporativas, patronaje industrial y prototipado 3D a la medida de tu identidad empresarial.",
+    "highlight": false,
+    "benefits": [
+      "Patronaje computarizado en Optitex",
+      "Modelado de prototipos y muestras físicas",
+      "Adaptación a manuales de marca e identidad corporativa"
+    ]
+  },
+  {
+    "id": "confeccion",
+    "name": "Confección",
+    "title": "Confección y Producción en Masa",
+    "icon": "fa-tshirt",
+    "description": "Capacidad de corte y confección de alto volumen con maquinaria industrial moderna, costuras reforzadas y control riguroso de calidad textil.",
+    "highlight": true,
+    "benefits": [
+      "Líneas de ensamble automatizadas",
+      "Control de calidad prenda por prenda",
+      "Cumplimiento riguroso de tiempos de entrega"
+    ]
+  },
+  {
+    "id": "estampado",
+    "name": "Bordado & Estampado",
+    "title": "Bordado Computarizado & Sublimación",
+    "icon": "fa-paint-brush",
+    "description": "Técnicas avanzadas de personalización textil: bordado de alta resolución, serigrafía textil, DTF, vinilo térmico y sublimación full print.",
+    "highlight": false,
+    "benefits": [
+      "Hilos de poliéster ultra resistentes al cloro",
+      "Tintas ecológicas libres de metales pesados",
+      "Detalles nítidos en tipografías e insignias complejas"
+    ]
+  },
+  {
+    "id": "asesoria",
+    "name": "Asesoría y Envíos",
+    "title": "Asesoría Técnica y Logística Nacional",
+    "icon": "fa-truck-fast",
+    "description": "Acompañamiento especializado en selección de textiles adecuados a tu rubro y distribución logística puerta a puerta a nivel nacional.",
+    "highlight": false,
+    "benefits": [
+      "Visita técnica y toma de tallas en sitio",
+      "Envíos asegurados a las principales ciudades de Colombia",
+      "Garantía de reposición inmediata ante cualquier imperfección"
+    ]
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "name": "byf-textil-backend",
+  "version": "1.0.0",
+  "description": "Backend API REST modular para el proyecto de grado B&F - Confecciones, Moda, Dotaciones y Merchandising",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "textil",
+    "dotaciones",
+    "uniformes",
+    "confeccion",
+    "backend",
+    "express"
+  ],
+  "author": "Proyecto de Grado B&F",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

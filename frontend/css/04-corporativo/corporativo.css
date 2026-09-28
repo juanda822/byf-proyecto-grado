@@ -1,0 +1,151 @@
+/* ==========================================================================
+   04-CORPORATIVO.CSS - SECCIÓN CORPORATIVA "FABRICAMOS CON AMOR"
+   Video institucional, Historia, Pasión artesanal y Valores B&F
+   ========================================================================== */
+
+.corporate-section {
+  padding: 80px 0;
+  background-color: #f8fafc;
+  position: relative;
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.corporate-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+  margin-top: 35px;
+}
+
+/* 1. Tarjeta de Video Interactivo (Izquierda) */
+.corporate-video-wrap {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+  background-color: #0f172a;
+  cursor: pointer;
+  group: true;
+}
+
+.corporate-video-poster {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-smooth);
+}
+
+.corporate-video-wrap:hover .corporate-video-poster {
+  transform: scale(1.03);
+}
+
+/* Efecto Resplandor Neón Holo / Magenta */
+.corporate-video-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(168, 85, 247, 0.25) 0%, rgba(15, 23, 42, 0.4) 80%);
+  pointer-events: none;
+}
+
+/* Botón Play Central Pulsante */
+.corporate-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #ec4899);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 0 0 10px rgba(245, 158, 11, 0.25), 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-normal);
+  z-index: 5;
+}
+
+.corporate-video-wrap:hover .corporate-play-btn {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 0 0 16px rgba(236, 72, 153, 0.3), 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* 2. Columna Informativa (Derecha) */
+.corporate-info-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.corporate-heading {
+  font-family: var(--font-subheading);
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #1e293b;
+  margin-bottom: 18px;
+}
+
+.corporate-desc {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+/* Lista de Compromisos / Ventajas */
+.corporate-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.corporate-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.corporate-check-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--color-primary-gold-light);
+  color: var(--color-primary-gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Botón Ver Más */
+.corporate-btn-more {
+  align-self: flex-start;
+  background-color: #1e293b;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 4px;
+  font-family: var(--font-subheading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.corporate-btn-more:hover {
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+}

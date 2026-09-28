@@ -1,0 +1,165 @@
+/* ==========================================================================
+   12-RESPONSIVE.CSS - ADAPTABILIDAD RESPONSIVE B&F
+   Dispositivos móviles, tablets y pantallas de diferentes densidades
+   ========================================================================== */
+
+/* Tablets y Pantallas Medianas (<= 1024px) */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 20px;
+  }
+
+  .corporate-container {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+  }
+}
+
+/* Teléfonos y Dispositivos Móviles (<= 768px) */
+@media (max-width: 768px) {
+  /* Header */
+  .top-bar-dark {
+    display: none;
+  }
+
+  .brand-contact-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-fast-item {
+    display: none;
+  }
+
+  .main-nav-container {
+    justify-content: space-between;
+    padding: 8px 16px;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  .nav-menu-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-white);
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 99;
+  }
+
+  .nav-menu-list.active {
+    display: flex;
+  }
+
+  .nav-link {
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  /* Hero */
+  .hero-section {
+    min-height: 420px;
+    padding: 50px 16px 60px 16px;
+  }
+
+  .hero-title {
+    font-size: 1.35rem;
+  }
+
+  .hero-categories-line {
+    font-size: 1.15rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* Productos */
+  .products-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Servicios */
+  .services-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Clientes */
+  .clients-grid {
+    gap: 24px;
+  }
+
+  .client-brand {
+    font-size: 1.05rem;
+  }
+
+  /* Noticias */
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Newsletter */
+  .newsletter-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .newsletter-brand-wrap {
+    flex: auto;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-submit-btn {
+    padding: 12px;
+  }
+
+  /* Footer */
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-product-layout {
+    grid-template-columns: 1fr;
+  }
+}

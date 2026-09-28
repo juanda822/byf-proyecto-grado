@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B&F | Líderes en el Sector Textil - Uniformes, Moda, Joyería & Merchandising</title>
+  <meta name="description"
+    content="B&F es líder en confección de uniformes corporativos, moda & joyería, ropa reflectiva certificada e impresión y merchandising publicitario en Colombia.">
+  <link rel="icon" type="image/png" href="assets/logos/byf-hero-emblem.png">
+
+  <!-- Iconos Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- ====================================================================
+       ARQUITECTURA MODULAR DE HOJAS DE ESTILO CSS POR SECCIÓN
+       Cada subcarpeta contiene el diseño de su componente correspondiente
+       ==================================================================== -->
+  <link rel="stylesheet" href="css/00-global/global.css">
+  <link rel="stylesheet" href="css/01-header/header.css">
+  <link rel="stylesheet" href="css/02-hero/hero.css">
+  <link rel="stylesheet" href="css/03-productos/productos.css">
+  <link rel="stylesheet" href="css/04-corporativo/corporativo.css">
+  <link rel="stylesheet" href="css/05-servicios/servicios.css">
+  <link rel="stylesheet" href="css/06-clientes/clientes.css">
+  <link rel="stylesheet" href="css/07-noticias/noticias.css">
+  <link rel="stylesheet" href="css/08-newsletter/newsletter.css">
+  <link rel="stylesheet" href="css/09-contacto/contacto.css">
+  <link rel="stylesheet" href="css/10-footer/footer.css">
+  <link rel="stylesheet" href="css/11-modals/modals.css">
+  <link rel="stylesheet" href="css/12-responsive/responsive.css">
+</head>
+
+<body>
+
+  <!-- ====================================================================
+       SECCIÓN 1: ENCABEZADO Y NAVEGACIÓN (B, B1, B2)
+       ==================================================================== -->
+  <header class="site-header" id="headerSection">
+
+    <!-- 1.1 Barra Superior Ultradelgada Oscura -->
+    <div class="top-bar-dark">
+      <div class="container top-bar-container">
+        <div class="top-bar-notice">
+          <span class="top-bar-badge">CALIDAD CERTIFICADA</span>
+          <span>Producción Textil Nacional y Envíos a Toda Colombia</span>
+        </div>
+        <div class="top-bar-links">
+          <a href="#contacto"><i class="fa-solid fa-headset"></i> Soporte Corporativo</a>
+          <a href="#newsletter"><i class="fa-regular fa-envelope"></i> Newsletter</a>
+          <a href="#" class="trigger-quote-modal" data-service="Cotización General"><i
+              class="fa-solid fa-file-invoice-dollar"></i> Cotizar en Línea</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.2 Barra Intermedia de Identidad y Contacto Rápido Superior (B1) -->
+    <div class="brand-contact-bar">
+      <div class="container brand-contact-container">
+
+        <!-- Teléfono de contacto izquierdo -->
+        <div class="contact-fast-item">
+          <div class="contact-fast-icon">
+            <i class="fa-solid fa-phone"></i>
+          </div>
+          <div class="contact-fast-texts">
+            <span class="contact-fast-label">Línea de Atención</span>
+            <span class="contact-fast-val">+57 (601) 745 6060 / 312 345 6789</span>
+          </div>
+        </div>
+
+        <!-- Logo B&F Central con Planeta y Estrella -->
+        <a href="#inicio" class="brand-center-logo">
+          <img src="assets/logos/byf-logo-dark.png" alt="B&F Textil y Dotaciones Logo Oficial">
+        </a>
+
+        <!-- Horario y Correo derecho -->
+        <div class="contact-fast-item right">
+          <div class="contact-fast-icon">
+            <i class="fa-solid fa-envelope-open-text"></i>
+          </div>
+          <div class="contact-fast-texts">
+            <span class="contact-fast-label">Cotizaciones &amp; Ventas</span>
+            <span class="contact-fast-val">ventas@byftextil.com</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 1.3 Menú de Navegación Principal (B2) -->
+    <nav class="main-nav-bar" id="mainNavBar">
+      <div class="container main-nav-container">
+
+        <!-- Botón para dispositivos móviles -->
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Abrir Menú">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Lista de enlaces de navegación con pestaña activa amarilla -->
+        <ul class="nav-menu-list" id="navMenuList">
+          <li class="nav-menu-item active">
+            <a href="#inicio" class="nav-link">INICIO</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="#productos" class="nav-link">LÍNEAS DE PRODUCTOS</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="#corporativo" class="nav-link">FABRICAMOS CON AMOR</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="#servicios" class="nav-link">NUESTROS SERVICIOS</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="#clientes" class="nav-link">CLIENTES</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="#noticias" class="nav-link">NOTICIAS B&amp;F</a>
+          </li>
+          <li class="nav-menu-item">
+            <a href="#contacto" class="nav-link">CONTACTO</a>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- ====================================================================
+       SECCIÓN 2: BANNER PRINCIPAL / HERO (C)
+       Textura de seda blanca, Emblema B&F y Colores de marca
+       ==================================================================== -->
+  <section class="hero-section" id="inicio">
+    <div class="hero-content">
+
+      <!-- Etiqueta superior MARCA LÍDER -->
+      <div class="hero-badge-wrap">
+        <span class="hero-badge-tag">MARCA LÍDER</span>
+      </div>
+
+      <!-- Emblema Planeta B&F Central Oficial -->
+      <div class="hero-emblem">
+        <img src="assets/logos/byf-hero-emblem.png" alt="Emblema B&F Planeta y Estrellas Oficial">
+      </div>
+
+      <!-- Titular Principal -->
+      <h1 class="hero-title">Líderes en el sector textil,</h1>
+
+      <!-- Subtitular con colores resaltados idénticos a la foto -->
+      <div class="hero-categories-line">
+        <span class="hero-word-uniformes">Uniformes, </span>
+        <span class="hero-word-moda">Moda, </span>
+        <span class="hero-word-joyeria">Joyería &amp; </span>
+        <span class="hero-word-merch">Merchandising</span>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="hero-actions">
+        <a href="#productos" class="btn btn-gold hero-btn-catalog">
+          <i class="fa-solid fa-layer-group"></i> Ver Catálogo
+        </a>
+        <a href="#corporativo" class="btn btn-dark hero-btn-contact">
+          <i class="fa-solid fa-circle-play"></i> Conócenos
+        </a>
+      </div>
+
+      <!-- Nota sutil de garantía -->
+      <div class="hero-guarantee-note">
+        <i class="fa-solid fa-award"></i> Confección 100% Colombiana de Exportación
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECCIÓN 3: LÍNEAS DE PRODUCTOS (D: D1, D2, D3, D4)
+       Uniformes, Moda & Accesorios, Ropa Reflectiva, Impresión / Merchandising
+       ==================================================================== -->
+  <section class="products-section" id="productos">
+    <div class="container">
+
+      <!-- Título de Sección con Divisor Iconográfico -->
+      <div class="section-title-wrap">
+        <h2 class="section-title">DESCUBRE NUESTRAS LÍNEAS</h2>
+        <div class="section-divider">
+          <span class="section-divider-icon"><i class="fa-solid fa-scissors"></i></span>
+        </div>
+        <p class="section-subtitle-text">Innovación textil de alta durabilidad, diseño ergonómico y acabados de
+          categoría premium para cada sector productivo.</p>
+      </div>
+
+      <!-- Grid de 4 Líneas de Producto -->
+      <div class="products-grid">
+
+        <!-- Línea 1: Uniformes (D1) -->
+        <article class="product-card" data-product-id="uniformes">
+          <div class="product-image-wrap">
+            <img src="/artifacts/uniformes_line_1790547525555.jpg"
+              alt="Uniformes empresariales, médicos, industriales y escolares B&F" class="product-image">
+            <div class="product-card-overlay">
+              <span>Dotaciones integrales de alta durabilidad</span>
+              <button class="product-overlay-btn">Ver Ficha Técnica</button>
+            </div>
+          </div>
+          <div class="product-card-footer">
+            <img src="assets/logos/byf-uniformes.svg" alt="B&F Uniformes" class="product-badge-logo">
+          </div>
+        </article>
+
+        <!-- Línea 2: Moda & Accesorios (D2) -->
+        <article class="product-card" data-product-id="moda-accesorios">
+          <div class="product-image-wrap">
+            <img src="/artifacts/moda_accesorios_1790547541896.jpg" alt="Moda, Joyería fina y accesorios B&F"
+              class="product-image">
+            <div class="product-card-overlay">
+              <span>Colección de joyería fina y tendencias</span>
+              <button class="product-overlay-btn">Ver Colección</button>
+            </div>
+          </div>
+          <div class="product-card-footer">
+            <img src="assets/logos/byf-moda.svg" alt="B&F Moda & Accesorios" class="product-badge-logo">
+          </div>
+        </article>
+
+        <!-- Línea 3: Ropa Reflectiva (D3) -->
+        <article class="product-card" data-product-id="ropa-reflectiva">
+          <div class="product-image-wrap">
+            <img src="/artifacts/ropa_reflectiva_1790547560327.jpg" alt="Ropa reflectiva y seguridad industrial B&F"
+              class="product-image">
+            <div class="product-card-overlay">
+              <span>Seguridad vial y cintas reflectivas 3M</span>
+              <button class="product-overlay-btn">Ver Certificaciones</button>
+            </div>
+          </div>
+          <div class="product-card-footer">
+            <img src="assets/logos/byf-reflectivo.svg" alt="B&F Ropa Reflectiva" class="product-badge-logo">
+          </div>
+        </article>
+
+        <!-- Línea 4: Impresión / Merchandising (D4) -->
+        <article class="product-card" data-product-id="merchandising">
+          <div class="product-image-wrap">
+            <img src="/artifacts/merchandising_sublimado_1790547580797.jpg"
+              alt="Impresión, Sublimado y Merchandising promocional B&F" class="product-image">
+            <div class="product-card-overlay">
+              <span>Artículos promocionales y sublimación digital</span>
+              <button class="product-overlay-btn">Cotizar Volumen</button>
+            </div>
+          </div>
+          <div class="product-card-footer">
+            <img src="assets/logos/byf-merchandising.svg" alt="B&F Merchandising" class="product-badge-logo">
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Botón Flecha Inferior para Seguir Explorando -->
+      <div class="products-explore-more">
+        <a href="#corporativo" class="products-dropdown-btn" title="Conocer Más de B&F">
+          <i class="fa-solid fa-chevron-down"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECCIÓN 4: SECCIÓN CORPORATIVA / ACERCA DE (E)
+       "FABRICAMOS CON AMOR" - Pasión Artesanal y Video Institucional
+       ==================================================================== -->
+  <section class="corporate-section" id="corporativo">
+    <div class="container">
+
+      <!-- Título de Sección -->
+      <div class="section-title-wrap">
+        <h2 class="section-title">FABRICAMOS CON AMOR</h2>
+        <div class="section-divider">
+          <span class="section-divider-icon"><i class="fa-solid fa-heart"></i></span>
+        </div>
+      </div>
+
+      <div class="corporate-container">
+
+        <!-- Columna Izquierda: Tarjeta de Video Neón Holo B&F con Botón Play -->
+        <div class="corporate-video-wrap" id="playCorporateVideo">
+          <img src="/artifacts/video_fabricamos_amor_1790547605583.jpg"
+            alt="Video Institucional Fabricamos con Amor B&F" class="corporate-video-poster">
+          <div class="corporate-video-glow"></div>
+          <div class="corporate-play-btn" title="Reproducir Video">
+            <i class="fa-solid fa-play"></i>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Información Corporativa de Pasión Artesanal -->
+        <div class="corporate-info-wrap">
+          <h3 class="corporate-heading">Conoce nuestra empresa y nuestro catálogo de servicios y productos</h3>
+          <p class="corporate-desc">
+            En <strong>B&amp;F</strong> nuestro corazón late la pasión por la confeccion y el diseño. Nos
+            especializamos en crear uniformes de alta calidad para diversas categorias como: lineas ejecutivas,
+            escolares, hoteleras, linea blanca, linea industrial, linea para restaurantes, aeroportuaria, de moda y de
+            calzado.</p>
+
+          <!-- Lista de Fortalezas -->
+          <div class="corporate-check-list">
+            <div class="corporate-check-item">
+              <span class="corporate-check-icon"><i class="fa-solid fa-check"></i></span>
+              <span>Telas certificadas con tecnología antifluido, protección UV y alta transpirabilidad.</span>
+            </div>
+            <div class="corporate-check-item">
+              <span class="corporate-check-icon"><i class="fa-solid fa-check"></i></span>
+              <span>Confección a la medida con bordados computarizados de ultra precisión.</span>
+            </div>
+            <div class="corporate-check-item">
+              <span class="corporate-check-icon"><i class="fa-solid fa-check"></i></span>
+              <span>Cumplimiento estricto de tiempos de entrega en pedidos a nivel nacional.</span>
+            </div>
+          </div>
+
+          <!-- Botón de Acción -->
+          <a href="#contacto" class="btn corporate-btn-more">
+            <i class="fa-solid fa-arrow-right"></i> Ver Más
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECCIÓN 5: NUESTROS SERVICIOS (F: F1, F2, F3, F4)
+       Diseño, Confección, Bordado & Estampado, Asesoría & Envíos
+       ==================================================================== -->
+  <section class="services-section" id="servicios">
+    <div class="container">
+
+      <!-- Título de Sección con Rombo -->
+      <div class="section-title-wrap">
+        <h2 class="section-title">Nuestros servicios</h2>
+        <div class="section-divider">
+          <span class="section-divider-icon"><i class="fa-solid fa-diagram-project"></i></span>
+        </div>
+        <p class="section-subtitle-text">Acompañamos a tu empresa en cada etapa del proceso textil: desde el concepto
+          inicial hasta la entrega final.</p>
+      </div>
+
+      <!-- Grid de 4 Servicios con Insignia de Diamante -->
+      <div class="services-grid">
+
+        <!-- Servicio 1: Diseño (F1) -->
+        <div class="service-card">
+          <div class="service-diamond-badge">
+            <i class="fa-solid fa-pen-ruler service-diamond-icon"></i>
+          </div>
+          <h3 class="service-title">Diseño</h3>
+          <p class="service-desc">Patronaje computarizado, desarrollo de moldes ergonómicos y modelado 3D de prendas
+            personalizadas para tu equipo de trabajo.</p>
+          <button class="btn service-btn btn-dark trigger-quote-modal" data-service="Diseño Textil">Ver Más</button>
+        </div>
+
+        <!-- Servicio 2: Confección (F2 - Destacado Amarillo) -->
+        <div class="service-card highlighted">
+          <div class="service-diamond-badge">
+            <i class="fa-solid fa-shirt service-diamond-icon"></i>
+          </div>
+          <h3 class="service-title">Confección</h3>
+          <p class="service-desc">Producción industrial en masa de alta capacidad con maquinaria especializada, costuras
+            de seguridad y control de calidad prenda a prenda.</p>
+          <button class="btn service-btn btn-gold trigger-quote-modal" data-service="Confección y Producción">Ver
+            Más</button>
+        </div>
+
+        <!-- Servicio 3: Bordado & Estampado (F3) -->
+        <div class="service-card">
+          <div class="service-diamond-badge">
+            <i class="fa-solid fa-wand-magic-sparkles service-diamond-icon"></i>
+          </div>
+          <h3 class="service-title">Bordado &amp; Estampado</h3>
+          <p class="service-desc">Personalización de logotipos con bordado computarizado de alta densidad, sublimación
+            digital full print, vinilo textil y serigrafía.</p>
+          <button class="btn service-btn btn-dark trigger-quote-modal" data-service="Bordado y Estampado">Ver
+            Más</button>
+        </div>
+
+        <!-- Servicio 4: Asesoría y Envíos (F4) -->
+        <div class="service-card">
+          <div class="service-diamond-badge">
+            <i class="fa-solid fa-truck-fast service-diamond-icon"></i>
+          </div>
+          <h3 class="service-title">Asesoría</h3>
+          <p class="service-desc">Toma de tallas técnica en tus instalaciones, selección de textiles según normatividad
+            y distribución logística segura a todo el país.</p>
+          <button class="btn service-btn btn-dark trigger-quote-modal" data-service="Asesoría y Envíos">Ver Más</button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECCIÓN 6: CLIENTES Y CONFIANZA (G)
+       Franja gris con logotipos de empresas y marcas aliadas
+       ==================================================================== -->
+  <section class="clients-section" id="clientes">
+    <div class="container">
+
+      <!-- Título de Sección -->
+      <div class="section-title-wrap">
+        <h2 class="section-title">Nuestros clientes</h2>
+        <div class="section-divider">
+          <span class="section-divider-icon"><i class="fa-solid fa-handshake-angle"></i></span>
+        </div>
+      </div>
+
+      <!-- Mosaico Vectorial de Marcas de Confianza idénticas a la fotografía -->
+      <div class="clients-grid">
+
+        <!-- Marcas con Logos Oficiales Recibidos -->
+        <div class="client-logo-item" title="Caribe Cargo S.A.S.">
+          <img src="assets/clientes/caribe-cargo.png" alt="Caribe Cargo S.A.S." class="client-logo-img">
+        </div>
+
+        <div class="client-logo-item" title="BYD Auto">
+          <img src="assets/clientes/byd.png" alt="BYD Auto" class="client-logo-img">
+        </div>
+
+        <div class="client-logo-item" title="Menzies Aviation">
+          <img src="assets/clientes/menzies-aviation.png" alt="Menzies Aviation" class="client-logo-img">
+        </div>
+
+        <div class="client-logo-item" title="Scania">
+          <img src="assets/clientes/scania.png" alt="Scania" class="client-logo-img">
+        </div>
+
+        <div class="client-logo-item" title="Krones">
+          <img src="assets/clientes/krones.png" alt="Krones" class="client-logo-img">
+        </div>
+
+        <!-- Fila 2 de Marcas Oficiales -->
+        <div class="client-logo-item" title="Colombian Air Cargo S.A.S.">
+          <img src="assets/clientes/colombian-air-cargo.png" alt="Colombian Air Cargo S.A.S." class="client-logo-img">
+        </div>
+
+        <div class="client-logo-item" title="Pelikan">
+          <img src="assets/clientes/pelikan.png" alt="Pelikan" class="client-logo-img">
+        </div>
+
+        <div class="client-logo-item" title="BLAS Panama Airport Services">
+          <img src="assets/clientes/blas.png" alt="BLAS Panama Airport Services" class="client-logo-img blas-logo">
+        </div>
+
+        <div class="client-logo-item" title="VIALCOR Soluciones Arquitectónicas">
+          <img src="assets/clientes/vialcor.png" alt="VIALCOR Soluciones Arquitectónicas" class="client-logo-img">
+        </div>
+
+        <div class="client-logo-item" title="Andrés Carne de Res">
+          <img src="assets/clientes/andres.png" alt="Andrés Carne de Res" class="client-logo-img">
+        </div>
+
+        <div class="client-logo-item" title="Aerosur S.A.S.">
+          <img src="assets/clientes/aerosur.png" alt="Aerosur S.A.S." class="client-logo-img">
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECCIÓN 7: NOTICIAS Y BLOG B&F (H)
+       Artículos destacados, eventos corporativos y capacitación
+       ==================================================================== -->
+  <section class="news-section" id="noticias">
+    <div class="container">
+
+      <!-- Título de Sección -->
+      <div class="section-title-wrap">
+        <h2 class="section-title">Noticias B&amp;F</h2>
+        <div class="section-divider">
+          <span class="section-divider-icon"><i class="fa-solid fa-newspaper"></i></span>
+        </div>
+      </div>
+
+      <!-- Grid de 2 Noticias Principales -->
+      <div class="news-grid">
+
+        <!-- Noticia 1: Ciclismo y Eventos -->
+        <article class="news-card">
+          <div class="news-image-wrap">
+            <img src="/artifacts/blog_ciclismo_evento_1790547633752.jpg"
+              alt="Patrocinio deportivo y presencia en eventos de alto impacto B&F" class="news-image">
+          </div>
+          <div class="news-body">
+            <span class="news-category-tag">EVENTOS CORPORATIVOS</span>
+            <h3 class="news-title">Patrocinio y presencia en eventos de alto impacto</h3>
+            <p class="news-excerpt">
+              B&amp;F lideró la confección y tecnología de los uniformes oficiales de competencia, combinando
+              propiedades aerodinámicas con transpirabilidad y máxima resistencia deportiva.
+            </p>
+            <a href="#" class="news-footer-link">
+              Leer Más <i class="fa-solid fa-chevron-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Noticia 2: Sostenibilidad y Capacitación -->
+        <article class="news-card">
+          <div class="news-image-wrap">
+            <!-- Portada ilustrada para capacitación y taller -->
+            <img src="/artifacts/video_fabricamos_amor_1790547605583.jpg"
+              alt="Compromiso de sostenibilidad y capacitación textil B&F" class="news-image" style="object-fit:cover;">
+          </div>
+          <div class="news-body">
+            <span class="news-category-tag">SOSTENIBILIDAD &amp; COMUNIDAD</span>
+            <h3 class="news-title">Compromiso de Sostenibilidad y Capacitación Textil</h3>
+            <p class="news-excerpt">
+              Impulsamos el desarrollo de nuestra región capacitando a mujeres operarias en confección circular e
+              integrando fibras recicladas certificadas en nuestras líneas de producción.
+            </p>
+            <a href="#" class="news-footer-link">
+              Leer Más <i class="fa-solid fa-chevron-right"></i>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Botón Ver Más Noticias -->
+      <div class="news-actions">
+        <button class="btn news-btn-all" onclick="showToast('Cargando más publicaciones del blog corporativo...')">
+          Ver Más
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECCIÓN 8: CAPTACIÓN / NEWSLETTER (I)
+       Franja horizontal amarilla de suscripción conectada a API REST
+       ==================================================================== -->
+  <section class="newsletter-section" id="newsletter">
+    <div class="container newsletter-container">
+
+      <!-- Columna Izquierda: Logo B&F Oficial -->
+      <div class="newsletter-brand-wrap">
+        <img src="assets/logos/byf-logo-dark.png" alt="B&F Logo Oficial" class="newsletter-logo">
+      </div>
+
+      <!-- Columna Derecha: Formulario y textos de Captación -->
+      <div class="newsletter-content-wrap">
+        <h3 class="newsletter-title">Suscríbete a nuestro boletín</h3>
+        <p class="newsletter-subtitle">Recibe en tu correo nuestras últimas colecciones, descuentos mayoristas y
+          novedades en dotaciones textiles.</p>
+
+        <!-- Formulario funcional conectado a backend /api/newsletter -->
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" id="newsletterEmail" class="newsletter-input"
+            placeholder="Ingresa tu correo electrónico aquí..." required>
+          <button type="submit" class="newsletter-submit-btn">Suscribirme</button>
+        </form>
+        <div id="newsletterFeedback" class="newsletter-feedback"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECCIÓN 9: CONTACTO Y MAPA (J: J1, J2)
+       Información de contacto con círculos amarillos y mapa de Bogotá
+       ==================================================================== -->
+  <section class="contact-section" id="contacto">
+    <div class="container">
+
+      <!-- Título de Sección -->
+      <div class="section-title-wrap">
+        <h2 class="section-title">Contáctanos</h2>
+        <div class="section-divider">
+          <span class="section-divider-icon"><i class="fa-solid fa-location-dot"></i></span>
+        </div>
+      </div>
+
+      <div class="contact-container">
+
+        <!-- 9.1 Columna Izquierda: Información de Contacto con Iconos Circulares (J1) -->
+        <div class="contact-info-wrap">
+          <h3 class="contact-info-title">Atención Personalizada</h3>
+
+          <!-- Item 1: Ubicación -->
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div class="contact-item-details">
+              <span class="contact-item-label">Sede Principal</span>
+              <span class="contact-item-value">Carrera 19 # 14 - 45, Paloquemao / Centro Empresarial<br>Bogotá D.C.,
+                Colombia</span>
+            </div>
+          </div>
+
+          <!-- Item 2: Teléfono -->
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <div class="contact-item-details">
+              <span class="contact-item-label">Línea Telefónica &amp; WhatsApp</span>
+              <span class="contact-item-value">+57 (601) 745 6060 &bull; Móvil: +57 312 345 6789</span>
+            </div>
+          </div>
+
+          <!-- Item 3: Correo -->
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="contact-item-details">
+              <span class="contact-item-label">Correo Corporativo</span>
+              <span class="contact-item-value"><a href="mailto:ventas@byftextil.com">ventas@byftextil.com</a></span>
+            </div>
+          </div>
+
+          <!-- Item 4: Horario -->
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div class="contact-item-details">
+              <span class="contact-item-label">Horario de Atención</span>
+              <span class="contact-item-value">Lunes a Viernes: 8:00 AM - 6:00 PM<br>Sábados: 8:00 AM - 1:00 PM</span>
+            </div>
+          </div>
+
+          <!-- Botón de Acción -->
+          <button class="btn contact-action-btn trigger-quote-modal" data-service="Solicitud de Asesor">
+            <i class="fa-solid fa-paper-plane"></i> Solicitar Asesor Comercial
+          </button>
+        </div>
+
+        <!-- 9.2 Columna Derecha: Mapa de Ubicación con Tarjeta Flotante (J2) -->
+        <div class="contact-map-wrap">
+          <!-- Tarjeta flotante con nombre y ubicación B&F -->
+          <div class="map-floating-card">
+            <span class="map-floating-title"><i class="fa-solid fa-industry" style="color:#f59e0b;"></i> B&amp;F Fábrica
+              &amp; Sala de Ventas</span>
+            <span class="map-floating-sub">Carrera 19 # 14 - 45, Bogotá</span>
+          </div>
+
+          <!-- Mapa Interactivo OpenStreetMap / Google Maps Embed -->
+          <iframe class="contact-map-iframe" title="Ubicación B&F Confecciones Bogotá"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.924823292416!2d-74.08638542416174!3d4.607469795367097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f997576595555%3A0xa61895a646cbb17b!2sBogot%C3%A1%2C%20Colombia!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+            allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECCIÓN 10: PIE DE PÁGINA / FOOTER (K)
+       Fondo oscuro, 4 columnas de contenido y galería de Instagram
+       ==================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+
+      <!-- Grid de 4 Columnas del Footer -->
+      <div class="footer-top-grid">
+
+        <!-- Columna 1: Sobre B&F -->
+        <div class="footer-col">
+          <div class="footer-brand-wrap">
+            <img src="assets/logos/byf-logo-white.png" alt="B&F Textil y Confecciones" class="footer-brand-logo">
+          </div>
+          <p class="footer-about-text">
+            Somos una empresa colombiana especializada en confección industrial, dotaciones de alta resistencia,
+            uniformes corporativos, joyería artesanal y artículos promocionales con los más rigurosos estándares de
+            calidad.
+          </p>
+          <div class="footer-social-links">
+            <a href="#" class="footer-social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="footer-social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="footer-social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="footer-social-btn" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Columna 2: Navegación Rápida -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Navegación</h4>
+          <ul class="footer-links-list">
+            <li class="footer-link-item"><a href="#inicio">Inicio</a></li>
+            <li class="footer-link-item"><a href="#productos">Líneas de Productos</a></li>
+            <li class="footer-link-item"><a href="#corporativo">Fabricamos con Amor</a></li>
+            <li class="footer-link-item"><a href="#servicios">Nuestros Servicios</a></li>
+            <li class="footer-link-item"><a href="#clientes">Clientes</a></li>
+            <li class="footer-link-item"><a href="#noticias">Noticias y Blog</a></li>
+            <li class="footer-link-item"><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Líneas de Producción -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Líneas Textiles</h4>
+          <ul class="footer-links-list">
+            <li class="footer-link-item"><a href="#productos">Dotación Industrial &amp; Overoles</a></li>
+            <li class="footer-link-item"><a href="#productos">Uniformes Médicos &amp; Antifluido</a></li>
+            <li class="footer-link-item"><a href="#productos">Ropa Reflectiva de Alta Visibilidad</a></li>
+            <li class="footer-link-item"><a href="#productos">Joyería &amp; Accesorios Corporativos</a></li>
+            <li class="footer-link-item"><a href="#productos">Sublimado &amp; Merchandising</a></li>
+            <li class="footer-link-item"><a href="#productos">Bordado Computarizado</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 4: Feed de Instagram (6 Miniaturas en Grid 3x2) -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Instagram</h4>
+          <div class="footer-instagram-grid">
+            <a href="#productos" class="instagram-thumb">
+              <img src="/artifacts/uniformes_line_1790547525555.jpg" alt="Uniformes B&F">
+            </a>
+            <a href="#productos" class="instagram-thumb">
+              <img src="/artifacts/moda_accesorios_1790547541896.jpg" alt="Moda B&F">
+            </a>
+            <a href="#productos" class="instagram-thumb">
+              <img src="/artifacts/ropa_reflectiva_1790547560327.jpg" alt="Ropa Reflectiva B&F">
+            </a>
+            <a href="#productos" class="instagram-thumb">
+              <img src="/artifacts/merchandising_sublimado_1790547580797.jpg" alt="Merchandising B&F">
+            </a>
+            <a href="#noticias" class="instagram-thumb">
+              <img src="/artifacts/blog_ciclismo_evento_1790547633752.jpg" alt="Ciclismo B&F">
+            </a>
+            <a href="#corporativo" class="instagram-thumb">
+              <img src="/artifacts/video_fabricamos_amor_1790547605583.jpg" alt="Taller B&F">
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Barra de Copyright Inferior -->
+      <div class="footer-bottom-bar">
+        <span>&copy; 2026 <strong>B&amp;F Confecciones &amp; Dotaciones S.A.S.</strong> &bull; Proyecto de Grado
+          Universitario</span>
+        <span>Desarrollado con arquitectura web modular con Node.js &amp; Express</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ====================================================================
+       SECCIÓN 11: MODALES INTERACTIVOS Y TOASTS
+       ==================================================================== -->
+
+  <!-- Modal 1: Video Corporativo -->
+  <div class="modal-backdrop" id="videoModal">
+    <div class="modal-container modal-video-container">
+      <button class="modal-close-btn" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-video-box">
+        <iframe id="corporateVideoFrame" src="" title="Video B&F"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Detalle de Producto / Catálogo -->
+  <div class="modal-backdrop" id="productDetailModal">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-product-layout">
+        <img src="" id="modalProductImg" alt="Producto B&F" class="modal-product-img">
+        <div class="modal-product-info">
+          <span class="modal-product-category" id="modalProductCategory">Categoría</span>
+          <h3 class="modal-product-title" id="modalProductTitle">Nombre del Producto</h3>
+          <p class="modal-product-desc" id="modalProductDesc">Descripción del producto...</p>
+          <div class="modal-product-specs" id="modalProductSpecs">
+            <!-- Especificaciones dinámicas -->
+          </div>
+          <button class="btn btn-gold trigger-quote-modal" data-service="Catálogo Específico"
+            style="align-self:flex-start;">
+            <i class="fa-solid fa-file-signature"></i> Solicitar Muestra / Cotizar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Formulario de Cotización Rápida -->
+  <div class="modal-backdrop" id="quoteModal">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-form-wrap">
+        <h3 class="modal-form-title">Solicitar Cotización B&amp;F</h3>
+        <p class="modal-form-sub">Diligencia tus datos y un especialista textil te contactará con una propuesta a la
+          medida.</p>
+
+        <form id="quoteForm">
+          <div class="form-group">
+            <label class="form-label" for="quoteName">Nombre Completo *</label>
+            <input type="text" id="quoteName" class="form-control" placeholder="Ej. Juan Pérez" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="quoteEmail">Correo Electrónico *</label>
+            <input type="email" id="quoteEmail" class="form-control" placeholder="Ej. juan@empresa.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="quotePhone">Teléfono o WhatsApp</label>
+            <input type="tel" id="quotePhone" class="form-control" placeholder="Ej. +57 312 345 6789">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="quoteService">Línea o Servicio Requerido</label>
+            <select id="quoteService" class="form-control">
+              <option value="Cotización General">Cotización General</option>
+              <option value="Uniformes Empresariales">Uniformes &amp; Dotaciones Industriales</option>
+              <option value="Moda y Accesorios">Moda &amp; Joyería Artesanal</option>
+              <option value="Ropa Reflectiva">Ropa Reflectiva &amp; Seguridad Vial</option>
+              <option value="Sublimación y Merchandising">Impresión, Sublimado &amp; Merchandising</option>
+              <option value="Diseño Textil">Diseño y Patronaje Textil</option>
+              <option value="Confección y Producción">Confección en Masa</option>
+              <option value="Bordado y Estampado">Bordado Computarizado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="quoteMessage">Detalles del Pedido (Cantidades, tallas, telas)</label>
+            <textarea id="quoteMessage" class="form-control" rows="3"
+              placeholder="Describe brevemente tus requerimientos..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold" style="width:100%; padding:14px; font-weight:800;">
+            <i class="fa-solid fa-paper-plane"></i> Enviar Solicitud al Backend
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor de Alerta Flotante (Toast) -->
+  <div id="toastNotification" class="toast-notification"></div>
+
+  <!-- ====================================================================
+       SCRIPTS JAVASCRIPT MODULARES
+       ==================================================================== -->
+  <script src="js/modals.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/newsletter.js"></script>
+  <script src="js/contact.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

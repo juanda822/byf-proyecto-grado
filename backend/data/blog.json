@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Patrocinio y presencia en eventos de alto impacto",
+    "subtitle": "Impulsamos el talento deportivo con indumentaria de alta tecnología y desempeño.",
+    "category": "EVENTOS CORPORATIVOS",
+    "date": "15 de Septiembre, 2026",
+    "image": "assets/images/noticias/evento-ciclismo.png",
+    "excerpt": "B&F lideró el diseño y confección de los uniformes oficiales para el circuito ciclístico nacional, demostrando la resistencia aerodinámica y transpirabilidad de nuestras telas deportivas premium.",
+    "content": "Nuestra división deportiva desarrolló prendas ergonómicas con propiedades de secado rápido y protección solar UV 50+. A través de alianzas estratégicas con federaciones y clubes, reforzamos nuestra visión de apoyar a los atletas con uniformes a la altura de los más altos estándares mundiales."
+  },
+  {
+    "id": 2,
+    "title": "Compromiso de Sostenibilidad y Capacitación Textil",
+    "subtitle": "Formamos a nuevas generaciones de confeccionistas bajo estándares ecológicos.",
+    "category": "SOSTENIBILIDAD",
+    "date": "02 de Septiembre, 2026",
+    "image": "assets/images/noticias/capacitacion-sostenible.png",
+    "excerpt": "Inauguramos nuestro programa de capacitación técnica para madres cabeza de hogar en confección industrial circular y aprovechamiento cero residuos de retales textiles.",
+    "content": "Con el respaldo de instructores certificados, más de 40 operarias se graduaron en técnicas de patronaje digital y manejo de maquinaria mecatrónica. Además, integramos en nuestra cadena productiva hilos reciclados de botellas PET, reduciendo la huella de carbono en un 35% en nuestra línea corporativa."
+  }
+]

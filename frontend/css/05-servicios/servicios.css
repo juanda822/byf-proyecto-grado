@@ -1,0 +1,136 @@
+/* ==========================================================================
+   05-SERVICIOS.CSS - NUESTROS SERVICIOS B&F
+   4 Tarjetas con insignia en rombo (diamante), títulos y botones
+   ========================================================================== */
+
+.services-section {
+  padding: 85px 0 95px 0;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  margin-top: 45px;
+}
+
+/* Tarjeta individual de servicio */
+.service-card {
+  position: relative;
+  background-color: var(--color-white);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 45px 22px 28px 22px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all var(--transition-normal);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+/* Tarjeta Destacada (Confección / Card 2 con acento amarillo) */
+.service-card.highlighted {
+  border-top: 3px solid var(--color-primary-gold);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.12);
+}
+
+/* Insignia en Rombo / Diamante Superior */
+.service-diamond-badge {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 46px;
+  height: 46px;
+  background-color: var(--color-white);
+  border: 2px solid #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: all var(--transition-normal);
+  z-index: 2;
+}
+
+.service-card.highlighted .service-diamond-badge {
+  background-color: var(--color-primary-gold);
+  border-color: var(--color-primary-gold);
+}
+
+.service-diamond-icon {
+  transform: rotate(-45deg);
+  font-size: 1.1rem;
+  color: #334155;
+  transition: transform var(--transition-fast);
+}
+
+.service-card.highlighted .service-diamond-icon {
+  color: #1e293b;
+}
+
+.service-card:hover .service-diamond-badge {
+  transform: translateX(-50%) rotate(45deg) scale(1.1);
+}
+
+/* Título del Servicio */
+.service-title {
+  font-family: var(--font-subheading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+/* Descripción */
+.service-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+/* Botón Ver Más */
+.service-btn {
+  width: 100%;
+  max-width: 140px;
+  padding: 9px 18px;
+  font-family: var(--font-subheading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  transition: all var(--transition-fast);
+}
+
+.service-btn.btn-dark {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+.service-btn.btn-dark:hover {
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+}
+
+.service-card.highlighted .service-btn {
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+  font-weight: 800;
+}
+
+.service-card.highlighted .service-btn:hover {
+  background-color: #1e293b;
+  color: #ffffff;
+}

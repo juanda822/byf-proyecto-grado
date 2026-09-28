@@ -1,0 +1,137 @@
+/* ==========================================================================
+   03-PRODUCTOS.CSS - LÍNEAS DE PRODUCTOS B&F
+   4 Tarjetas verticales: Uniformes, Moda, Ropa Reflectiva y Merchandising
+   ========================================================================== */
+
+.products-section {
+  padding: 70px 0 80px 0;
+  background-color: #ffffff;
+  position: relative;
+}
+
+/* Grid de las 4 líneas de productos */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 35px;
+}
+
+/* Tarjeta individual de producto */
+.product-card {
+  position: relative;
+  background-color: var(--color-white);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+  border-color: #cbd5e1;
+}
+
+/* Contenedor de la imagen de producto */
+.product-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: #f1f5f9;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--transition-smooth);
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* Overlay interactivo al pasar el mouse */
+.product-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.2) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  color: var(--color-white);
+}
+
+.product-card:hover .product-card-overlay {
+  opacity: 1;
+}
+
+.product-overlay-btn {
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+  font-family: var(--font-subheading);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 4px;
+  align-self: flex-start;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+/* Pie de la tarjeta con el logo badge específico */
+.product-card-footer {
+  padding: 14px 12px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #f1f5f9;
+  min-height: 60px;
+}
+
+.product-badge-logo {
+  height: 32px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+}
+
+/* Botón flecha inferior de exploración */
+.products-explore-more {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.products-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: #1e293b;
+  color: #ffffff;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.products-dropdown-btn:hover {
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+  transform: translateY(2px);
+}

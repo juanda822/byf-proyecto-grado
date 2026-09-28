@@ -1,0 +1,109 @@
+/* ==========================================================================
+   08-NEWSLETTER.CSS - CAPTACIÓN Y BOLETÍN B&F
+   Franja horizontal dorada/amarilla de suscripción interactiva
+   ========================================================================== */
+
+.newsletter-section {
+  background-color: var(--color-primary-gold); /* Amarillo dorado llamativo idéntico a la imagen */
+  padding: 42px 0;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);
+}
+
+.newsletter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+/* Columna Izquierda: Logo B&F Negro */
+.newsletter-brand-wrap {
+  flex: 0 0 240px;
+}
+
+.newsletter-logo {
+  height: 52px;
+  width: auto;
+}
+
+/* Columna Derecha: Formulario y textos */
+.newsletter-content-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 680px;
+}
+
+.newsletter-title {
+  font-family: var(--font-subheading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.newsletter-subtitle {
+  font-size: 0.85rem;
+  color: #334155;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+/* Formulario con campo de texto y botón */
+.newsletter-form {
+  display: flex;
+  width: 100%;
+  gap: 0;
+  background-color: #ffffff;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 12px 18px;
+  font-size: 0.9rem;
+  color: #1e293b;
+  background-color: transparent;
+}
+
+.newsletter-input::placeholder {
+  color: #94a3b8;
+}
+
+.newsletter-submit-btn {
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 0 28px;
+  font-family: var(--font-subheading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: background-color var(--transition-fast);
+}
+
+.newsletter-submit-btn:hover {
+  background-color: #1e293b;
+}
+
+/* Mensaje de respuesta del backend */
+.newsletter-feedback {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: none;
+}
+
+.newsletter-feedback.success {
+  display: block;
+  color: #064e3b;
+}
+
+.newsletter-feedback.error {
+  display: block;
+  color: #7f1d1d;
+}

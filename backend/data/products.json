@@ -1,0 +1,70 @@
+[
+  {
+    "id": "uniformes",
+    "name": "Uniformes",
+    "slug": "uniformes",
+    "tagline": "Dotaciones empresariales, industriales, escolares y de salud",
+    "description": "Fabricación de uniformes de alta resistencia con telas antifluidos, dril, oxford y gabardina. Confección a medida con bordados de alta precisión para consolidar la imagen corporativa de su empresa.",
+    "category": "Dotaciones",
+    "image": "assets/images/productos/uniformes.png",
+    "logoBadge": "assets/logos/byf-uniformes.svg",
+    "items": [
+      "Overoles y conjuntos industriales",
+      "Camisas tipo polo y camisas Oxford",
+      "Uniformes médicos y antifluido",
+      "Uniformes colegiales y deportivos"
+    ],
+    "features": ["Telas antifluido certificadas", "Costuras reforzadas de alta durabilidad", "Bordado computarizado incluido", "Variedad de tallas y colores"]
+  },
+  {
+    "id": "moda-accesorios",
+    "name": "Moda & Accesorios",
+    "slug": "moda-accesorios",
+    "tagline": "Joyería fina, accesorios exclusivos y prendas de tendencia",
+    "description": "Línea exclusiva de bisutería fina, joyería artesanal, cadenas, pulseras y accesorios de moda para complementar estilos contemporáneos con acabados elegantes y duraderos.",
+    "category": "Moda & Tendencias",
+    "image": "assets/images/productos/moda.png",
+    "logoBadge": "assets/logos/byf-moda.svg",
+    "items": [
+      "Joyería artesanal y dorada",
+      "Pulseras, dijes y cadenas",
+      "Accesorios para eventos y regalos corporativos",
+      "Prendas de vestir personalizadas"
+    ],
+    "features": ["Baño de oro y rodio de alta calidad", "Diseños contemporáneos exclusivos", "Presentación de lujo en estuche", "Resistencia al desgaste"]
+  },
+  {
+    "id": "ropa-reflectiva",
+    "name": "Ropa Reflectiva",
+    "slug": "ropa-reflectiva",
+    "tagline": "Seguridad industrial y prendas de alta visibilidad certificadas",
+    "description": "Prendas de protección personal y seguridad vial con cintas reflectivas 3M que cumplen normativas nacionales e internacionales de visibilidad y durabilidad en condiciones extremas.",
+    "category": "Seguridad Industrial",
+    "image": "assets/images/productos/reflectivo.png",
+    "logoBadge": "assets/logos/byf-reflectivo.svg",
+    "items": [
+      "Chalecos reflectivos tipo brigadista y malla",
+      "Chaquetas térmicas e impermeables reflectivas",
+      "Pantalones de trabajo con cintas de 2 pulgadas",
+      "Impermeables de alta densidad y conos viales"
+    ],
+    "features": ["Cintas reflectivas 3M grado industrial", "Colores flúor de máxima visibilidad diurna/nocturna", "Resistentes al agua y rasgaduras", "Cumplimiento Norma ANSI / ISEA"]
+  },
+  {
+    "id": "merchandising",
+    "name": "Impresión / Merchandising",
+    "slug": "merchandising",
+    "tagline": "Sublimado, artículos promocionales y marca con nosotros",
+    "description": "Personalización y estampado en gran variedad de soportes promocionales: tulas, botilitos, termos metálicos, gorras, tazas cerámicas y material publicitario para campañas de marca.",
+    "category": "Publicidad & Sublimación",
+    "image": "assets/images/productos/sublimado.png",
+    "logoBadge": "assets/logos/byf-merchandising.svg",
+    "items": [
+      "Tulas deportivas y bolsas ecológicas",
+      "Termos metálicos y botilitos deportivos",
+      "Mugs y pocillos sublimados",
+      "Gorras bordadas y estampadas en serigrafía"
+    ],
+    "features": ["Sublimación digital a todo color", "Tampografía y serigrafía de alta adherencia", "Precios mayoristas por volumen", "Asesoría de diseño gráfico incluida"]
+  }
+]

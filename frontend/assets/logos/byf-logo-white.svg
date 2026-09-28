@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
+  <!-- Planet Core -->
+  <g transform="translate(10, 10)">
+    <!-- Back ring -->
+    <path d="M 2 28 C 15 15, 60 14, 76 25" stroke="#ffffff" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.35"/>
+    
+    <!-- Planet body -->
+    <circle cx="38" cy="30" r="21" fill="#ffffff" />
+    
+    <!-- Front tilted ring with star/sparkle -->
+    <ellipse cx="38" cy="30" rx="34" ry="11" transform="rotate(-26 38 30)" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round"/>
+    
+    <!-- Sparkle on upper-left ring -->
+    <polygon points="12,18 14,24 20,26 14,28 12,34 10,28 4,26 10,24" fill="#fbbf24" />
+    <circle cx="12" cy="26" r="1.5" fill="#ffffff" />
+  </g>
+  
+  <!-- Typography B&F -->
+  <text x="96" y="55" font-family="'Cinzel', 'Playfair Display', 'Cinzel Decorative', Georgia, serif" font-size="46" font-weight="800" letter-spacing="2" fill="#ffffff">B&amp;F</text>
+  
+  <!-- Subtle tagline -->
+  <text x="98" y="70" font-family="'Montserrat', sans-serif" font-size="8.5" font-weight="700" letter-spacing="4" fill="#fbbf24">TEXTIL &amp; DOTACIONES</text>
+</svg>

@@ -1,0 +1,145 @@
+/* ==========================================================================
+   06-CLIENTES.CSS - CLIENTES Y CONFIANZA B&F
+   Banda gris de marcas corporativas y aliados comerciales
+   ========================================================================== */
+
+.clients-section {
+  padding: 65px 0 75px 0;
+  background-color: #e2e8f0; /* Fondo gris claro idéntico a la imagen */
+  border-top: 1px solid #cbd5e1;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.clients-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 36px 48px;
+  max-width: 1080px;
+  margin: 30px auto 0 auto;
+}
+
+/* Item de logo de cliente */
+.client-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  filter: grayscale(100%) contrast(120%);
+  opacity: 0.78;
+  transition: all var(--transition-normal);
+  padding: 6px 12px;
+}
+
+.client-logo-item:hover {
+  filter: grayscale(0%) contrast(100%);
+  opacity: 1;
+  transform: translateY(-2px) scale(1.06);
+}
+
+/* Imagen de logo oficial */
+.client-logo-img {
+  max-height: 48px;
+  max-width: 140px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.client-logo-img.blas-logo {
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Emulación tipográfica vectorial precisa para cada marca */
+.client-brand {
+  font-family: var(--font-subheading);
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.client-brand.krones {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #1e293b;
+}
+
+.client-brand.scania {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #0f172a;
+}
+
+.client-brand.metro {
+  font-weight: 900;
+  color: #0369a1;
+}
+
+.client-brand.metro .metro-m {
+  background-color: #0284c7;
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 1.1rem;
+}
+
+.client-brand.byd {
+  border: 2px solid #dc2626;
+  border-radius: 50px;
+  padding: 2px 14px;
+  color: #dc2626;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.client-brand.colombian-air {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #991b1b;
+  letter-spacing: 1px;
+  border-left: 3px solid #b91c1c;
+  padding-left: 8px;
+}
+
+.client-brand.pelikan {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.client-brand.vialcor {
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #0284c7;
+}
+
+.client-brand.blas {
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #1e293b;
+}
+
+.client-brand.aquaviva {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0891b2;
+}
+
+.client-brand.andres {
+  font-family: 'Brush Script MT', 'Dancing Script', cursive, sans-serif;
+  font-size: 1.7rem;
+  color: #dc2626;
+  font-weight: bold;
+}

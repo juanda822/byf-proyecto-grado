@@ -1,0 +1,145 @@
+/* ==========================================================================
+   09-CONTACTO.CSS - INFORMACIÓN DE CONTACTO Y MAPA B&F
+   Datos corporativos con iconos circulares amarillos y mapa interactivo
+   ========================================================================== */
+
+.contact-section {
+  padding: 85px 0 95px 0;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 45px;
+  align-items: center;
+  margin-top: 35px;
+}
+
+/* Columna Izquierda: Información Corporativa */
+.contact-info-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.contact-info-title {
+  font-family: var(--font-subheading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Iconos circulares amarillos idénticos a la foto */
+.contact-item-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25);
+  margin-top: 2px;
+}
+
+.contact-item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-item-label {
+  font-family: var(--font-subheading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.contact-item-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+.contact-item-value a:hover {
+  color: var(--color-primary-gold-dark);
+}
+
+.contact-action-btn {
+  align-self: flex-start;
+  margin-top: 10px;
+  background-color: #1e293b;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 4px;
+  font-family: var(--font-subheading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.contact-action-btn:hover {
+  background-color: var(--color-primary-gold);
+  color: #1e293b;
+}
+
+/* Columna Derecha: Mapa Interactivo */
+.contact-map-wrap {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  background-color: #e2e8f0;
+}
+
+.contact-map-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Tarjeta flotante en el mapa (como en la foto de referencia) */
+.map-floating-card {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 5;
+  border-left: 4px solid var(--color-primary-gold);
+}
+
+.map-floating-title {
+  font-family: var(--font-subheading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.map-floating-sub {
+  font-size: 0.72rem;
+  color: #64748b;
+}
