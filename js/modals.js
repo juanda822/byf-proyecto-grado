@@ -167,6 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
   productCards.forEach(card => {
     card.addEventListener('click', () => {
       const productId = card.getAttribute('data-product-id');
+      if (productId === 'uniformes') {
+        window.location.href = 'uniformes.html';
+        return;
+      }
       const item = productsData[productId];
 
       if (item && productModal) {
