@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const localVideo = document.getElementById('corporateVideoLocal');
   const switchVideoBtn = document.getElementById('switchVideoSourceBtn');
 
-  const YOUTUBE_EMBED_URL = 'https://www.youtube-nocookie.com/embed/uWHnjV3EY5k?autoplay=1&rel=0';
+  const YOUTUBE_EMBED_URL = 'https://www.youtube-nocookie.com/embed/mdAReYRLvqU?autoplay=1&rel=0';
   let isLocalVideoActive = false;
 
   function stopAllVideos() {
@@ -169,6 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const productId = card.getAttribute('data-product-id');
       if (productId === 'uniformes') {
         window.location.href = 'uniformes.html';
+        return;
+      }
+      if (productId === 'ropa-reflectiva') {
+        window.location.href = 'reflectivo.html';
         return;
       }
       const item = productsData[productId];

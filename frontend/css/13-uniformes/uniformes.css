@@ -131,61 +131,194 @@
 }
 
 /* --------------------------------------------------------------------------
-   HERO DE UNIFORMES (BANNER COMPUESTO EXACTO A LA FOTO ORIGINAL)
+   HERO DE UNIFORMES (TEXTO 100% EDITABLE + FONDO DE MODELOS EN SEDA)
    -------------------------------------------------------------------------- */
-.uni-hero-banner-section {
+.uni-hero-editable-section {
   position: relative;
   width: 100%;
-  background: #f8fafc;
+  min-height: 560px;
+  background-color: #f8fafc;
+  background-image: url('../../assets/uniformes/hero-uniformes.png');
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding: 55px 0 65px 0;
   overflow: hidden;
   border-bottom: 2px solid var(--uni-gold);
-  box-shadow: 0 4px 20px rgba(15, 30, 54, 0.08);
 }
 
-.uni-hero-banner-wrapper {
-  position: relative;
+/* Marca de agua decorativa circular a rayas en la esquina inferior izquierda */
+.uni-hero-striped-badge {
+  position: absolute;
+  left: -32px;
+  bottom: 24px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    -45deg,
+    #0f1e36,
+    #0f1e36 4.5px,
+    transparent 4.5px,
+    transparent 11px
+  );
+  opacity: 0.88;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.uni-hero-editable-container {
+  max-width: 1240px;
   width: 100%;
-  max-width: 1440px;
   margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+  z-index: 2;
 }
 
-.uni-hero-banner-img {
-  width: 100%;
+.uni-hero-editable-content {
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.uni-hero-logo-box {
+  margin-bottom: 2px;
+}
+
+.uni-hero-logo-img {
+  max-width: 290px;
   height: auto;
   display: block;
 }
 
-/* Hotspots interactivos alineados milimétricamente sobre los botones de la imagen */
-.uni-hotspot-btn {
-  position: absolute;
+/* Titular Principal con Tipografía Serif y Detalle Dorado Editable */
+.uni-hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #0b2545;
+  line-height: 1.22;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.uni-title-gold {
+  color: #d49e24;
+  font-weight: 800;
+  display: inline;
+}
+
+/* Párrafo Descriptivo 100% Editable */
+.uni-hero-description {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.55;
+  margin: 0;
+  font-weight: 450;
+}
+
+/* Badges / Pastillas Informativas en 2 filas */
+.uni-hero-badges-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 4px 0 8px 0;
+}
+
+.uni-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.uni-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  padding: 7px 16px;
+  border-radius: 50px;
+  box-shadow: 0 3px 10px rgba(15, 30, 54, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.badge-icon-gold {
+  color: #d49e24;
+  font-size: 0.95rem;
+}
+
+.badge-text {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0f1e36;
+  letter-spacing: 0.2px;
+}
+
+/* Botones de Acción Editables */
+.uni-hero-buttons-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+/* Botón 1: ORDENA AHORA */
+.uni-btn-ordena-ahora {
+  background: #0f1e36;
+  color: #ffffff;
+  font-family: var(--font-subheading, 'Outfit', sans-serif);
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 13px 26px;
   border-radius: 6px;
-  cursor: pointer;
-  z-index: 10;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(15, 30, 54, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.25s ease;
 }
 
-/* Botón "ORDENA AHORA" */
-.uni-hotspot-ordena {
-  left: 5.6%;
-  top: 81%;
-  width: 19%;
-  height: 11%;
-}
-
-/* Botón "Ver Catálogo" */
-.uni-hotspot-catalogo {
-  left: 26.2%;
-  top: 81%;
-  width: 16.5%;
-  height: 11%;
-}
-
-.uni-hotspot-btn:hover {
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.65), inset 0 0 10px rgba(255, 255, 255, 0.25);
+.uni-btn-ordena-ahora:hover {
+  background: #172b4d;
+  color: #d4af37;
   transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(15, 30, 54, 0.35);
+}
+
+/* Botón 2: Ver Catálogo */
+.uni-btn-ver-catalogo {
+  background: #faeed3;
+  color: #0f1e36;
+  border: 1.5px solid #d49e24;
+  font-family: var(--font-subheading, 'Outfit', sans-serif);
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 13px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+  transition: all 0.25s ease;
+}
+
+.uni-btn-ver-catalogo:hover {
+  background: #d49e24;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(212, 175, 55, 0.3);
 }
 
 /* --------------------------------------------------------------------------
@@ -387,129 +520,122 @@
 }
 
 /* --------------------------------------------------------------------------
-   SECCIÓN CATÁLOGO IMPRESO / DESCARGA (FOTOGRAFÍA REAL DE REVISTA)
+   SECCIÓN CATÁLOGO IMPRESO / DESCARGA (FOTOGRAFÍA REAL DE REVISTA + TEXTO EDITABLE)
    -------------------------------------------------------------------------- */
 .uni-catalogo-section {
-  padding: 80px 0 90px 0;
-  background-color: #faf8f5;
-  background-image: 
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.85) 0%, rgba(245, 240, 232, 0.92) 100%),
-    url('../../assets/hero-silk-bg.png');
-  background-size: cover;
-  background-position: center;
-  border-top: 1px solid #e8e2d8;
-  border-bottom: 1px solid #e8e2d8;
+  padding: 60px 0 70px 0;
+  background: linear-gradient(180deg, #e7e2d8 0%, #e1d8cd 50%, #d8cec2 100%);
+  border-top: 1px solid #dcd3c7;
+  border-bottom: 1px solid #dcd3c7;
+  position: relative;
+  overflow: hidden;
 }
 
 .uni-catalogo-container {
-  max-width: 1240px;
+  max-width: 1220px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
-  gap: 50px;
+  gap: 36px;
 }
 
 .uni-catalogo-photo-wrap {
   position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(15, 30, 54, 0.16);
-  border: 4px solid #ffffff;
-  background: #ffffff;
-  transition: transform 0.4s ease;
-}
-
-.uni-catalogo-photo-wrap:hover {
-  transform: translateY(-4px) scale(1.01);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .uni-catalogo-photo {
   width: 100%;
+  max-width: 580px;
   height: auto;
   display: block;
+  filter: drop-shadow(0 15px 32px rgba(0, 0, 0, 0.08));
+  transition: transform 0.35s ease;
+}
+
+.uni-catalogo-photo:hover {
+  transform: scale(1.015);
 }
 
 .uni-catalogo-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 10px 0 10px 10px;
 }
 
 .uni-catalogo-script-quote {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.65rem;
-  font-style: italic;
-  color: #334155;
-  line-height: 1.3;
+  font-family: 'Caveat', 'Dancing Script', cursive;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #2b2826;
+  line-height: 1.15;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.uni-catalogo-logo-wrap {
+  display: flex;
+  align-items: center;
+  margin: 2px 0 4px 0;
 }
 
 .uni-catalogo-logo {
-  max-width: 280px;
+  max-width: 310px;
+  width: 100%;
   height: auto;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.04));
 }
 
 .uni-catalogo-text {
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  color: #475569;
-  line-height: 1.6;
-}
-
-.uni-catalogo-features {
-  list-style: none;
-  padding: 0;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #21252d;
+  line-height: 1.35;
+  max-width: 400px;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.uni-catalogo-features li {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--uni-blue-navy);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.uni-catalogo-features li i {
-  color: var(--uni-gold);
-  font-size: 1rem;
 }
 
 .uni-btn-download-cat {
-  background: var(--uni-blue-dark);
+  background: #0f182a;
   color: #ffffff;
-  font-family: var(--font-subheading);
-  font-size: 1rem;
+  font-family: var(--font-subheading, 'Outfit', sans-serif);
+  font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  padding: 16px 36px;
+  padding: 12px 38px;
   border-radius: 6px;
   text-decoration: none;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  box-shadow: 0 10px 25px rgba(15, 30, 54, 0.28);
-  border: 1.5px solid var(--uni-gold);
-  transition: all 0.3s ease;
-  margin-top: 10px;
+  line-height: 1.22;
+  box-shadow: 0 8px 22px rgba(15, 24, 42, 0.28);
+  border: none;
+  transition: all 0.25s ease;
+  margin-top: 6px;
   cursor: pointer;
   align-self: flex-start;
 }
 
 .uni-btn-download-cat:hover {
-  background: #162847;
-  color: var(--uni-gold);
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(15, 30, 54, 0.4);
+  background: #192742;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 24, 42, 0.38);
+  color: #ffffff;
 }
 
 /* --------------------------------------------------------------------------
@@ -894,5 +1020,46 @@
 
   .uni-hero-tagline {
     font-size: 1.7rem;
+  }
+
+  .uni-hero-editable-section {
+    min-height: auto;
+    padding: 40px 0 50px 0;
+    background-position: right center;
+  }
+
+  .uni-hero-editable-content {
+    background: rgba(248, 250, 252, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 24px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(15, 30, 54, 0.1);
+  }
+
+  .uni-hero-title {
+    font-size: 1.65rem;
+  }
+
+  .uni-catalogo-section {
+    padding: 45px 0 55px 0;
+  }
+
+  .uni-catalogo-script-quote {
+    font-size: 2.1rem;
+  }
+
+  .uni-catalogo-logo {
+    max-width: 250px;
+  }
+
+  .uni-catalogo-text {
+    font-size: 1.15rem;
+    text-align: center;
+  }
+
+  .uni-btn-download-cat {
+    padding: 11px 30px;
+    font-size: 0.95rem;
   }
 }
