@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="#000000">
+  <!-- Distressed horizontal brush stroke pointing left from right border -->
+  <path d="M 240 5 C 180 8, 120 4, 60 12 C 40 15, 20 18, 0 20 C 35 24, 90 22, 150 20 C 190 19, 220 22, 240 25 Z"/>
+  <path d="M 240 28 C 190 30, 140 27, 80 34 C 55 37, 30 40, 10 42 C 45 44, 110 41, 170 38 C 210 36, 230 40, 240 43 Z"/>
+  <path d="M 240 46 C 200 48, 160 45, 110 50 C 85 52, 60 55, 40 56 C 75 58, 130 55, 190 52 C 220 51, 235 54, 240 56 Z"/>
+  <circle cx="25" cy="22" r="1.5" />
+  <circle cx="5" cy="43" r="1.2" />
+  <circle cx="35" cy="57" r="1.5" />
+</svg>

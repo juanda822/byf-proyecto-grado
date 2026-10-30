@@ -29,84 +29,77 @@
 <body class="ref-body">
 
   <!-- ====================================================================
-       BARRA SUPERIOR DE ANUNCIOS Y CERTIFICACIONES
+       NAVBAR OFICIAL DE B&F REFLECTIVE (DISEÑO EXACTO DEL MOCKUP)
        ==================================================================== -->
-  <div class="ref-top-announcement">
-    <span><i class="fa-solid fa-shield-halved"></i> NORMA TÉCNICA ANSI / ISEA 107 CLASE 2 & 3</span>
-    <span>&bull;</span>
-    <span><i class="fa-solid fa-truck-fast"></i> ENVÍOS NACIONALES A TODA COLOMBIA</span>
-    <span>&bull;</span>
-    <span><i class="fa-solid fa-bolt"></i> CINTAS MICROPRISMÁTICAS DE ALTA INTENSIDAD</span>
-  </div>
-
-  <!-- ====================================================================
-       NAVBAR OFICIAL DE B&F REFLECTIVE
-       ==================================================================== -->
-  <header class="ref-navbar">
+  <header class="ref-navbar" id="refNavbar">
     <div class="ref-nav-container">
-      <a href="index.html" class="ref-brand-link" title="Volver al Portal Principal B&F">
-        <img src="assets/productos/logo-reflective.png" alt="B&F Reflective Logo" class="ref-nav-logo">
-        <span class="ref-brand-badge">Línea Oficial 03</span>
-      </a>
+      <!-- Menú Hamburguesa Izquierda -->
+      <button class="ref-menu-toggle" id="refMenuToggle" aria-label="Abrir Menú de Navegación">
+        <i class="fa-solid fa-bars"></i>
+      </button>
 
-      <nav>
+      <!-- Menú Central idéntico al Mockup -->
+      <nav class="ref-nav-menu-wrap" id="refNavMenu">
         <ul class="ref-nav-menu">
-          <li><a href="index.html" class="ref-nav-link"><i class="fa-solid fa-house"></i> Home Principal</a></li>
-          <li><a href="#cintas" class="ref-nav-link">Cintas Técnicas</a></li>
-          <li><a href="#catalogos" class="ref-nav-link">Líneas</a></li>
-          <li><a href="#catalogo-pdf" class="ref-nav-link">Catálogo PDF</a></li>
-          <li><a href="#galeria" class="ref-nav-link">Fotos</a></li>
-          <li><a href="#tiktok" class="ref-nav-link"><i class="fa-brands fa-tiktok"></i> TikTok</a></li>
-          <li><a href="#pedidos" class="ref-nav-link">Cotizar</a></li>
+          <li><a href="index.html" class="ref-nav-link">HOME</a></li>
+          <li><a href="#manifiesto" class="ref-nav-link">ABOUT</a></li>
+          <li><a href="#cintas" class="ref-nav-link">FEATURES</a></li>
+          <li><a href="#catalogos" class="ref-nav-link">MANU</a></li>
+          <li><a href="#pedidos" class="ref-nav-link">SHOP</a></li>
+          <li><a href="#galeria" class="ref-nav-link">BLOG</a></li>
+          <li><a href="#pedidos" class="ref-nav-link">CONTACT</a></li>
         </ul>
       </nav>
 
-      <a href="index.html#productos" class="ref-btn-back">
-        <i class="fa-solid fa-arrow-left"></i> Todas las Líneas
-      </a>
+      <!-- Acciones Derecha: Usuario, Búsqueda, Carrito -->
+      <div class="ref-nav-actions">
+        <a href="#pedidos" class="ref-nav-action-icon" title="Mi Cuenta" aria-label="Mi Cuenta">
+          <i class="fa-regular fa-user"></i>
+        </a>
+        <a href="#catalogos" class="ref-nav-action-icon" title="Buscar Productos" aria-label="Buscar Productos">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </a>
+        <a href="#pedidos" class="ref-nav-action-icon" title="Carrito de Compras" aria-label="Carrito de Compras">
+          <i class="fa-solid fa-bag-shopping"></i>
+        </a>
+      </div>
     </div>
   </header>
 
   <main>
     <!-- ====================================================================
-         HERO SECTION: PRENDAS Y MATERIALES REFLECTIVOS
+         HERO SECTION: PRENDAS Y MATERIALES REFLECTIVOS (COMPOSICIÓN EXACTA)
          ==================================================================== -->
     <section class="ref-hero-section" id="inicio">
       <div class="ref-hero-container">
 
-        <!-- Badge Neón Superior -->
-        <div class="ref-hero-badge-pill">
-          <i class="fa-solid fa-lightbulb"></i> B&F REFLECTIVE &bull; ALTA VISIBILIDAD &bull; GRADO PROFESIONAL
-        </div>
+        <!-- Composición Central de Contenido y Banner -->
+        <div class="ref-hero-stage">
 
-        <!-- Titular Principal -->
-        <h1 class="ref-hero-title">
-          PRENDAS Y MATERIALES <span class="ref-title-lime">REFLECTIVOS</span>
-        </h1>
+          <!-- Capa Central Superior: Logo Neón + Titular + Botón Shop Now -->
+          <div class="ref-hero-overlay-center">
+            <div class="ref-hero-logo-box">
+              <img src="assets/productos/logo-reflective-hero.png" alt="B&F REFLECTIVE" class="ref-hero-logo-img">
+            </div>
 
-        <p class="ref-hero-desc">
-          Tecnología de retro-reflexión microprismática de alta intensidad para motociclistas, ciclistas, deportistas y
-          cuadrillas de seguridad industrial que requieren máxima visibilidad en condiciones de baja luminosidad.
-        </p>
+            <div class="ref-hero-tagline">CONFECCIÓN Y VENTA DE</div>
 
-        <!-- Banner Fotográfico Central Proporcionado por el Usuario -->
-        <div class="ref-hero-media-wrap">
-          <img src="assets/reflectivo/hero-banner-reflectivo.jpg"
-            alt="B&F Reflective - Modelos en indumentaria reflectiva, cintas y chalecos de alta visibilidad"
-            class="ref-hero-banner-img">
-        </div>
+            <h1 class="ref-hero-title">
+              PRENDAS Y<br>MATERIALES REFLECTIVOS
+            </h1>
 
-        <!-- Botones de Acción Inmediata -->
-        <div class="ref-hero-actions-row">
-          <a href="#catalogo-pdf" class="ref-btn-primary" id="btnDescargaHero">
-            <i class="fa-solid fa-file-pdf"></i> DESCARGAR CATÁLOGO PDF
-          </a>
-          <a href="#cintas" class="ref-btn-secondary">
-            <i class="fa-solid fa-tape"></i> Cintas Reflectivas Técnicas
-          </a>
-          <a href="#tiktok" class="ref-btn-secondary" style="border-color: rgba(37, 244, 238, 0.4);">
-            <i class="fa-brands fa-tiktok"></i> Ver Pruebas en TikTok
-          </a>
+            <div class="ref-hero-cta-box">
+              <a href="#catalogos" class="ref-btn-shop-pill">SHOP NOW</a>
+            </div>
+          </div>
+
+          <!-- Banner Fotográfico con los Modelos, Chaleco y Cintas Reflectivas -->
+          <div class="ref-hero-media-wrap">
+            <img src="assets/reflectivo/hero-banner-reflectivo.jpg"
+              alt="B&F Reflective - Modelos en indumentaria reflectiva, cintas y chalecos de alta visibilidad"
+              class="ref-hero-banner-img">
+          </div>
+
         </div>
 
       </div>
@@ -115,38 +108,31 @@
     <!-- ====================================================================
          SECCIÓN 1: MANIFIESTO VERDE NEÓN (DISEÑO EXACTO DEL CLIENTE)
          ==================================================================== -->
-    <section class="ref-manifesto-section">
+    <section class="ref-manifesto-section" id="manifiesto">
+      <!-- Detalles Gráficos Decorativos del Mockup -->
+      <div class="ref-manifesto-crosshairs" aria-hidden="true">+ &nbsp; +</div>
+      <div class="ref-manifesto-brush-left" aria-hidden="true"></div>
+      <div class="ref-manifesto-brush-right" aria-hidden="true"></div>
+
       <div class="ref-manifesto-container">
-        <div class="ref-manifesto-card">
 
-          <!-- Logo B&F Reflective en Silueta Oscura -->
-          <div class="ref-manifesto-logo-wrap">
-            <img src="assets/productos/logo-reflective.png" alt="B&F Reflective" class="ref-manifesto-logo-img">
-          </div>
-
-          <!-- Texto Literal del Manifiesto Proporcionado -->
-          <p class="ref-manifesto-text">
-            Somos líderes en confección, venta de prendas y materiales reflectivos de alta calidad y durabilidad,
-            ideales para motociclistas, deportistas, y trabajadores que necesitan ser reconocidos fácilmente por sus labores.
-          </p>
-
-          <!-- Métricas de Desempeño Técnico -->
-          <div class="ref-manifesto-metrics">
-            <div class="ref-metric-item">
-              <div class="ref-metric-number">500+</div>
-              <div class="ref-metric-label">Candela/lux/m² Retrorreflexión</div>
-            </div>
-            <div class="ref-metric-item">
-              <div class="ref-metric-number">50+</div>
-              <div class="ref-metric-label">Ciclos de Lavado Industrial</div>
-            </div>
-            <div class="ref-metric-item">
-              <div class="ref-metric-number">360°</div>
-              <div class="ref-metric-label">Ángulo de Visibilidad Nocturna</div>
-            </div>
-          </div>
-
+        <!-- Logo B&F Reflective en Silueta Negra Sólida -->
+        <div class="ref-manifesto-logo-wrap">
+          <img src="assets/productos/logo-reflective-black.png" alt="B&F REFLECTIVE" class="ref-manifesto-logo-img">
         </div>
+
+        <!-- Texto Literal del Manifiesto Proporcionado en la Imagen -->
+        <p class="ref-manifesto-text">
+          Somos líderes en confección, venta de prendas y materiales reflectivos de alta calidad y durabilidad,
+          ideales para motociclistas, deportistas, y trabajadores que necesitan ser reconocidos fácilmente por su labores.
+        </p>
+
+        <!-- Símbolo Reflectivo en Perspectiva (Chevron) del Mockup -->
+        <div class="ref-manifesto-chevron-wrap">
+          <img src="assets/reflectivo/chevron-perspective.png" alt="Cintas reflectivas viales en perspectiva B&F"
+            class="ref-manifesto-chevron-img">
+        </div>
+
       </div>
     </section>
 
@@ -347,7 +333,8 @@
           <div class="ref-cat-info">
             <h3 class="ref-cat-title">CINTAS REFLECTIVAS</h3>
             <p class="ref-cat-desc">
-              Rollos de cinta reflectiva de 50 y 100 metros en tonos gris plata, flúor verde y naranja para talleres de confección y empresas de seguridad.
+              Rollos de cinta reflectiva de 50 y 100 metros en tonos gris plata, flúor verde y naranja para talleres de
+              confección y empresas de seguridad.
             </p>
             <a href="#catalogo-pdf" class="ref-cat-btn">
               <i class="fa-solid fa-file-pdf"></i> Ver Ficha en PDF
@@ -364,7 +351,8 @@
           <div class="ref-cat-info">
             <h3 class="ref-cat-title">PRENDAS DAMA</h3>
             <p class="ref-cat-desc">
-              Chaquetas impermeables cortavientos, licras deportivas con detalles reflectivos, buzos térmicos y chalecos ergonómicos para mujer.
+              Chaquetas impermeables cortavientos, licras deportivas con detalles reflectivos, buzos térmicos y chalecos
+              ergonómicos para mujer.
             </p>
             <a href="#catalogo-pdf" class="ref-cat-btn">
               <i class="fa-solid fa-file-pdf"></i> Ver Ficha en PDF
@@ -381,7 +369,8 @@
           <div class="ref-cat-info">
             <h3 class="ref-cat-title">PRENDAS CABALLERO</h3>
             <p class="ref-cat-desc">
-              Indumentaria de entrenamiento nocturno, chaquetas rompevientos de alta luminosidad, bermudas y camisetas técnicas para ciclistas y corredores.
+              Indumentaria de entrenamiento nocturno, chaquetas rompevientos de alta luminosidad, bermudas y camisetas
+              técnicas para ciclistas y corredores.
             </p>
             <a href="#catalogo-pdf" class="ref-cat-btn">
               <i class="fa-solid fa-file-pdf"></i> Ver Ficha en PDF
@@ -398,12 +387,14 @@
         <article class="ref-cat-card">
           <div class="ref-cat-media">
             <span class="ref-cat-badge-top">Seguridad Industrial</span>
-            <img src="assets/reflectivo/cat-seguridad.jpg" alt="Prendas de Seguridad Vial y Chalecos" class="ref-cat-img">
+            <img src="assets/reflectivo/cat-seguridad.jpg" alt="Prendas de Seguridad Vial y Chalecos"
+              class="ref-cat-img">
           </div>
           <div class="ref-cat-info">
             <h3 class="ref-cat-title">PRENDAS DE SEGURIDAD</h3>
             <p class="ref-cat-desc">
-              Chalecos tipo brigadista en dril y malla transpirable, overoles de dotación petrolera y chaquetones de alta resistencia con cintas 3M.
+              Chalecos tipo brigadista en dril y malla transpirable, overoles de dotación petrolera y chaquetones de
+              alta resistencia con cintas 3M.
             </p>
             <a href="#catalogo-pdf" class="ref-cat-btn">
               <i class="fa-solid fa-file-pdf"></i> Ver Ficha en PDF
@@ -420,7 +411,8 @@
           <div class="ref-cat-info">
             <h3 class="ref-cat-title">ARTÍCULOS DEPORTIVOS</h3>
             <p class="ref-cat-desc">
-              Impermeables iridiscentes holográficos para motociclista, guantes con ribete reflectivo, arneses elásticos de pecho y fundas cubre-mochila.
+              Impermeables iridiscentes holográficos para motociclista, guantes con ribete reflectivo, arneses elásticos
+              de pecho y fundas cubre-mochila.
             </p>
             <a href="#catalogo-pdf" class="ref-cat-btn">
               <i class="fa-solid fa-file-pdf"></i> Ver Ficha en PDF
@@ -445,7 +437,8 @@
             <h3 class="ref-pdf-preview-title">CATÁLOGO B&amp;F REFLECTIVE</h3>
             <div class="ref-pdf-preview-sub">Edición Oficial 2026 &bull; Formato Digital PDF</div>
             <p style="font-size: 0.86rem; color: #94a3b8; line-height: 1.5; margin: 0 0 20px 0;">
-              Documento técnico completo con cartas de colores, coeficientes de retrorreflexión, tablas de medidas y certificaciones ANSI / ISEA.
+              Documento técnico completo con cartas de colores, coeficientes de retrorreflexión, tablas de medidas y
+              certificaciones ANSI / ISEA.
             </p>
             <a href="assets/reflectivo/catalogo-byf-reflectivo.pdf" download="Catalogo-BYF-Reflectivo-2026.pdf"
               class="ref-btn-primary" style="width: 100%; justify-content: center; box-sizing: border-box;">
@@ -456,7 +449,8 @@
 
         <!-- Contenido Informativo y Puntos Clave del PDF -->
         <div class="ref-pdf-content">
-          <span class="ref-section-pill"><i class="fa-solid fa-circle-check"></i> Archivo Técnico para Compras &amp; Licitaciones</span>
+          <span class="ref-section-pill"><i class="fa-solid fa-circle-check"></i> Archivo Técnico para Compras &amp;
+            Licitaciones</span>
           <h2 class="ref-pdf-headline">
             DESCARGA NUESTRO <span class="ref-title-lime">CATÁLOGO TÉCNICO</span> COMPLETO
           </h2>
@@ -468,19 +462,23 @@
           <ul class="ref-pdf-checklist">
             <li>
               <i class="fa-solid fa-square-check"></i>
-              <span><strong>Fichas Técnicas de Cintas:</strong> Pruebas de retrorreflexión cd/(lx&bull;m²) y resistencia al lavado.</span>
+              <span><strong>Fichas Técnicas de Cintas:</strong> Pruebas de retrorreflexión cd/(lx&bull;m²) y resistencia
+                al lavado.</span>
             </li>
             <li>
               <i class="fa-solid fa-square-check"></i>
-              <span><strong>Línea de Confección:</strong> Chaquetas, impermeables, overoles, chalecos y buzos con tabla de medidas.</span>
+              <span><strong>Línea de Confección:</strong> Chaquetas, impermeables, overoles, chalecos y buzos con tabla
+                de medidas.</span>
             </li>
             <li>
               <i class="fa-solid fa-square-check"></i>
-              <span><strong>Certificados de Cumplimiento:</strong> Normas ANSI / ISEA 107, EN ISO 20471 y reglamentación vial NTC.</span>
+              <span><strong>Certificados de Cumplimiento:</strong> Normas ANSI / ISEA 107, EN ISO 20471 y reglamentación
+                vial NTC.</span>
             </li>
             <li>
               <i class="fa-solid fa-square-check"></i>
-              <span><strong>Precios Mayoristas:</strong> Información de contacto directa para cotizaciones por volumen y personalización.</span>
+              <span><strong>Precios Mayoristas:</strong> Información de contacto directa para cotizaciones por volumen y
+                personalización.</span>
             </li>
           </ul>
 
@@ -502,7 +500,8 @@
         <span class="ref-section-pill"><i class="fa-solid fa-camera"></i> Galería de Fotos Reales</span>
         <h2 class="ref-section-title">CALIDAD Y VISIBILIDAD <span class="ref-title-lime">EN ACCIÓN</span></h2>
         <p class="ref-section-desc">
-          Conoce nuestras prendas y dotaciones en entornos reales: desde motociclistas urbanos con tecnología holográfica
+          Conoce nuestras prendas y dotaciones en entornos reales: desde motociclistas urbanos con tecnología
+          holográfica
           iridiscente hasta operarios industriales con indumentaria de alta protección certificada.
         </p>
       </div>
@@ -514,7 +513,8 @@
         <article class="ref-gallery-item">
           <div class="ref-gallery-media">
             <img src="assets/reflectivo/galeria-moto-iridiscente.jpg"
-              alt="Motociclista con chaqueta reflectiva iridiscente holográfica y casco amarillo" class="ref-gallery-img">
+              alt="Motociclista con chaqueta reflectiva iridiscente holográfica y casco amarillo"
+              class="ref-gallery-img">
             <div class="ref-gallery-overlay">
               <div class="ref-gallery-caption">
                 <span class="ref-gallery-category">Motociclismo &bull; Movilidad Urbana</span>
@@ -528,7 +528,8 @@
         <article class="ref-gallery-item">
           <div class="ref-gallery-media">
             <img src="assets/reflectivo/galeria-trabajador-gafas.png"
-              alt="Operario industrial con chaqueta reflectiva naranja, gafas de seguridad y protección auditiva" class="ref-gallery-img">
+              alt="Operario industrial con chaqueta reflectiva naranja, gafas de seguridad y protección auditiva"
+              class="ref-gallery-img">
             <div class="ref-gallery-overlay">
               <div class="ref-gallery-caption">
                 <span class="ref-gallery-category">Protección Personal &bull; Industria</span>
@@ -577,16 +578,17 @@
               de pegado térmico de cintas y los mejores outfits nocturnos para motociclistas y ciclistas.
             </p>
 
-            <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="ref-tiktok-btn">
+            <a href="https://www.tiktok.com/@byf.reflective" target="_blank" rel="noopener noreferrer" class="ref-tiktok-btn">
               <i class="fa-brands fa-tiktok"></i>
-              <span>IR AL TIKTOK OFICIAL (@byfreflectivo)</span>
+              <span>IR AL TIKTOK OFICIAL (@byf.reflective)</span>
             </a>
           </div>
 
           <!-- Mockup Interactivo de Teléfono Celular con Video de TikTok -->
           <div class="ref-tiktok-phone-mockup">
             <div class="ref-phone-frame">
-              <img src="assets/reflectivo/hero-banner-reflectivo.jpg" alt="Video TikTok B&F Reflective" class="ref-phone-video-bg">
+              <img src="assets/reflectivo/hero-banner-reflectivo.jpg" alt="Video TikTok B&F Reflective"
+                class="ref-phone-video-bg">
 
               <!-- Interfaz simulada de TikTok -->
               <div class="ref-phone-overlay">
@@ -598,10 +600,11 @@
 
                 <div class="ref-phone-footer-content">
                   <div class="ref-phone-user">
-                    @byfreflectivo <i class="fa-solid fa-circle-check ref-phone-verified"></i>
+                    @byf.reflective <i class="fa-solid fa-circle-check ref-phone-verified"></i>
                   </div>
                   <div class="ref-phone-caption">
-                    Probando la chaqueta iridiscente a 100 metros de distancia en la noche 🏍️✨ #reflectivo #seguridadvial #motoscolombia #byf
+                    Probando la chaqueta iridiscente a 100 metros de distancia en la noche 🏍️✨ #reflectivo
+                    #seguridadvial #motoscolombia #byf
                   </div>
                 </div>
               </div>
@@ -644,13 +647,15 @@
         <div class="ref-order-form-box">
           <h2 class="ref-order-form-title">HAZ TU PEDIDO</h2>
           <p style="font-weight: 700; font-size: 0.95rem; margin-bottom: 20px; color: #1c260f;">
-            Solicita tu cotización mayorista o asesoría en cintas y prendas reflectivas con respuesta en menos de 2 horas.
+            Solicita tu cotización mayorista o asesoría en cintas y prendas reflectivas con respuesta en menos de 2
+            horas.
           </p>
 
           <form class="ref-order-form" id="refOrderForm">
             <div class="ref-input-group">
               <label for="refNombre">Nombre o Empresa:</label>
-              <input type="text" id="refNombre" class="ref-form-input" placeholder="Tu nombre completo o razón social" required>
+              <input type="text" id="refNombre" class="ref-form-input" placeholder="Tu nombre completo o razón social"
+                required>
             </div>
 
             <div class="ref-input-group">
@@ -666,7 +671,8 @@
             <div class="ref-input-group">
               <label for="refProducto">Línea de Interés:</label>
               <select id="refProducto" class="ref-form-input" style="cursor: pointer;">
-                <option value="Cintas Reflectivas por Rollo">Cintas Reflectivas por Rollo (Textil / Termoadhesiva)</option>
+                <option value="Cintas Reflectivas por Rollo">Cintas Reflectivas por Rollo (Textil / Termoadhesiva)
+                </option>
                 <option value="Prendas para Motociclista">Prendas e Impermeables para Motociclista</option>
                 <option value="Chalecos y Dotación de Seguridad">Chalecos y Dotación de Seguridad Industrial</option>
                 <option value="Prendas Deportivas Running y Ciclismo">Prendas Deportivas Running y Ciclismo</option>
@@ -676,7 +682,8 @@
 
             <div class="ref-input-group">
               <label for="refCantidad">Cantidad Estimada:</label>
-              <input type="number" id="refCantidad" class="ref-form-input" placeholder="Ej: 50 unidades o metros" min="1">
+              <input type="number" id="refCantidad" class="ref-form-input" placeholder="Ej: 50 unidades o metros"
+                min="1">
             </div>
 
             <button type="submit" class="ref-btn-submit-order">
@@ -696,8 +703,10 @@
             <div class="ref-banner-sub">PRENDAS REFLECTIVAS</div>
 
             <p class="ref-banner-desc">
-              Cada prenda que fabricamos combina los textiles más resistentes del mercado con tecnología lumínica de avanzada.
-              Ya sea que equipes a tu cuadrilla de construcción o salgas a rodar en bicicleta o motocicleta por la ciudad,
+              Cada prenda que fabricamos combina los textiles más resistentes del mercado con tecnología lumínica de
+              avanzada.
+              Ya sea que equipes a tu cuadrilla de construcción o salgas a rodar en bicicleta o motocicleta por la
+              ciudad,
               B&amp;F Reflective te hace visible y seguro en cada metro de tu recorrido.
             </p>
           </div>
@@ -714,6 +723,83 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECCIÓN 9: DEMOSTRACIONES EN VIDEO (CANAL OFICIAL DE YOUTUBE)
+         ==================================================================== -->
+    <section class="ref-videos-section" id="videos">
+      <div class="ref-videos-container">
+        <div class="ref-section-header">
+          <span class="ref-section-pill"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Canal Oficial de YouTube</span>
+          <h2 class="ref-section-title">DEMOSTRACIONES & <span class="ref-title-lime">PRUEBAS EN VIDEO</span></h2>
+          <p class="ref-section-desc">
+            Observa en acción la tecnología de retro-reflexión de nuestras prendas y el proceso de confección técnica de alta resistencia en nuestro taller.
+          </p>
+        </div>
+
+        <div class="ref-videos-grid">
+          <!-- Video 1: Protección y Alta Visibilidad con Cinta Reflectiva -->
+          <article class="ref-video-card">
+            <div class="ref-video-player-wrap">
+              <iframe 
+                src="https://www.youtube-nocookie.com/embed/f0IOzCm77sU?rel=0" 
+                title="Diseños B&F | Protección y Alta Visibilidad con Cinta Reflectiva"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen 
+                loading="lazy">
+              </iframe>
+            </div>
+            <div class="ref-video-info">
+              <div class="ref-video-tag"><i class="fa-solid fa-bolt"></i> Test de Visibilidad Nocturna</div>
+              <h3 class="ref-video-title">Diseños B&amp;F | Protección y Alta Visibilidad con Cinta Reflectiva</h3>
+              <p class="ref-video-desc">
+                Demostración de luminosidad y retro-reflexión a larga distancia en condiciones de baja luz, ideal para motociclistas, ciclistas y seguridad vial.
+              </p>
+              <a href="https://www.youtube.com/watch?v=f0IOzCm77sU" target="_blank" rel="noopener noreferrer" class="ref-btn-video-watch">
+                <i class="fa-brands fa-youtube"></i> Ver en YouTube
+              </a>
+            </div>
+          </article>
+
+          <!-- Video 2: Alta Resistencia y Durabilidad para Jornadas Exigentes -->
+          <article class="ref-video-card">
+            <div class="ref-video-player-wrap">
+              <iframe 
+                src="https://www.youtube-nocookie.com/embed/T0PCeJU2gFY?rel=0" 
+                title="Diseños B&F | Alta Resistencia y Durabilidad para Jornadas Exigentes"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen 
+                loading="lazy">
+              </iframe>
+            </div>
+            <div class="ref-video-info">
+              <div class="ref-video-tag"><i class="fa-solid fa-shield-halved"></i> Calidad &amp; Confección Industrial</div>
+              <h3 class="ref-video-title">Diseños B&amp;F | Alta Resistencia y Durabilidad para Jornadas Exigentes</h3>
+              <p class="ref-video-desc">
+                Proceso de confección con materiales reflectivos de alta durabilidad, costuras de seguridad reforzadas y resistencia para jornadas de trabajo pesado.
+              </p>
+              <a href="https://www.youtube.com/watch?v=T0PCeJU2gFY" target="_blank" rel="noopener noreferrer" class="ref-btn-video-watch">
+                <i class="fa-brands fa-youtube"></i> Ver en YouTube
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Banner de Suscripción al Canal Oficial -->
+        <div class="ref-channel-banner">
+          <div class="ref-channel-info">
+            <i class="fa-brands fa-youtube ref-channel-icon"></i>
+            <div>
+              <h4 class="ref-channel-title">Canal Oficial: DISEÑOS BYF (@PUBLICIDADBF-m9z)</h4>
+              <p class="ref-channel-desc">Suscríbete a nuestro canal de YouTube para ver novedades, tutoriales y pruebas técnicas de reflectividad.</p>
+            </div>
+          </div>
+          <a href="https://www.youtube.com/@PUBLICIDADBF-m9z" target="_blank" rel="noopener noreferrer" class="ref-btn-channel-subscribe">
+            <i class="fa-solid fa-bell"></i> SUSCRIBIRSE EN YOUTUBE
+          </a>
+        </div>
       </div>
     </section>
   </main>
@@ -744,17 +830,20 @@
 
         <!-- Redes Sociales -->
         <div class="ref-footer-socials">
-          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="ref-social-icon" title="TikTok Oficial">
+          <a href="https://www.tiktok.com/@byf.reflective" target="_blank" rel="noopener noreferrer" class="ref-social-icon"
+            title="TikTok Oficial @byf.reflective">
             <i class="fa-brands fa-tiktok"></i>
+          </a>
+          <a href="https://www.youtube.com/@PUBLICIDADBF-m9z" target="_blank" rel="noopener noreferrer" class="ref-social-icon"
+            title="YouTube Oficial DISEÑOS BYF">
+            <i class="fa-brands fa-youtube" style="color: #ff4444;"></i>
+          </a>
+          <a href="https://wa.me/573175721842" target="_blank" rel="noopener noreferrer" class="ref-social-icon"
+            title="WhatsApp B&F">
+            <i class="fa-brands fa-whatsapp"></i>
           </a>
           <a href="#" class="ref-social-icon" title="Instagram B&F">
             <i class="fa-brands fa-instagram"></i>
-          </a>
-          <a href="https://wa.me/573175721842" target="_blank" rel="noopener noreferrer" class="ref-social-icon" title="WhatsApp B&F">
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
-          <a href="#" class="ref-social-icon" title="Facebook B&F">
-            <i class="fa-brands fa-facebook-f"></i>
           </a>
         </div>
       </div>
@@ -764,11 +853,13 @@
         <h4 class="ref-footer-col-title">Secciones de la Línea</h4>
         <ul class="ref-footer-links-list">
           <li><a href="#inicio">Inicio Reflectivo</a></li>
+          <li><a href="#manifiesto">Acerca de B&amp;F</a></li>
           <li><a href="#cintas">Cintas Textiles &amp; Termoadhesivas</a></li>
           <li><a href="#catalogos">Catálogos por Categoría</a></li>
           <li><a href="#catalogo-pdf">Descargar Catálogo PDF</a></li>
           <li><a href="#galeria">Galería Fotográfica</a></li>
-          <li><a href="#tiktok">Canal Oficial de TikTok</a></li>
+          <li><a href="#tiktok">TikTok Oficial (@byf.reflective)</a></li>
+          <li><a href="#videos">Videos de YouTube</a></li>
           <li><a href="#pedidos">Cotización &amp; Pedidos</a></li>
         </ul>
       </div>
@@ -789,7 +880,8 @@
 
     <!-- Barra Inferior de Copyright -->
     <div class="ref-footer-bottom">
-      &copy; 2026 <strong>B&amp;F Confecciones &amp; Dotaciones S.A.S.</strong> &bull; Línea B&amp;F Reflective &bull; Proyecto de Grado Universitario
+      &copy; 2026 <strong>B&amp;F Confecciones &amp; Dotaciones S.A.S.</strong> &bull; Línea B&amp;F Reflective &bull;
+      Proyecto de Grado Universitario
     </div>
   </footer>
 

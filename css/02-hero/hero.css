@@ -7,17 +7,20 @@
   position: relative;
   width: 100%;
   min-height: 480px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   text-align: center;
   padding: 80px 20px 90px 20px;
-  background-color: #f1f5f9;
-  /* Textura de seda blanca ondulada oficial subida por el usuario */
-  background-image: url('../../assets/hero-silk-bg.png');
+
+  /* Fondo de seda B&F */
+  background-image: url('../../assets/hero-silk-bg.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+
   overflow: hidden;
   box-shadow: inset 0 -10px 25px rgba(0, 0, 0, 0.03);
 }
@@ -88,7 +91,8 @@
 }
 
 .hero-word-moda {
-  color: #f59e0b; /* Amarillo/naranja dorado idéntico a la referencia */
+  color: #f59e0b;
+  /* Amarillo/naranja dorado idéntico a la referencia */
 }
 
 .hero-word-joyeria {
@@ -96,7 +100,8 @@
 }
 
 .hero-word-merch {
-  color: #00a4e4; /* Azul cian / celeste idéntico a la referencia */
+  color: #00a4e4;
+  /* Azul cian / celeste idéntico a la referencia */
 }
 
 /* 5. Frase "Imagínalo y nosotros lo hacemos realidad" */
