@@ -6,22 +6,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🌟 Sistema Web B&F Textil inicializado');
 
-  // Adaptador inteligente de rutas para compatibilidad tanto en servidor Node.js como en doble clic local (file://)
-  if (window.location.protocol === 'file:') {
-    const brainBasePath = 'C:/Users/JUAN/.gemini/antigravity-ide/brain/9c1ec6dd-3cfb-47fa-bd15-06db260d5467/';
-    document.querySelectorAll('img').forEach(img => {
-      const currentSrc = img.getAttribute('src');
-      if (currentSrc && currentSrc.startsWith('/artifacts/')) {
-        img.src = brainBasePath + currentSrc.replace('/artifacts/', '');
-      }
-    });
-
-    const hero = document.querySelector('.hero-section');
-    if (hero) {
-      hero.style.backgroundImage = `radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.4) 0%, rgba(248, 250, 252, 0.95) 100%), url('${brainBasePath}hero_silk_background_1790547505433.jpg')`;
-    }
-  }
-
   // Verificar estado del backend de manera silenciosa
   fetch('/api/health')
     .then(res => res.json())

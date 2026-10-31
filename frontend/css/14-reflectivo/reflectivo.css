@@ -33,7 +33,7 @@ body.ref-body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-image: 
+  background-image:
     radial-gradient(circle at 15% 20%, rgba(163, 230, 53, 0.05) 0%, transparent 40%),
     radial-gradient(circle at 85% 60%, rgba(255, 94, 20, 0.04) 0%, transparent 45%),
     linear-gradient(180deg, #07090d 0%, #0d121a 50%, #07090d 100%);
@@ -62,285 +62,517 @@ body.ref-body {
   gap: 6px;
 }
 
-/* --------------------------------------------------------------------------
-   NAVBAR OFICIAL B&F REFLECTIVE
-   -------------------------------------------------------------------------- */
 .ref-navbar {
-  position: sticky;
+  position: absolute;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
-  background: rgba(7, 9, 13, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--ref-dark-border);
-  padding: 14px 0;
+  padding: 22px 0 10px;
+  background: transparent;
 }
 
 .ref-nav-container {
-  max-width: 1260px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 clamp(16px, 4vw, 45px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
 }
 
-.ref-brand-link {
+/* Botón Hamburguesa Izquierda */
+.ref-menu-toggle {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 6px 10px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  text-decoration: none;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+  z-index: 1001;
 }
 
-.ref-nav-logo {
-  height: 48px;
-  width: auto;
-  filter: drop-shadow(0 0 10px var(--ref-lime-glow));
-  transition: transform 0.25s ease;
+.ref-menu-toggle:hover {
+  color: #39ff14;
+  transform: scale(1.1);
 }
 
-.ref-brand-link:hover .ref-nav-logo {
-  transform: scale(1.03);
-}
-
-.ref-brand-badge {
-  background: rgba(163, 230, 53, 0.12);
-  border: 1px solid var(--ref-lime);
-  color: var(--ref-lime);
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+/* Menú Central */
+.ref-nav-menu-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ref-nav-menu {
   display: flex;
   align-items: center;
-  gap: 22px;
+  justify-content: center;
+  gap: clamp(14px, 2.5vw, 32px);
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .ref-nav-link {
-  color: #cbd5e1;
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 .ref-nav-link:hover {
-  color: var(--ref-lime);
-  text-shadow: 0 0 10px var(--ref-lime-glow);
+  color: #39ff14;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
 }
 
-.ref-btn-back {
-  background: transparent;
-  color: var(--ref-lime);
-  border: 1px solid var(--ref-lime);
-  padding: 9px 18px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 0.84rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  display: inline-flex;
+/* Acciones Derecha (Usuario, Búsqueda, Carrito) */
+.ref-nav-actions {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.25s ease;
+  gap: clamp(14px, 2vw, 22px);
 }
 
-.ref-btn-back:hover {
-  background: var(--ref-lime);
-  color: #07090d;
-  box-shadow: 0 0 18px var(--ref-lime-glow);
+.ref-nav-action-icon {
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  transition: color 0.2s ease, transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+.ref-nav-action-icon:hover {
+  color: #39ff14;
   transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.8);
+}
+
+/* ============================================================
+   RESPONSIVE NAVBAR (Móviles y Tablets)
+   ============================================================ */
+
+@media (max-width: 860px) {
+  .ref-nav-menu-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(7, 10, 6, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+  }
+
+  .ref-nav-menu-wrap.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .ref-nav-menu {
+    flex-direction: column;
+    gap: 22px;
+    text-align: center;
+  }
+
+  .ref-nav-link {
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
 }
 
 /* --------------------------------------------------------------------------
    HERO SECTION (BANNER COMPOSITE CON MODELOS Y CINTAS)
    -------------------------------------------------------------------------- */
+/* ============================================================
+   B&F REFLECTIVE — HERO ESTILO NEGRO + VERDE NEÓN MOCKUP
+   ============================================================ */
+
 .ref-hero-section {
   position: relative;
-  padding: 45px 0 65px 0;
+  width: 100%;
+  min-height: 560px;
+  padding: 60px 0 0;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(57, 255, 20, 0.16) 0%, rgba(35, 80, 10, 0.08) 35%, transparent 65%),
+    #080b06;
+  color: #fff;
   overflow: hidden;
-  text-align: center;
+  isolation: isolate;
+}
+
+/* Textura grunge oscura */
+.ref-hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    repeating-linear-gradient(135deg,
+      transparent 0px,
+      transparent 35px,
+      rgba(255, 255, 255, 0.035) 36px,
+      transparent 38px),
+    radial-gradient(ellipse at 20% 20%, #41483a 0%, transparent 40%),
+    radial-gradient(ellipse at 85% 55%, #35392e 0%, transparent 45%);
 }
 
 .ref-hero-container {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 24px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.ref-hero-badge-pill {
+/* Escenario Central */
+.ref-hero-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Capa Superior de Texto: Logo + Titular + Shop Now */
+.ref-hero-overlay-center {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 640px;
+  z-index: 10;
+  text-align: center;
+  pointer-events: auto;
+}
+
+/* Logo Neón B&F Reflective */
+.ref-hero-logo-box {
+  margin: 0 auto 10px;
+  display: inline-block;
+}
+
+.ref-hero-logo-img {
+  width: clamp(140px, 18vw, 195px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 16px rgba(57, 255, 20, 0.45));
+}
+
+/* Tagline Superior */
+.ref-hero-tagline {
+  display: block;
+  font-size: clamp(9px, 1.1vw, 12px);
+  font-weight: 800;
+  letter-spacing: 3.5px;
+  color: #e5e7eb;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* Titular Principal en Neón Verde */
+.ref-hero-title {
+  font-size: clamp(24px, 3.8vw, 42px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  color: #3dfa0b;
+  text-shadow: 0 0 24px rgba(61, 250, 11, 0.5), 0 3px 12px rgba(0, 0, 0, 0.9);
+  margin: 0 0 14px 0;
+  font-family: var(--ref-font-display);
+}
+
+/* Botón Shop Now (Pill de Neón Verde) */
+.ref-hero-cta-box {
+  margin: 0 auto;
+}
+
+.ref-btn-shop-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(163, 230, 53, 0.1);
-  border: 1px solid var(--ref-lime);
-  color: var(--ref-lime);
-  padding: 6px 18px;
-  border-radius: 50px;
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 18px;
-  box-shadow: 0 0 16px rgba(163, 230, 53, 0.2);
-}
-
-.ref-hero-title {
-  font-family: var(--ref-font-display);
-  font-size: 2.8rem;
+  justify-content: center;
+  padding: 8px 30px;
+  border-radius: 9999px;
+  background: #3dfa0b;
+  color: #000000;
+  font-size: clamp(11px, 1.2vw, 13px);
   font-weight: 900;
-  line-height: 1.15;
-  letter-spacing: 1px;
-  color: #ffffff;
-  margin: 0 0 16px 0;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(61, 250, 11, 0.45);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.ref-title-lime {
-  color: var(--ref-lime);
-  text-shadow: 0 0 24px var(--ref-lime-glow);
-  display: inline;
+.ref-btn-shop-pill:hover {
+  background: #52ff24;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 26px rgba(61, 250, 11, 0.7);
 }
 
-.ref-hero-desc {
-  font-size: 1.1rem;
-  color: #cbd5e1;
-  max-width: 780px;
-  margin: 0 auto 30px auto;
-  line-height: 1.6;
-}
-
-/* Banner de la imagen central proporcionada por el usuario */
+/* Banner de Modelos y Cintas */
 .ref-hero-media-wrap {
   position: relative;
-  border-radius: 14px;
+  width: 100%;
+  margin: 0 auto;
   overflow: hidden;
-  border: 2px solid rgba(163, 230, 53, 0.4);
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(163, 230, 53, 0.2);
-  margin-bottom: 35px;
 }
 
 .ref-hero-banner-img {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
+  object-fit: contain;
+  object-position: center bottom;
 }
 
-.ref-hero-actions-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
+/* Adaptación responsive para el Hero */
+@media (max-width: 767px) {
+  .ref-hero-section {
+    padding-top: 55px;
+    min-height: auto;
+  }
+
+  .ref-hero-overlay-center {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 16px 15px;
+  }
+
+  .ref-hero-title {
+    font-size: clamp(22px, 6.5vw, 32px);
+  }
 }
 
-.ref-btn-primary {
-  background: var(--ref-lime);
-  color: #080c05;
-  font-family: var(--ref-font-display);
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 14px 34px;
-  border-radius: 6px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 8px 25px var(--ref-lime-glow);
-  transition: all 0.25s ease;
-  border: none;
-  cursor: pointer;
-}
+/* ============================================================
+   SECCIÓN VERDE NEÓN — MANIFIESTO B&F (DISEÑO EXACTO DEL MOCKUP)
+   ============================================================ */
 
-.ref-btn-primary:hover {
-  background: var(--ref-lime-bright);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(163, 230, 53, 0.6);
-}
-
-.ref-btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  font-family: var(--ref-font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  padding: 14px 30px;
-  border-radius: 6px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  transition: all 0.25s ease;
-}
-
-.ref-btn-secondary:hover {
-  background: rgba(163, 230, 53, 0.15);
-  border-color: var(--ref-lime);
-  color: var(--ref-lime);
-  transform: translateY(-2px);
-}
-
-/* --------------------------------------------------------------------------
-   SECCIÓN 1: MANIFIESTO NEÓN LIMA (TARJETA EXACTA DE LA FOTO DEL CLIENTE)
-   -------------------------------------------------------------------------- */
 .ref-manifesto-section {
-  padding: 40px 0 60px 0;
+  position: relative;
+  padding: 55px 20px 65px;
+  overflow: hidden;
+  background-color: #9ee501;
+  background-image:
+    radial-gradient(ellipse at 18% 15%, rgba(255, 255, 0, 0.35), transparent 40%),
+    repeating-linear-gradient(0deg,
+      transparent 0px,
+      transparent 6px,
+      rgba(30, 45, 0, 0.025) 7px,
+      transparent 10px);
+  color: #000000;
+  isolation: isolate;
+}
+
+/* Cruces y trazos de pincel en los extremos */
+.ref-manifesto-crosshairs {
+  position: absolute;
+  top: 65px;
+  left: clamp(20px, 8vw, 130px);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #000000;
+  letter-spacing: 12px;
+  opacity: 0.85;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+
+.ref-manifesto-brush-left {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  width: clamp(90px, 16vw, 210px);
+  height: 60px;
+  background: url('../../assets/reflectivo/brush-stroke-left.svg') no-repeat left center;
+  background-size: contain;
+  pointer-events: none;
+  opacity: 0.95;
+  z-index: 1;
+}
+
+.ref-manifesto-brush-right {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  width: clamp(90px, 16vw, 210px);
+  height: 60px;
+  background: url('../../assets/reflectivo/brush-stroke-right.svg') no-repeat right center;
+  background-size: contain;
+  pointer-events: none;
+  opacity: 0.95;
+  z-index: 1;
 }
 
 .ref-manifesto-container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 24px;
-}
-
-.ref-manifesto-card {
-  background: linear-gradient(135deg, #a3e635 0%, #84cc16 60%, #65a30d 100%);
-  border-radius: 16px;
-  padding: 55px 45px 50px 45px;
-  color: #070e02;
-  box-shadow: 0 20px 50px rgba(132, 204, 22, 0.35);
   position: relative;
-  overflow: hidden;
+  z-index: 3;
   text-align: center;
 }
 
+/* Logo B&F Reflective en Silueta Negra */
 .ref-manifesto-logo-wrap {
-  margin-bottom: 24px;
+  margin: 0 auto 24px;
 }
 
 .ref-manifesto-logo-img {
-  max-width: 260px;
+  width: clamp(170px, 24vw, 230px);
+  max-width: 80%;
   height: auto;
-  filter: brightness(0) saturate(100%); /* Silueta oscura impecable sobre fondo lima */
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
+/* Texto Corporativo Literal */
 .ref-manifesto-text {
+  max-width: 860px;
+  margin: 0 auto;
+  color: #000000;
   font-family: var(--ref-font-display);
-  font-size: 1.45rem;
-  font-weight: 800;
-  line-height: 1.45;
-  max-width: 890px;
-  margin: 0 auto 35px auto;
-  letter-spacing: 0.3px;
-  color: #070c03;
+  font-size: clamp(1.2rem, 2.3vw, 1.85rem);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Símbolo Reflectivo en Perspectiva (Chevron) */
+.ref-manifesto-chevron-wrap {
+  margin: 35px auto 0;
+  display: flex;
+  justify-content: center;
+}
+
+.ref-manifesto-chevron-img {
+  width: clamp(260px, 45vw, 420px);
+  max-width: 90%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.28));
+}
+
+/* ============================================================
+   ADAPTACIÓN A CELULARES
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .ref-hero-section {
+    min-height: auto;
+    padding: 25px 14px 0;
+  }
+
+  .ref-hero-badge-pill {
+    max-width: 100%;
+    font-size: 8px;
+    letter-spacing: 0.7px;
+    padding: 7px 9px;
+  }
+
+  .ref-hero-title {
+    font-size: clamp(25px, 7vw, 36px);
+    line-height: 1.1;
+  }
+
+  .ref-hero-desc {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+
+  .ref-hero-media-wrap {
+    margin-top: 18px;
+  }
+
+  .ref-hero-banner-img {
+    max-height: none;
+    width: 100%;
+  }
+
+  .ref-hero-actions-row {
+    gap: 10px;
+    margin-top: 18px;
+    padding-bottom: 25px;
+  }
+
+  .ref-btn-primary,
+  .ref-btn-secondary {
+    width: 100%;
+    max-width: 340px;
+    justify-content: center;
+    padding: 12px 14px;
+    font-size: 11px;
+  }
+
+  .ref-manifesto-section {
+    padding: 28px 0 40px;
+  }
+
+  .ref-manifesto-container {
+    padding: 0 15px;
+  }
+
+  .ref-manifesto-card {
+    padding: 0 5px 20px;
+  }
+
+  .ref-manifesto-logo-img {
+    width: 145px;
+  }
+
+  .ref-manifesto-text {
+    font-size: 17px;
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 380px) {
+  .ref-hero-title {
+    font-size: 24px;
+  }
+
+  .ref-hero-badge-pill {
+    font-size: 7px;
+  }
+
+  .ref-manifesto-text {
+    font-size: 15px;
+  }
 }
 
 .ref-manifesto-metrics {
@@ -984,9 +1216,14 @@ body.ref-body {
 }
 
 .ref-tiktok-gradient-text {
+  color: #fe2c55;
+  /* respaldo si no hay soporte */
   background: linear-gradient(90deg, #25f4ee 0%, #fe2c55 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   display: inline;
 }
 

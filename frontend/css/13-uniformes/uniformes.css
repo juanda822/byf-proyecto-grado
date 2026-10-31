@@ -138,7 +138,7 @@
   width: 100%;
   min-height: 560px;
   background-color: #f8fafc;
-  background-image: url('../../assets/uniformes/hero-uniformes.png');
+  background-image: url('../../assets/uniformes/hero-uniformes.jpg');
   background-size: cover;
   background-position: right center;
   background-repeat: no-repeat;
@@ -157,13 +157,11 @@
   width: 88px;
   height: 88px;
   border-radius: 50%;
-  background: repeating-linear-gradient(
-    -45deg,
-    #0f1e36,
-    #0f1e36 4.5px,
-    transparent 4.5px,
-    transparent 11px
-  );
+  background: repeating-linear-gradient(-45deg,
+      #0f1e36,
+      #0f1e36 4.5px,
+      transparent 4.5px,
+      transparent 11px);
   opacity: 0.88;
   pointer-events: none;
   z-index: 1;
@@ -730,9 +728,9 @@
 .uni-contact-section {
   padding: 85px 0 95px 0;
   background-color: var(--uni-blue-dark);
-  background-image: 
+  background-image:
     radial-gradient(circle at 10% 20%, rgba(22, 46, 80, 0.8) 0%, rgba(15, 30, 54, 0.98) 100%),
-    url('../../assets/hero-silk-bg.png');
+    url('../../assets/hero-silk-bg.jpg');
   background-size: cover;
   background-position: center;
   color: #ffffff;

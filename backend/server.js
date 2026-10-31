@@ -22,11 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 const frontendPath = path.join(__dirname, '..', 'frontend');
 app.use(express.static(frontendPath));
 
-// Servir recursos multimedia de la carpeta brain/artefactos
-const artifactsPath = 'C:\\Users\\JUAN\\.gemini\\antigravity-ide\\brain\\9c1ec6dd-3cfb-47fa-bd15-06db260d5467';
-if (fs.existsSync(artifactsPath)) {
-  app.use('/artifacts', express.static(artifactsPath));
-}
+// Recursos opcionales no incluidos en Git, dentro del frontend.
+app.use('/artifacts', express.static(path.join(frontendPath, 'assets', 'artifacts')));
 
 // Rutas de API REST
 app.use('/api/products', productsRoutes);
@@ -78,9 +75,9 @@ app.get('/api/stats', (req, res) => {
   }
 });
 
-// Ruta principal para servir el Frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
+// Las páginas HTML se sirven desde frontend/. Los recursos ausentes deben dar 404.
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: 'Recurso no encontrado.' });
 });
 
 // Iniciar servidor
