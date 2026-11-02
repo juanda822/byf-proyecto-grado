@@ -871,6 +871,56 @@ body.ref-body {
   box-shadow: 0 0 16px var(--ref-lime-glow);
 }
 
+/* ============================================================
+   BOTÓN CENTRAL DE DESCARGA - SECCIÓN CATÁLOGO
+   ============================================================ */
+.ref-catalog-cta-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 48px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.ref-btn-catalog-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--ref-lime, #a3e635);
+  color: #07090d;
+  font-family: var(--ref-font-display, 'Poppins', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 16px 38px;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px var(--ref-lime-glow, rgba(163, 230, 53, 0.45));
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.ref-btn-catalog-download i {
+  font-size: 1.25rem;
+  transition: transform 0.25s ease;
+}
+
+.ref-btn-catalog-download:hover {
+  background: var(--ref-lime-bright, #bef264);
+  color: #000000;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(163, 230, 53, 0.65), 0 0 25px var(--ref-lime-glow);
+}
+
+.ref-btn-catalog-download:hover i {
+  transform: translateY(2px);
+}
+
+
 /* --------------------------------------------------------------------------
    SECCIÓN 4: DESCARGA DE CATÁLOGO TÉCNICO EN FORMATO PDF
    -------------------------------------------------------------------------- */
@@ -1655,6 +1705,14 @@ body.ref-body {
 }
 
 @media (max-width: 768px) {
+  .ref-btn-catalog-download {
+    width: 100%;
+    max-width: 440px;
+    padding: 14px 20px;
+    font-size: 0.92rem;
+    letter-spacing: 0.8px;
+  }
+
   .ref-hero-title {
     font-size: 2rem;
   }

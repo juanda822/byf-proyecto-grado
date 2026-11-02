@@ -175,6 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'reflectivo.html';
         return;
       }
+      if (productId === 'merchandising') {
+        window.location.href = 'printbordados.html';
+        return;
+      }
       const item = productsData[productId];
 
       if (item && productModal) {

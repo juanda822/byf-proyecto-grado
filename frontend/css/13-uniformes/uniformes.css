@@ -133,21 +133,44 @@
 /* --------------------------------------------------------------------------
    HERO DE UNIFORMES (TEXTO 100% EDITABLE + FONDO DE MODELOS EN SEDA)
    -------------------------------------------------------------------------- */
+
 .uni-hero-editable-section {
   position: relative;
   width: 100%;
   min-height: 560px;
+
   background-color: #f8fafc;
-  background-image: url('../../assets/uniformes/hero-uniformes.jpg');
+  background-image: url('../../assets/uniformes/hero-uniformes.png');
+
   background-size: cover;
-  background-position: right center;
+  background-position: center right;
   background-repeat: no-repeat;
+
   display: flex;
   align-items: center;
+
   padding: 55px 0 65px 0;
   overflow: hidden;
+
   border-bottom: 2px solid var(--uni-gold);
 }
+
+/* Ajuste para computadores grandes */
+@media (min-width: 1600px) {
+  .uni-hero-editable-section {
+    background-position: center right;
+  }
+}
+
+/* Ajuste para celulares */
+@media (max-width: 768px) {
+  .uni-hero-editable-section {
+    min-height: 500px;
+    background-position: center;
+    padding: 40px 20px;
+  }
+}
+
 
 /* Marca de agua decorativa circular a rayas en la esquina inferior izquierda */
 .uni-hero-striped-badge {
