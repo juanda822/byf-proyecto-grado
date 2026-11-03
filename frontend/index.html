@@ -246,7 +246,8 @@
               class="product-image">
             <div class="product-card-overlay">
               <span>Artículos promocionales y sublimación digital</span>
-              <a href="printbordados.html" class="product-overlay-btn" style="text-decoration: none;">Ver Catálogo & Línea</a>
+              <a href="printbordados.html" class="product-overlay-btn" style="text-decoration: none;">Ver Catálogo &
+                Línea</a>
             </div>
           </div>
           <div class="product-card-footer">
@@ -270,6 +271,7 @@
        SECCIÓN 4: SECCIÓN CORPORATIVA / ACERCA DE (E)
        "FABRICAMOS CON AMOR" - Pasión Artesanal y Video Institucional
        ==================================================================== -->
+
   <section class="corporate-section" id="corporativo">
     <div class="container">
 
@@ -340,7 +342,8 @@
       <div class="section-title-wrap">
         <h2 class="section-title">Nuestros servicios</h2>
         <div class="section-divider">
-          <span class="section-divider-icon"><i class="fa-solid fa-diagram-project"></i></span>
+          <span class="section-divider-icon"><i class="fa-solid fa-pen-ruler service-diamond-icon"
+              aria-hidden="true"></i></span>
         </div>
         <p class="section-subtitle-text">Acompañamos a tu empresa en cada etapa del proceso textil: desde el concepto
           inicial hasta la entrega final.</p>
@@ -352,47 +355,65 @@
         <!-- Servicio 1: Diseño (F1) -->
         <div class="service-card">
           <div class="service-diamond-badge">
-            <i class="fa-solid fa-pen-ruler service-diamond-icon"></i>
+            <i class="fa-solid fa-pen-ruler service-diamond-icon" aria-hidden="true"></i>
           </div>
           <h3 class="service-title">Diseño</h3>
           <p class="service-desc">Patronaje computarizado, desarrollo de moldes ergonómicos y modelado 3D de prendas
             personalizadas para tu equipo de trabajo.</p>
-          <button class="btn service-btn btn-dark trigger-quote-modal" data-service="Diseño Textil">Ver Más</button>
+          <button class="btn service-btn btn-dark trigger-quote-modal" data-service="Diseño Textil">Cotiza</button>
+        </div>
+        <!-- Servicio: Corte -->
+        <div class="service-card">
+          <div class="service-diamond-badge">
+            <i class="fa-solid fa-scissors service-diamond-icon" aria-hidden="true"></i>
+          </div>
+
+          <h3 class="service-title">Corte</h3>
+
+          <p class="service-desc">
+            Corte textil de precisión según los moldes, las tallas y las
+            especificaciones de cada pedido, optimizando el aprovechamiento
+            de la tela.
+          </p>
+
+          <button type="button" class="btn service-btn btn-dark trigger-quote-modal" data-service="Corte Textil">
+            Cotiza
+          </button>
         </div>
 
         <!-- Servicio 2: Confección (F2 - Destacado Amarillo) -->
         <div class="service-card highlighted">
           <div class="service-diamond-badge">
-            <i class="fa-solid fa-shirt service-diamond-icon"></i>
+            <i class="fa-solid fa-shirt service-diamond-icon" aria-hidden="true"></i>
           </div>
           <h3 class="service-title">Confección</h3>
           <p class="service-desc">Producción industrial en masa de alta capacidad con maquinaria especializada, costuras
             de seguridad y control de calidad prenda a prenda.</p>
-          <button class="btn service-btn btn-gold trigger-quote-modal" data-service="Confección y Producción">Ver
-            Más</button>
+          <button class="btn service-btn btn-gold trigger-quote-modal"
+            data-service="Confección y Producción">Cotiza</button>
         </div>
 
         <!-- Servicio 3: Bordado & Estampado (F3) -->
         <div class="service-card">
           <div class="service-diamond-badge">
-            <i class="fa-solid fa-wand-magic-sparkles service-diamond-icon"></i>
+            <i class="fa-solid fa-palette service-diamond-icon" aria-hidden="true"></i>
           </div>
           <h3 class="service-title">Bordado &amp; Estampado</h3>
           <p class="service-desc">Personalización de logotipos con bordado computarizado de alta densidad, sublimación
             digital full print, vinilo textil y serigrafía.</p>
-          <button class="btn service-btn btn-dark trigger-quote-modal" data-service="Bordado y Estampado">Ver
-            Más</button>
+          <button class="btn service-btn btn-dark trigger-quote-modal"
+            data-service="Bordado y Estampado">Cotiza</button>
         </div>
 
         <!-- Servicio 4: Asesoría y Envíos (F4) -->
         <div class="service-card">
           <div class="service-diamond-badge">
-            <i class="fa-solid fa-truck-fast service-diamond-icon"></i>
+            <i class="fa-solid fa-comments service-diamond-icon" aria-hidden="true"></i>
           </div>
           <h3 class="service-title">Asesoría</h3>
           <p class="service-desc">Toma de tallas técnica en tus instalaciones, selección de textiles según normatividad
             y distribución logística segura a todo el país.</p>
-          <button class="btn service-btn btn-dark trigger-quote-modal" data-service="Asesoría y Envíos">Ver Más</button>
+          <button class="btn service-btn btn-dark trigger-quote-modal" data-service="Asesoría y Envíos">Cotiza</button>
         </div>
 
       </div>
@@ -476,58 +497,67 @@
   <section class="news-section" id="noticias">
     <div class="container">
 
-      <!-- Título de Sección -->
       <div class="section-title-wrap">
         <h2 class="section-title">Noticias B&amp;F</h2>
+
         <div class="section-divider">
-          <span class="section-divider-icon"><i class="fa-solid fa-newspaper"></i></span>
+          <span class="section-divider-icon">
+            <i class="fa-solid fa-newspaper" aria-hidden="true"></i>
+          </span>
         </div>
       </div>
 
-      <!-- Grid de 2 Noticias Principales -->
       <div class="news-grid">
 
-        <!-- Noticia 1: Ciclismo y Eventos -->
+        <!-- Noticia 1 -->
         <article class="news-card">
           <div class="news-image-wrap">
-            <img src="/artifacts/blog_ciclismo_evento_1790547633752.jpg"
-              alt="Patrocinio deportivo y presencia en eventos de alto impacto B&F" class="news-image">
+            <img src="/frontend/assets/noticiasbyf/confeccionista.png" alt="Día del confeccionista B&amp;F"
+              class="news-image" loading="lazy">
           </div>
+
           <div class="news-body">
-            <span class="news-category-tag">EVENTOS CORPORATIVOS</span>
-            <h3 class="news-title">Patrocinio y presencia en eventos de alto impacto</h3>
+            <time class="news-date" datetime="2024-10-31">
+              Octubre 14, 2026
+            </time>
+
+            <h3 class="news-title">
+              Un reconocimiento a quienes crean con sus manos.
+            </h3>
+
             <p class="news-excerpt">
-              B&amp;F lideró la confección y tecnología de los uniformes oficiales de competencia, combinando
-              propiedades aerodinámicas con transpirabilidad y máxima resistencia deportiva.
+              En B&amp;F celebramos el Día del Confeccionista reconociendo y agradeciendo la dedicación, el esfuerzo y
+              el talento de quienes hacen posible cada una de nuestras prendas. Como muestra de gratitud, compartimos un
+              pequeño detalle con nuestros confeccionistas, porque su trabajo es parte fundamental de lo que somos.
             </p>
-            <a href="#" class="news-footer-link">
-              Leer Más <i class="fa-solid fa-chevron-right"></i>
-            </a>
           </div>
         </article>
 
-        <!-- Noticia 2: Sostenibilidad y Capacitación -->
+        <!-- Noticia 2 -->
         <article class="news-card">
           <div class="news-image-wrap">
-            <!-- Portada ilustrada para capacitación y taller -->
-            <img src="/artifacts/video_fabricamos_amor_1790547605583.jpg"
-              alt="Compromiso de sostenibilidad y capacitación textil B&F" class="news-image" style="object-fit:cover;">
+            <img src="/frontend/assets/noticiasbyf/capacitacion.png"
+              alt="Jornada de capacitación sobre sostenibilidad en B&amp;F" class="news-image" loading="lazy">
           </div>
+
           <div class="news-body">
-            <span class="news-category-tag">SOSTENIBILIDAD &amp; COMUNIDAD</span>
-            <h3 class="news-title">Compromiso de Sostenibilidad y Capacitación Textil</h3>
+            <time class="news-date" datetime="2024-10-22">
+              Octubre 22, 2026
+            </time>
+
+            <h3 class="news-title">
+              Capacitación de Sostenibilidad
+            </h3>
+
             <p class="news-excerpt">
-              Impulsamos el desarrollo de nuestra región capacitando a mujeres operarias en confección circular e
-              integrando fibras recicladas certificadas en nuestras líneas de producción.
+              Las capacitaciones permiten compartir conocimientos
+              y trabajar en equipo para generar cambios que
+              aporten de manera positiva a nuestra sociedad.
             </p>
-            <a href="#" class="news-footer-link">
-              Leer Más <i class="fa-solid fa-chevron-right"></i>
-            </a>
           </div>
         </article>
 
       </div>
-
       <!-- Botón Ver Más Noticias -->
       <div class="news-actions">
         <button class="btn news-btn-all" onclick="showToast('Cargando más publicaciones del blog corporativo...')">
@@ -682,13 +712,22 @@
             calidad.
           </p>
           <div class="footer-social-links">
-            <a href="#" class="footer-social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="footer-social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="footer-social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="#" class="footer-social-btn" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/byf.uniforms/" class="footer-social-btn social-instagram" target="_blank"
+              rel="noopener noreferrer" aria-label="Instagram de B&F" title="Instagram">
+              <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+
+            <a href="https://www.tiktok.com/@byf.uniforms" class="footer-social-btn social-tiktok" target="_blank"
+              rel="noopener noreferrer" aria-label="TikTok de B&F" title="TikTok">
+              <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+            </a>
+
+            <a href="https://www.youtube.com/@PUBLICIDADBF-m9z" class="footer-social-btn social-youtube" target="_blank"
+              rel="noopener noreferrer" aria-label="YouTube de B&F" title="YouTube">
+              <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
-
         <!-- Columna 2: Navegación Rápida -->
         <div class="footer-col">
           <h4 class="footer-col-title">Navegación</h4>
@@ -718,25 +757,25 @@
 
         <!-- Columna 4: Feed de Instagram (6 Miniaturas en Grid 3x2) -->
         <div class="footer-col">
-          <h4 class="footer-col-title">Instagram</h4>
+          <h4 class="footer-col-title">Descubrenos</h4>
           <div class="footer-instagram-grid">
             <a href="#productos" class="instagram-thumb">
-              <img src="/artifacts/uniformes_line_1790547525555.jpg" alt="Uniformes B&F">
+              <img src="/frontend/assets/imagenes footer/bordados.jpg">
             </a>
             <a href="#productos" class="instagram-thumb">
-              <img src="/artifacts/moda_accesorios_1790547541896.jpg" alt="Moda B&F">
+              <img src="/frontend/assets/imagenes footer/impresion.jpg">
             </a>
             <a href="#productos" class="instagram-thumb">
-              <img src="/artifacts/ropa_reflectiva_1790547560327.jpg" alt="Ropa Reflectiva B&F">
+              <img src="/frontend/assets/imagenes footer/marca.jpg">
             </a>
             <a href="#productos" class="instagram-thumb">
-              <img src="/artifacts/merchandising_sublimado_1790547580797.jpg" alt="Merchandising B&F">
+              <img src="/frontend/assets/imagenes footer/marcamos.jpg">
             </a>
             <a href="#noticias" class="instagram-thumb">
-              <img src="/artifacts/blog_ciclismo_evento_1790547633752.jpg" alt="Ciclismo B&F">
+              <img src="/frontend/assets/imagenes footer/plotter.jpg">
             </a>
             <a href="#corporativo" class="instagram-thumb">
-              <img src="assets/video-poster.jpg" alt="Video B&F">
+              <img src="assets/imagenes footer/transforma.jpg">
             </a>
           </div>
         </div>
@@ -767,7 +806,6 @@
           allowfullscreen></iframe>
         <video id="corporateVideoLocal" controls style="display:none;">
           <source src="assets/VIDEO BYF.mp4" type="video/mp4">
-          Tu navegador no soporta reproducción de video local HTML5.
         </video>
       </div>
       <div class="modal-video-footer">
@@ -842,7 +880,7 @@
               placeholder="Describe brevemente tus requerimientos..."></textarea>
           </div>
           <button type="submit" class="btn btn-gold" style="width:100%; padding:14px; font-weight:800;">
-            <i class="fa-solid fa-paper-plane"></i> Enviar Solicitud al Backend
+            <i class="fa-solid fa-paper-plane"></i> Enviar Solicitud
           </button>
         </form>
       </div>

@@ -1,140 +1,229 @@
 /* ==========================================================================
-   07-NOTICIAS.CSS - NOTICIAS Y BLOG B&F
-   2 Tarjetas de artículos, etiquetas temáticas y botón de ver más
+   07-NOTICIAS.CSS - NOTICIAS B&F
    ========================================================================== */
 
 .news-section {
-  padding: 85px 0 95px 0;
-  background-color: #ffffff;
   position: relative;
+  padding: 55px 0 60px;
+  background: #f4f4f4;
 }
 
+.news-section .section-title {
+  margin: 0;
+  font-family: var(--font-subheading, sans-serif);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 700;
+  color: #1c2835;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* Divisor dorado */
+.news-section .section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 310px;
+  margin: 14px auto 0;
+}
+
+.news-section .section-divider::before,
+.news-section .section-divider::after {
+  content: "";
+  flex: 1;
+  height: 3px;
+  border-top: 1px solid #d6ad49;
+  border-bottom: 1px solid #d6ad49;
+  background: transparent;
+}
+
+.news-section .section-divider-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #d6ad49;
+  font-size: 24px;
+}
+
+/* Dos noticias */
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  max-width: 1040px;
-  margin: 35px auto 0 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 28px;
+  max-width: 1100px;
+  margin: 45px auto 0;
 }
 
-/* Tarjeta individual de noticia */
 .news-card {
-  background-color: var(--color-white);
-  border: 1px solid #e2e8f0;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
-  transition: all var(--transition-normal);
-  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+  background: #ffffff;
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 10px 12px -12px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .news-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
-  border-color: #cbd5e1;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 20px -14px rgba(0, 0, 0, 0.35);
 }
 
-/* Imagen de cabecera de la noticia */
+/* Fotografías */
 .news-image-wrap {
-  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background-color: #0f172a;
+  background: #e2e8f0;
 }
 
 .news-image {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-smooth);
+  object-position: center;
+  transition: transform 0.35s ease;
 }
 
 .news-card:hover .news-image {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
-/* Contenido de la tarjeta */
+/* Texto */
 .news-body {
-  padding: 24px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  padding: 26px 20px 30px;
 }
 
-/* Categoría / Etiqueta */
-.news-category-tag {
-  font-family: var(--font-subheading);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--color-primary-gold-dark);
-  margin-bottom: 8px;
+.news-date {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #777777;
 }
 
-/* Título */
 .news-title {
-  font-family: var(--font-subheading);
-  font-size: 1.15rem;
+  margin: 0 0 16px;
+  font-family: var(--font-subheading, sans-serif);
+  font-size: 19px;
   font-weight: 700;
-  color: #1e293b;
   line-height: 1.4;
-  margin-bottom: 12px;
-  transition: color var(--transition-fast);
+  color: #1c2835;
 }
 
-.news-card:hover .news-title {
-  color: #0284c7;
-}
-
-/* Extracto */
 .news-excerpt {
-  font-size: 0.88rem;
-  color: #64748b;
-  line-height: 1.6;
-  margin-bottom: 18px;
-  flex-grow: 1;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #808080;
 }
 
-/* Pie de la noticia */
-.news-footer-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-subheading);
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #1e293b;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.news-footer-link i {
-  color: var(--color-primary-gold);
-  transition: transform var(--transition-fast);
-}
-
-.news-card:hover .news-footer-link i {
-  transform: translateX(4px);
-}
-
-/* Botón Ver Más Noticias Centrado */
+/* Botón inferior */
 .news-actions {
+  margin-top: 45px;
   text-align: center;
-  margin-top: 40px;
 }
 
 .news-btn-all {
-  padding: 12px 32px;
-  background-color: #1e293b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 11px 24px;
+  background: #1c2835;
   color: #ffffff;
-  font-size: 0.85rem;
+  border: none;
+  border-radius: 7px;
+  font-family: var(--font-subheading, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #111827;
+  transition: background 0.2s ease;
 }
 
 .news-btn-all:hover {
-  background-color: var(--color-primary-gold);
-  color: #1e293b;
+  background: #334155;
+  color: #ffffff;
+}
+
+.news-btn-all:focus-visible {
+  outline: 3px solid #d6ad49;
+  outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .news-section {
+    padding: 40px 0 45px;
+  }
+
+  .news-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    gap: 28px;
+    margin-top: 30px;
+  }
+
+  .news-title {
+    font-size: 18px;
+  }
+}
+
+/* Fondo decorativo de Noticias B&F */
+section.news-section {
+  position: relative;
+  background-color: #ffffff;
+
+  background-image:
+    /* Resplandor dorado */
+    radial-gradient(ellipse at 0% 15%,
+      rgba(245, 158, 11, 0.12),
+      transparent 50%),
+
+    /* Resplandor azul */
+    radial-gradient(ellipse at 100% 85%,
+      rgba(56, 130, 190, 0.10),
+      transparent 50%),
+
+    /* Textura de puntos */
+    radial-gradient(circle,
+      rgba(30, 41, 59, 0.06) 0.8px,
+      transparent 1px);
+
+  background-size:
+    100% 100%,
+    100% 100%,
+    16px 16px;
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    repeat;
+
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Tarjetas blancas con sombra suave */
+.news-section .news-card {
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow:
+    0 15px 35px -20px rgba(30, 41, 59, 0.3);
+}
+
+.news-section .news-card:hover {
+  box-shadow:
+    0 20px 40px -20px rgba(30, 41, 59, 0.35);
 }

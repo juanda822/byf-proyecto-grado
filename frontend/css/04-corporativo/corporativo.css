@@ -27,7 +27,6 @@
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
   background-color: #0f172a;
   cursor: pointer;
-  group: true;
 }
 
 .corporate-video-poster {
@@ -148,4 +147,56 @@
 .corporate-btn-more:hover {
   background-color: var(--color-primary-gold);
   color: #1e293b;
+}
+
+/* Fabricamos con amor: fondo blanco con textura */
+section.corporate-section {
+  position: relative;
+  padding: 80px 0;
+  background-color: #ffffff;
+
+  background-image:
+    /* Luz dorada suave */
+    radial-gradient(ellipse at 0% 25%,
+      rgba(245, 158, 11, 0.09),
+      transparent 50%),
+
+    /* Luz azul suave */
+    radial-gradient(ellipse at 100% 85%,
+      rgba(100, 140, 190, 0.07),
+      transparent 45%),
+
+    /* Textura fina */
+    radial-gradient(circle,
+      rgba(30, 41, 59, 0.055) 0.7px,
+      transparent 1px);
+
+  background-size:
+    100% 100%,
+    100% 100%,
+    12px 12px;
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    repeat;
+
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Marco del video */
+.corporate-section .corporate-video-wrap {
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 20px 45px -18px rgba(30, 41, 59, 0.25),
+    0 0 28px rgba(245, 158, 11, 0.06);
+}
+
+/* Título */
+.corporate-section .corporate-heading {
+  color: #253044;
+  font-size: clamp(26px, 2.6vw, 36px);
+  font-weight: 800;
+  line-height: 1.25;
 }
