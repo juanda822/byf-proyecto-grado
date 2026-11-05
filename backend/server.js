@@ -1,3 +1,10 @@
+// Variables de entorno (backend/.env) — requiere Node 20.12+ / 22
+try {
+  process.loadEnvFile(require('path').join(__dirname, '.env'));
+} catch (error) {
+  if (error.code !== 'ENOENT') console.warn('No se pudo leer backend/.env:', error.message);
+}
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -9,12 +16,16 @@ const blogRoutes = require('./routes/blogRoutes');
 const newsletterRoutes = require('./routes/newsletterRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const clientsRoutes = require('./routes/clientsRoutes');
+const pqrsRoutes = require('./routes/pqrsRoutes');
+const db = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middlewares
 app.use(cors());
+// Las PQRS llevan fotos en base64: límite de cuerpo mayor solo para esa ruta.
+app.use('/api/pqrs', express.json({ limit: '60mb' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -32,6 +43,7 @@ app.use('/api/blog', blogRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/clients', clientsRoutes);
+app.use('/api/pqrs', pqrsRoutes);
 
 // Endpoint de estado y resumen general para el proyecto de grado
 app.get('/api/health', (req, res) => {
@@ -47,6 +59,7 @@ app.get('/api/health', (req, res) => {
       '/api/newsletter',
       '/api/contact',
       '/api/clients',
+      '/api/pqrs',
       '/api/stats'
     ]
   });
@@ -80,6 +93,21 @@ app.use((req, res) => {
   res.status(404).json({ success: false, message: 'Recurso no encontrado.' });
 });
 
+// Errores de cuerpo (JSON mal formado o demasiado grande)
+app.use((err, req, res, next) => {
+  if (err.type === 'entity.too.large') {
+    return res.status(413).json({ success: false, message: 'Las fotos pesan demasiado. Adjunta menos fotos o de menor tamaño.' });
+  }
+  if (err.type === 'entity.parse.failed') {
+    return res.status(400).json({ success: false, message: 'Solicitud con formato inválido.' });
+  }
+  console.error(err);
+  res.status(500).json({ success: false, message: 'Ocurrió un error en el servidor.' });
+});
+
+// Conexión a MySQL para el módulo PQRS (el resto del sitio funciona sin ella)
+db.init();
+
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log('========================================================');
@@ -87,5 +115,6 @@ app.listen(PORT, () => {
   console.log(`🌐 URL Local: http://localhost:${PORT}`);
   console.log(`📁 Frontend servido desde: ${frontendPath}`);
   console.log(`📋 API endpoints activos en: http://localhost:${PORT}/api/health`);
+  console.log(`🎫 PQRS y garantías: http://localhost:${PORT}/pqrs.html`);
   console.log('========================================================');
 });

@@ -9,6 +9,8 @@ frontend/
   index.html                 Portal principal
   uniformes.html             Línea de uniformes
   reflectivo.html            Línea reflectiva
+  printbordados.html         Línea Print & Bordados
+  pqrs.html                  Centro de PQRS y garantías (clientes y administrador)
   css/00-global/ … 14-reflectivo/  Estilos por sección
   js/                        Interacciones y formularios
   assets/                    Imágenes, logos y catálogos únicos
@@ -17,6 +19,9 @@ backend/
   routes/                    Rutas REST
   controllers/               Lógica de la API
   data/                      Datos y registros JSON
+  config/db.js               Conexión a MySQL (módulo PQRS)
+  database/schema.sql        Tablas MySQL del módulo PQRS
+  uploads/pqrs/              Fotos de las PQRS (se crea sola, no va a Git)
   package.json               Dependencias y comandos
 scripts/
   smoke.js                   Comprobación HTTP sin escribir datos
@@ -61,7 +66,36 @@ La comprobación valida páginas, recursos CSS/JS, catálogos, API y rechazo de 
 | GET, POST | `/api/contact` | Consultar o guardar mensajes |
 | GET | `/api/stats` | Resumen de registros |
 
+| GET | `/api/pqrs/estado` | ¿Hay base de datos? ¿Ya existe administrador? |
+| POST | `/api/pqrs/auth/registro` | Registro de clientes |
+| POST | `/api/pqrs/auth/login` | Ingreso de clientes y administrador |
+| POST | `/api/pqrs/admin/configurar` | Crea la cuenta del administrador (solo una vez) |
+| GET, POST | `/api/pqrs/tickets` | Listar tickets (el cliente ve los suyos, el admin todos) o radicar uno |
+| GET | `/api/pqrs/tickets/:id` | Detalle con fotos y respuestas |
+| PATCH | `/api/pqrs/tickets/:id/logistica` | Dirección y especificaciones de recogida y entrega |
+| POST | `/api/pqrs/tickets/:id/respuestas` | Responder (admin) o agregar mensaje (cliente) |
+| PATCH | `/api/pqrs/tickets/:id/estado` | Cambiar estado (admin) |
+| GET | `/api/pqrs/admin/resumen` | Conteo por estado (admin) |
+
 Las rutas inexistentes responden 404; no devuelven HTML como si fuera una imagen o un script.
+
+## Módulo PQRS y garantías (MySQL)
+
+El botón dorado **PQRS** (arriba a la derecha en todas las páginas) abre `pqrs.html`:
+
+- **Cliente:** se registra, ingresa y radica su petición, queja o reclamo: cliente, número de pedido, tipo (lista desplegable), asunto (por ejemplo, Garantía), prenda y talla si aplican, descripción del motivo, fotos del prelavado y fotos de la parte defectuosa. Al enviar se genera un ticket (`PQR-2026-00001`) y pasa al paso 2, donde puede anexar dirección, ciudad, teléfono y especificaciones de recogida y entrega (o hacerlo después). En *Mis solicitudes* ve el estado, las respuestas y puede escribir mensajes.
+- **Administrador:** ve todas las PQRS con contadores por estado, buscador y filtros; abre cada ticket con sus fotos y datos de recogida, responde al cliente y cambia el estado (Radicado → En revisión → Respondido → Cerrado).
+
+### Configuración
+
+1. Instala MySQL 8 (o MariaDB) y créale un usuario, o usa `root`.
+2. Copia `backend/.env.example` como `backend/.env` y completa `DB_USER`, `DB_PASSWORD` y un `AUTH_SECRET` largo.
+3. `cd backend && npm install --package-lock=false && npm start`. Al iniciar, el servidor crea la base `byf_pqrs` y sus tablas (`database/schema.sql`). Si MySQL no está disponible, el resto del sitio sigue funcionando y la página PQRS muestra un aviso.
+4. Crea la cuenta del administrador de una de estas dos formas:
+   - En `pqrs.html`, enlace **Crear la cuenta del administrador** (solo aparece mientras no exista ninguno). Si el sitio estará en internet, define `ADMIN_SETUP_KEY` en `.env` para que se pida esa clave.
+   - Desde la terminal: `cd backend && npm run crear-admin` (también sirve para restablecer la contraseña).
+
+Tablas: `usuarios` (clientes y administradores, contraseñas con scrypt), `tickets`, `ticket_adjuntos` (fotos guardadas en `backend/uploads/pqrs/`, fuera de la carpeta pública y servidas solo a su dueño y al administrador) y `ticket_respuestas`. Las fotos se reducen en el navegador a 1600 px antes de enviarse; se aceptan JPG, PNG y WEBP, máximo 6 por sección.
 
 ## Recursos pendientes y herramientas históricas
 

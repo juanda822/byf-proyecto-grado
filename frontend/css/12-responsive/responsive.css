@@ -34,7 +34,16 @@
 @media (max-width: 768px) {
   /* Header */
   .top-bar-dark {
+    padding: 6px 0;
+  }
+
+  .top-bar-notice,
+  .top-bar-links > a:not(.byf-pqrs-btn) {
     display: none;
+  }
+
+  .top-bar-container {
+    justify-content: flex-end;
   }
 
   .brand-contact-container {

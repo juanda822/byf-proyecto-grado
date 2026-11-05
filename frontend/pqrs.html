@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PQRS y Garantías | B&amp;F</title>
+  <meta name="description" content="Centro de peticiones, quejas, reclamos y garantías de B&F. Registra tu solicitud y haz seguimiento a tu ticket.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="assets/logos/byf-hero-emblem.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/00-global/global.css">
+  <link rel="stylesheet" href="css/16-pqrs/pqrs.css">
+</head>
+
+<body class="pqrs-body">
+
+  <!-- ====================================================================
+       ENCABEZADO
+       ==================================================================== -->
+  <header class="pq-header">
+    <div class="pq-container pq-header-inner">
+      <a href="index.html" class="pq-brand" title="Volver al sitio de B&amp;F">
+        <img src="assets/logos/byf-logo-white.png" alt="B&amp;F" class="pq-brand-logo">
+        <span class="pq-brand-divider" aria-hidden="true"></span>
+        <span class="pq-brand-text">
+          <strong>Centro PQRS</strong>
+          <small>Peticiones · Quejas · Reclamos · Garantías</small>
+        </span>
+      </a>
+
+      <div class="pq-header-actions">
+        <div class="pq-session" id="pqSession" hidden>
+          <span class="pq-session-role" id="pqSessionRole"></span>
+          <span class="pq-session-name" id="pqSessionName"></span>
+          <button type="button" class="pq-btn pq-btn-ghost pq-btn-sm" id="pqLogout">
+            <i class="fa-solid fa-right-from-bracket"></i> Salir
+          </button>
+        </div>
+        <a href="index.html" class="pq-btn pq-btn-outline pq-btn-sm pq-back">
+          <i class="fa-solid fa-arrow-left"></i> <span>Volver al sitio</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="pq-banner" id="pqBanner" role="alert" hidden></div>
+
+  <main class="pq-main">
+
+    <!-- ==================================================================
+         VISTA 1: ACCESO (INGRESAR / REGISTRARSE / CONFIGURAR ADMIN)
+         ================================================================== -->
+    <section class="pq-view" id="viewAuth" hidden>
+      <div class="pq-container pq-auth-grid">
+
+        <div class="pq-auth-intro">
+          <span class="pq-eyebrow">Servicio al cliente B&amp;F</span>
+          <h1 class="pq-title">Gestiona tu garantía <em>en línea</em></h1>
+          <p class="pq-lead">
+            ¿Una prenda de tu dotación llegó con un defecto? Crea tu cuenta, radica tu petición, queja
+            o reclamo con fotos y nosotros coordinamos la recogida y la entrega.
+          </p>
+          <ol class="pq-steps-intro">
+            <li><span>1</span><div><strong>Regístrate</strong>Con los datos de tu empresa o persona.</div></li>
+            <li><span>2</span><div><strong>Radica tu PQR</strong>Pedido, prenda, talla, motivo y fotos.</div></li>
+            <li><span>3</span><div><strong>Agenda la recogida</strong>Dirección y especificaciones de entrega.</div></li>
+            <li><span>4</span><div><strong>Recibe respuesta</strong>Sigue tu ticket hasta su solución.</div></li>
+          </ol>
+        </div>
+
+        <div class="pq-card pq-auth-card">
+          <div class="pq-tabs" role="tablist">
+            <button type="button" class="pq-tab active" role="tab" data-auth-tab="login" aria-selected="true">Ingresar</button>
+            <button type="button" class="pq-tab" role="tab" data-auth-tab="registro" aria-selected="false">Crear cuenta</button>
+          </div>
+
+          <!-- Ingresar (clientes y administrador) -->
+          <form class="pq-form" id="formLogin" data-auth-panel="login" novalidate>
+            <p class="pq-form-hint">Clientes y administrador ingresan con su correo y contraseña.</p>
+            <label class="pq-field">
+              <span>Correo electrónico</span>
+              <input type="email" name="email" autocomplete="email" required placeholder="correo@empresa.com">
+            </label>
+            <label class="pq-field">
+              <span>Contraseña</span>
+              <input type="password" name="password" autocomplete="current-password" required>
+            </label>
+            <p class="pq-form-error" data-error></p>
+            <button type="submit" class="pq-btn pq-btn-gold pq-btn-block">
+              <i class="fa-solid fa-right-to-bracket"></i> Ingresar
+            </button>
+          </form>
+
+          <!-- Registro de clientes -->
+          <form class="pq-form" id="formRegistro" data-auth-panel="registro" hidden novalidate>
+            <label class="pq-field">
+              <span>Cliente (persona o empresa) *</span>
+              <input type="text" name="nombre" autocomplete="organization" required maxlength="150" placeholder="Ej: Andrés Carne de Res">
+            </label>
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>NIT o cédula</span>
+                <input type="text" name="documento" maxlength="40" placeholder="Ej: 900.123.456-7">
+              </label>
+              <label class="pq-field">
+                <span>Teléfono</span>
+                <input type="tel" name="telefono" autocomplete="tel" maxlength="40" placeholder="Ej: 312 345 6789">
+              </label>
+            </div>
+            <label class="pq-field">
+              <span>Correo electrónico *</span>
+              <input type="email" name="email" autocomplete="email" required maxlength="190" placeholder="correo@empresa.com">
+            </label>
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>Contraseña *</span>
+                <input type="password" name="password" autocomplete="new-password" required minlength="8" placeholder="Mínimo 8 caracteres">
+              </label>
+              <label class="pq-field">
+                <span>Confirmar contraseña *</span>
+                <input type="password" name="password2" autocomplete="new-password" required minlength="8">
+              </label>
+            </div>
+            <p class="pq-form-error" data-error></p>
+            <button type="submit" class="pq-btn pq-btn-gold pq-btn-block">
+              <i class="fa-solid fa-user-plus"></i> Crear mi cuenta
+            </button>
+          </form>
+
+          <!-- Configuración inicial: cuenta del administrador -->
+          <div class="pq-admin-setup" id="adminSetup" hidden>
+            <button type="button" class="pq-link" id="adminSetupToggle" aria-expanded="false">
+              <i class="fa-solid fa-user-shield"></i> Crear la cuenta del administrador
+            </button>
+            <form class="pq-form" id="formAdminSetup" hidden novalidate>
+              <p class="pq-form-hint">
+                Configuración inicial: esta cuenta podrá ver y responder todas las PQRS. Solo se puede crear una vez.
+              </p>
+              <label class="pq-field">
+                <span>Nombre del administrador *</span>
+                <input type="text" name="nombre" required maxlength="150" placeholder="Ej: Servicio al cliente B&amp;F">
+              </label>
+              <label class="pq-field">
+                <span>Correo *</span>
+                <input type="email" name="email" required maxlength="190" autocomplete="username">
+              </label>
+              <div class="pq-row">
+                <label class="pq-field">
+                  <span>Contraseña *</span>
+                  <input type="password" name="password" required minlength="8" autocomplete="new-password">
+                </label>
+                <label class="pq-field">
+                  <span>Confirmar *</span>
+                  <input type="password" name="password2" required minlength="8" autocomplete="new-password">
+                </label>
+              </div>
+              <label class="pq-field" id="adminSetupKeyField" hidden>
+                <span>Clave de configuración *</span>
+                <input type="password" name="clave" autocomplete="off">
+              </label>
+              <p class="pq-form-error" data-error></p>
+              <button type="submit" class="pq-btn pq-btn-outline pq-btn-block">
+                <i class="fa-solid fa-shield-halved"></i> Crear administrador
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         VISTA 2: PANEL DEL CLIENTE
+         ================================================================== -->
+    <section class="pq-view" id="viewCliente" hidden>
+      <div class="pq-container">
+        <div class="pq-page-head">
+          <div>
+            <span class="pq-eyebrow">Mi cuenta</span>
+            <h1 class="pq-title pq-title-sm">Hola, <span id="clienteNombre"></span></h1>
+          </div>
+          <div class="pq-tabs pq-tabs-inline" role="tablist">
+            <button type="button" class="pq-tab active" data-client-tab="nueva">
+              <i class="fa-solid fa-plus"></i> Nueva PQR
+            </button>
+            <button type="button" class="pq-tab" data-client-tab="mis">
+              <i class="fa-solid fa-ticket"></i> Mis solicitudes <span class="pq-count" id="misCount">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Nueva PQR: asistente en 3 pasos -->
+        <div data-client-panel="nueva">
+          <ol class="pq-stepper" id="pqStepper">
+            <li class="active" data-step-dot="1"><span>1</span> Solicitud</li>
+            <li data-step-dot="2"><span>2</span> Recogida y entrega</li>
+            <li data-step-dot="3"><span>3</span> Ticket generado</li>
+          </ol>
+
+          <!-- Paso 1 -->
+          <form class="pq-card pq-form" id="formTicket" data-step="1" novalidate>
+            <h2 class="pq-card-title"><i class="fa-solid fa-file-pen"></i> Datos de la solicitud</h2>
+
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>Cliente *</span>
+                <input type="text" name="cliente" required maxlength="150" placeholder="Ej: Andrés Carne de Res">
+              </label>
+              <label class="pq-field">
+                <span>Número de pedido *</span>
+                <input type="text" name="numeroPedido" required maxlength="40" placeholder="Ej: 1526-1">
+              </label>
+            </div>
+
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>Tipo de solicitud *</span>
+                <select name="tipo" required>
+                  <option value="">Selecciona una opción</option>
+                  <option value="peticion">Petición</option>
+                  <option value="queja">Queja</option>
+                  <option value="reclamo">Reclamo</option>
+                </select>
+              </label>
+              <label class="pq-field">
+                <span id="asuntoLabel">Describa su petición, queja o reclamo *</span>
+                <input type="text" name="asunto" required maxlength="150" list="asuntosSugeridos" placeholder="Ej: Garantía">
+                <datalist id="asuntosSugeridos">
+                  <option value="Garantía"></option>
+                  <option value="Cambio de talla"></option>
+                  <option value="Prenda incompleta en el pedido"></option>
+                  <option value="Retraso en la entrega"></option>
+                  <option value="Error en el bordado o estampado"></option>
+                </datalist>
+              </label>
+            </div>
+
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>Prenda <small>(si aplica)</small></span>
+                <input type="text" name="prenda" maxlength="100" placeholder="Ej: Pantalón">
+              </label>
+              <label class="pq-field">
+                <span>Talla <small>(si aplica)</small></span>
+                <input type="text" name="talla" maxlength="30" placeholder="Ej: Talla 32">
+              </label>
+            </div>
+
+            <label class="pq-field">
+              <span>Descripción del motivo *</span>
+              <textarea name="descripcion" rows="5" required maxlength="5000"
+                placeholder="Ej: El día de ayer recibí mi pedido de dotación y un pantalón talla 32 vino descosido en la parte inferior de la bota izquierda."></textarea>
+            </label>
+
+            <div class="pq-row pq-row-uploads">
+              <div class="pq-upload" data-upload="prelavado">
+                <div class="pq-upload-head">
+                  <strong><i class="fa-solid fa-soap"></i> Fotos del prelavado</strong>
+                  <small>Cómo estaba la prenda antes de lavarla</small>
+                </div>
+                <label class="pq-dropzone">
+                  <input type="file" accept="image/jpeg,image/png,image/webp" multiple>
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <span>Toca para subir o arrastra las fotos aquí</span>
+                  <small>JPG, PNG o WEBP · máximo 6 fotos</small>
+                </label>
+                <div class="pq-thumbs"></div>
+              </div>
+
+              <div class="pq-upload" data-upload="defecto">
+                <div class="pq-upload-head">
+                  <strong><i class="fa-solid fa-magnifying-glass-plus"></i> Fotos de la parte defectuosa</strong>
+                  <small>Por ejemplo, la costura descosida de cerca</small>
+                </div>
+                <label class="pq-dropzone">
+                  <input type="file" accept="image/jpeg,image/png,image/webp" multiple>
+                  <i class="fa-solid fa-camera"></i>
+                  <span>Toca para subir o arrastra las fotos aquí</span>
+                  <small>JPG, PNG o WEBP · máximo 6 fotos</small>
+                </label>
+                <div class="pq-thumbs"></div>
+              </div>
+            </div>
+
+            <p class="pq-form-error" data-error></p>
+            <div class="pq-form-actions">
+              <button type="submit" class="pq-btn pq-btn-gold">
+                Enviar solicitud <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Paso 2 -->
+          <form class="pq-card pq-form" id="formLogistica" data-step="2" hidden novalidate>
+            <div class="pq-success-strip">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                Tu solicitud quedó radicada con el ticket <strong data-ticket-code></strong>.
+                Si es necesario, anexa los datos para recoger y entregar la prenda.
+              </div>
+            </div>
+            <h2 class="pq-card-title"><i class="fa-solid fa-truck-fast"></i> Datos de recogida y entrega</h2>
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>Dirección</span>
+                <input type="text" name="direccion" maxlength="255" autocomplete="street-address" placeholder="Ej: Cra 7 # 45-12, Bodega 3">
+              </label>
+              <label class="pq-field">
+                <span>Ciudad</span>
+                <input type="text" name="ciudad" maxlength="100" autocomplete="address-level2" placeholder="Ej: Bogotá">
+              </label>
+            </div>
+            <label class="pq-field">
+              <span>Teléfono de contacto para la recogida</span>
+              <input type="tel" name="telefonoContacto" maxlength="40" autocomplete="tel">
+            </label>
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>Especificaciones de recogida</span>
+                <textarea name="especificacionesRecogida" rows="4" maxlength="2000"
+                  placeholder="Ej: Recoger de lunes a viernes de 8 a.m. a 4 p.m. Preguntar por Carlos en portería."></textarea>
+              </label>
+              <label class="pq-field">
+                <span>Especificaciones de entrega</span>
+                <textarea name="especificacionesEntrega" rows="4" maxlength="2000"
+                  placeholder="Ej: Entregar la prenda reparada en la misma dirección, en horario de la mañana."></textarea>
+              </label>
+            </div>
+            <p class="pq-form-error" data-error></p>
+            <div class="pq-form-actions">
+              <button type="button" class="pq-btn pq-btn-ghost" id="skipLogistica">Omitir por ahora</button>
+              <button type="submit" class="pq-btn pq-btn-gold">
+                Guardar y finalizar <i class="fa-solid fa-check"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Paso 3 -->
+          <div class="pq-card pq-done" data-step="3" hidden>
+            <div class="pq-done-badge"><i class="fa-solid fa-ticket"></i></div>
+            <h2>Ticket <span data-ticket-code></span></h2>
+            <p>
+              Recibimos tu solicitud. Nuestro equipo la revisará y te responderá por este medio.
+              Puedes consultar el estado en <strong>Mis solicitudes</strong>.
+            </p>
+            <div class="pq-form-actions pq-center">
+              <button type="button" class="pq-btn pq-btn-outline" id="verTicketCreado">
+                <i class="fa-solid fa-eye"></i> Ver mi ticket
+              </button>
+              <button type="button" class="pq-btn pq-btn-gold" id="nuevaOtra">
+                <i class="fa-solid fa-plus"></i> Radicar otra
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mis solicitudes -->
+        <div data-client-panel="mis" hidden>
+          <div class="pq-ticket-list" id="clienteTickets"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         VISTA 3: PANEL DEL ADMINISTRADOR
+         ================================================================== -->
+    <section class="pq-view" id="viewAdmin" hidden>
+      <div class="pq-container">
+        <div class="pq-page-head">
+          <div>
+            <span class="pq-eyebrow">Panel del administrador</span>
+            <h1 class="pq-title pq-title-sm">Gestión de PQRS</h1>
+          </div>
+          <button type="button" class="pq-btn pq-btn-outline pq-btn-sm" id="adminRefresh">
+            <i class="fa-solid fa-rotate"></i> Actualizar
+          </button>
+        </div>
+
+        <div class="pq-stats" id="adminStats">
+          <button type="button" class="pq-stat" data-filter-estado="">
+            <span class="pq-stat-num" data-stat="total">0</span><span>Total</span>
+          </button>
+          <button type="button" class="pq-stat" data-filter-estado="radicado">
+            <span class="pq-stat-num" data-stat="radicado">0</span><span>Radicados</span>
+          </button>
+          <button type="button" class="pq-stat" data-filter-estado="en_revision">
+            <span class="pq-stat-num" data-stat="en_revision">0</span><span>En revisión</span>
+          </button>
+          <button type="button" class="pq-stat" data-filter-estado="respondido">
+            <span class="pq-stat-num" data-stat="respondido">0</span><span>Respondidos</span>
+          </button>
+          <button type="button" class="pq-stat" data-filter-estado="cerrado">
+            <span class="pq-stat-num" data-stat="cerrado">0</span><span>Cerrados</span>
+          </button>
+        </div>
+
+        <form class="pq-filters" id="adminFilters">
+          <label class="pq-field pq-field-search">
+            <span class="pq-sr">Buscar</span>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" name="q" placeholder="Buscar por ticket, cliente, pedido o asunto">
+          </label>
+          <label class="pq-field">
+            <span class="pq-sr">Estado</span>
+            <select name="estado">
+              <option value="">Todos los estados</option>
+              <option value="radicado">Radicado</option>
+              <option value="en_revision">En revisión</option>
+              <option value="respondido">Respondido</option>
+              <option value="cerrado">Cerrado</option>
+            </select>
+          </label>
+          <label class="pq-field">
+            <span class="pq-sr">Tipo</span>
+            <select name="tipo">
+              <option value="">Todos los tipos</option>
+              <option value="peticion">Petición</option>
+              <option value="queja">Queja</option>
+              <option value="reclamo">Reclamo</option>
+            </select>
+          </label>
+        </form>
+
+        <div class="pq-card pq-table-card">
+          <table class="pq-table">
+            <thead>
+              <tr>
+                <th>Ticket</th>
+                <th>Cliente</th>
+                <th>Pedido</th>
+                <th>Tipo</th>
+                <th>Asunto</th>
+                <th>Estado</th>
+                <th>Radicado</th>
+                <th><span class="pq-sr">Acciones</span></th>
+              </tr>
+            </thead>
+            <tbody id="adminTickets"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <div class="pq-loading" id="pqLoading"><span class="pq-spinner"></span></div>
+  </main>
+
+  <!-- ====================================================================
+       DETALLE DEL TICKET (cliente y administrador)
+       ==================================================================== -->
+  <div class="pq-drawer" id="ticketDrawer" hidden>
+    <div class="pq-drawer-backdrop" data-close-drawer></div>
+    <aside class="pq-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <header class="pq-drawer-head">
+        <div>
+          <span class="pq-eyebrow" id="drawerTipo"></span>
+          <h2 id="drawerTitle"></h2>
+        </div>
+        <button type="button" class="pq-icon-btn" data-close-drawer aria-label="Cerrar">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </header>
+      <div class="pq-drawer-body" id="drawerBody"></div>
+    </aside>
+  </div>
+
+  <!-- Visor de fotos -->
+  <div class="pq-lightbox" id="pqLightbox" hidden>
+    <button type="button" class="pq-icon-btn" data-close-lightbox aria-label="Cerrar foto">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <img alt="">
+  </div>
+
+  <div class="pq-toast" id="pqToast" role="status" aria-live="polite"></div>
+
+  <script src="js/pqrs.js"></script>
+</body>
+
+</html>

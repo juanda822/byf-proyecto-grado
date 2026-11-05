@@ -240,3 +240,49 @@ button {
 .animate-fade-in {
   animation: fadeIn 0.6s ease forwards;
 }
+
+/* ==========================================================================
+   BOTÓN PQRS (presente en el encabezado de todas las páginas)
+   ========================================================================== */
+.byf-pqrs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e5c158, #d4af37 55%, #a8862a);
+  color: #0f1e36 !important;
+  font-family: var(--font-subheading);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.byf-pqrs-btn:hover {
+  color: #0f1e36 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.45);
+}
+
+.top-bar-links .byf-pqrs-btn {
+  padding: 3px 12px;
+  font-size: 0.68rem;
+}
+
+.byf-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .byf-pqrs-btn { padding: 6px 12px; font-size: 0.7rem; }
+  /* En móvil el logo ya lleva al portal: se ocultan los botones de regreso */
+  .byf-nav-actions .uni-btn-back,
+  .print-nav-actions .print-btn-back span,
+  .print-nav-container .print-brand-badge { display: none; }
+}

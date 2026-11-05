@@ -23,7 +23,7 @@ async function run() {
       resources.add(decodeURI(new URL(value, `http://local${source}`).pathname));
     }
   }
-  for (const page of ['index.html', 'uniformes.html', 'reflectivo.html']) {
+  for (const page of ['index.html', 'uniformes.html', 'reflectivo.html', 'printbordados.html', 'pqrs.html']) {
     const response = await fetch(`${base}/${page}`);
     assert.equal(response.status, 200, page);
     assert.match(response.headers.get('content-type'), /text\/html/);
@@ -58,6 +58,12 @@ async function run() {
     const response = await fetch(`${base}/api/${endpoint}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
     assert.equal(response.status, 400);
     assert.equal((await response.json()).success, false);
+    checks++;
+  }
+  {
+    const response = await fetch(`${base}/api/pqrs/estado`);
+    assert.equal(response.status, 200, 'pqrs/estado');
+    assert.equal((await response.json()).success, true);
     checks++;
   }
   assert.equal((await fetch(`${base}/missing-resource.png`)).status, 404);

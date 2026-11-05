@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "crear-admin": "node scripts/crear-admin.js"
   },
   "keywords": [
     "textil",
@@ -20,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0"
   }
 }

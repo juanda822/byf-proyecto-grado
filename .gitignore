@@ -4,3 +4,5 @@ backend/node_modules/
 .env.*
 !.env.example
 frontend/assets/VIDEO BYF.mp4
+
+backend/uploads/
