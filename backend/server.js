@@ -22,6 +22,9 @@ const db = require('./config/db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Detrás del proxy del hosting, para conocer la IP real del visitante
+app.set('trust proxy', 1);
+
 // Middlewares
 app.use(cors());
 // Las PQRS llevan fotos en base64: límite de cuerpo mayor solo para esa ruta.

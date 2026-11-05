@@ -7,7 +7,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const UPLOAD_ROOT = path.join(__dirname, '..', 'uploads', 'pqrs');
+// En hosting (Railway) apunta UPLOAD_DIR a un volumen permanente, por ejemplo /data/uploads
+const UPLOAD_ROOT = path.join(process.env.UPLOAD_DIR || path.join(__dirname, '..', 'uploads'), 'pqrs');
 const MAX_BYTES = 6 * 1024 * 1024;       // 6 MB por foto
 const MAX_PER_CATEGORY = 6;
 

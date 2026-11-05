@@ -1,0 +1,12 @@
+{
+  "name": "byf-proyecto-grado",
+  "private": true,
+  "description": "Arranque del sitio B&F desde la raíz (usado por el hosting)",
+  "scripts": {
+    "build": "npm --prefix backend install --package-lock=false --omit=dev",
+    "start": "npm --prefix backend start"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
