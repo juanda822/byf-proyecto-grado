@@ -134,7 +134,7 @@
     renderSession();
     if (state.user.rol === 'admin') {
       showView('viewAdmin');
-      loadAdmin();
+      $('[data-admin-tab="tickets"]').click();
     } else {
       $('#clienteNombre').textContent = state.user.nombre;
       showView('viewCliente');
@@ -488,7 +488,11 @@
       filters.elements.estado.value = btn.dataset.filterEstado;
       loadAdminTickets();
     }));
-    $('#adminRefresh').addEventListener('click', loadAdmin);
+    $('#adminRefresh').addEventListener('click', () => {
+      if ($('[data-admin-panel="reporte"]').hidden) loadAdmin();
+      else loadReport();
+    });
+    initReport();
     $('#adminTickets').addEventListener('click', e => {
       const row = e.target.closest('[data-open-ticket]');
       if (row) openTicket(row.dataset.openTicket);
@@ -497,6 +501,143 @@
       const row = e.target.closest('[data-open-ticket]');
       if (row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openTicket(row.dataset.openTicket); }
     });
+  }
+
+  /* --------------------------------------------------------------- reporte */
+
+  const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+  function isoDay(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  function initReport() {
+    $$('[data-admin-tab]').forEach(tab => tab.addEventListener('click', () => {
+      $$('[data-admin-tab]').forEach(t => t.classList.toggle('active', t === tab));
+      $$('[data-admin-panel]').forEach(p => { p.hidden = p.dataset.adminPanel !== tab.dataset.adminTab; });
+      if (tab.dataset.adminTab === 'reporte') loadReport();
+      else loadAdmin();
+    }));
+
+    const form = $('#reportFilters');
+    form.addEventListener('submit', e => e.preventDefault());
+    $$('[data-preset]', form).forEach(btn => btn.addEventListener('click', () => {
+      const hoy = new Date();
+      let desde = '';
+      if (btn.dataset.preset === 'mes') desde = isoDay(new Date(hoy.getFullYear(), hoy.getMonth(), 1));
+      if (btn.dataset.preset === '30') desde = isoDay(new Date(hoy.getTime() - 29 * 86400000));
+      if (btn.dataset.preset === 'anio') desde = isoDay(new Date(hoy.getFullYear(), 0, 1));
+      form.elements.desde.value = desde;
+      form.elements.hasta.value = desde ? isoDay(hoy) : '';
+      $$('[data-preset]', form).forEach(b => b.classList.toggle('active', b === btn));
+      loadReport();
+    }));
+    ['desde', 'hasta'].forEach(name => form.elements[name].addEventListener('change', () => {
+      $$('[data-preset]', form).forEach(b => b.classList.remove('active'));
+      loadReport();
+    }));
+
+    $('#reportCsv').addEventListener('click', async e => {
+      const btn = e.currentTarget;
+      try {
+        await withBusy(btn, async () => {
+          const res = await fetch(`${API}/admin/exportar?${reportParams()}`, { headers: { Authorization: `Bearer ${state.token}` } });
+          if (!res.ok) throw new Error('No se pudo generar el archivo.');
+          const blob = await res.blob();
+          const name = (/filename="([^"]+)"/.exec(res.headers.get('Content-Disposition') || '') || [])[1] || 'pqrs-byf.csv';
+          const url = URL.createObjectURL(blob);
+          const a = Object.assign(document.createElement('a'), { href: url, download: name });
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 2000);
+        });
+      } catch (error) {
+        toast(error.message, true);
+      }
+    });
+
+    $('#reportPrint').addEventListener('click', () => {
+      document.body.classList.add('pq-printing');
+      window.print();
+    });
+    window.addEventListener('afterprint', () => document.body.classList.remove('pq-printing'));
+  }
+
+  /** Envía inicio y fin del día en la hora local del navegador (Colombia), como instante exacto. */
+  function reportParams() {
+    const form = $('#reportFilters');
+    const params = new URLSearchParams();
+    const { desde, hasta } = { desde: form.elements.desde.value, hasta: form.elements.hasta.value };
+    if (desde) params.set('desde', new Date(`${desde}T00:00:00`).toISOString());
+    if (hasta) params.set('hasta', new Date(`${hasta}T23:59:59.999`).toISOString());
+    return params;
+  }
+
+  function periodoTexto() {
+    const form = $('#reportFilters');
+    const f = v => new Date(v + 'T12:00:00').toLocaleDateString('es-CO', { day: '2-digit', month: 'long', year: 'numeric' });
+    const { desde, hasta } = { desde: form.elements.desde.value, hasta: form.elements.hasta.value };
+    if (desde && hasta) return `Del ${f(desde)} al ${f(hasta)}`;
+    if (desde) return `Desde el ${f(desde)}`;
+    if (hasta) return `Hasta el ${f(hasta)}`;
+    return 'Todas las solicitudes registradas';
+  }
+
+  function duracion(horas) {
+    if (horas === null || horas === undefined) return '—';
+    if (horas < 1) return `${Math.max(1, Math.round(horas * 60))} min`;
+    if (horas < 48) return `${horas.toFixed(1).replace('.', ',')} h`;
+    return `${(horas / 24).toFixed(1).replace('.', ',')} días`;
+  }
+
+  function bars(list, labels = {}) {
+    const max = Math.max(1, ...list.map(i => i.total));
+    if (!list.length || list.every(i => !i.total)) return '<p class="pq-muted">Sin datos en este periodo.</p>';
+    return `<div class="pq-bars">${list.map(i => `
+      <div class="pq-bar-row">
+        <span title="${esc(labels[i.etiqueta] || i.etiqueta)}">${esc(labels[i.etiqueta] || i.etiqueta)}</span>
+        <div class="pq-bar-track"><div class="pq-bar-fill" style="width:${(i.total / max) * 100}%"></div></div>
+        <span>${i.total}</span>
+      </div>`).join('')}</div>`;
+  }
+
+  function columns(list) {
+    if (!list.length) return '<p class="pq-muted">Sin datos en este periodo.</p>';
+    const max = Math.max(1, ...list.map(i => i.total));
+    return `<div class="pq-columns">${list.slice(-12).map(i => {
+      const [y, m] = i.etiqueta.split('-');
+      return `<div class="pq-col">
+        <b>${i.total}</b>
+        <div class="pq-col-bar" style="height:${(i.total / max) * 100}%"></div>
+        <span>${MESES[Number(m) - 1]} ${y.slice(2)}</span>
+      </div>`;
+    }).join('')}</div>`;
+  }
+
+  async function loadReport() {
+    $('#reportPeriodo').textContent = periodoTexto();
+    const kpis = $('#reportKpis');
+    const charts = $('#reportCharts');
+    try {
+      const { data } = await api('/admin/reporte?' + reportParams());
+      const pct = data.total ? Math.round((data.respondidos / data.total) * 100) : 0;
+      kpis.innerHTML = `
+        <div class="pq-kpi"><div class="pq-kpi-num">${data.total}</div><div class="pq-kpi-label">Solicitudes</div><small>en el periodo</small></div>
+        <div class="pq-kpi"><div class="pq-kpi-num">${data.respondidos}</div><div class="pq-kpi-label">Respondidas</div><small>${pct}% del total</small></div>
+        <div class="pq-kpi"><div class="pq-kpi-num">${data.sinResponder}</div><div class="pq-kpi-label">Pendientes de respuesta</div><small>abiertas sin respuesta</small></div>
+        <div class="pq-kpi"><div class="pq-kpi-num">${duracion(data.horasPromedioRespuesta)}</div><div class="pq-kpi-label">Tiempo promedio</div><small>hasta la primera respuesta</small></div>`;
+      charts.innerHTML = `
+        <section class="pq-card pq-chart"><h3>Por estado</h3>${bars(data.porEstado, ESTADOS)}</section>
+        <section class="pq-card pq-chart"><h3>Por tipo</h3>${bars(data.porTipo, TIPOS)}</section>
+        <section class="pq-card pq-chart"><h3>Solicitudes por mes</h3>${columns(data.porMes)}</section>
+        <section class="pq-card pq-chart"><h3>Motivos más frecuentes</h3>${bars(data.porAsunto)}</section>
+        <section class="pq-card pq-chart"><h3>Prendas con más casos</h3>${bars(data.porPrenda)}</section>
+        <section class="pq-card pq-chart"><h3>Clientes con más solicitudes</h3>${bars(data.porCliente)}</section>`;
+    } catch (error) {
+      kpis.innerHTML = '';
+      charts.innerHTML = `<p class="pq-muted">${esc(error.message)}</p>`;
+    }
   }
 
   function loadAdmin() {

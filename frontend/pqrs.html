@@ -371,10 +371,22 @@
             <span class="pq-eyebrow">Panel del administrador</span>
             <h1 class="pq-title pq-title-sm">Gestión de PQRS</h1>
           </div>
-          <button type="button" class="pq-btn pq-btn-outline pq-btn-sm" id="adminRefresh">
-            <i class="fa-solid fa-rotate"></i> Actualizar
-          </button>
+          <div class="pq-head-actions">
+            <div class="pq-tabs pq-tabs-inline" role="tablist">
+              <button type="button" class="pq-tab active" data-admin-tab="tickets">
+                <i class="fa-solid fa-ticket"></i> Solicitudes
+              </button>
+              <button type="button" class="pq-tab" data-admin-tab="reporte">
+                <i class="fa-solid fa-chart-column"></i> Reporte
+              </button>
+            </div>
+            <button type="button" class="pq-icon-btn" id="adminRefresh" title="Actualizar" aria-label="Actualizar">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </div>
         </div>
+
+        <div data-admin-panel="tickets">
 
         <div class="pq-stats" id="adminStats">
           <button type="button" class="pq-stat" data-filter-estado="">
@@ -437,6 +449,43 @@
             </thead>
             <tbody id="adminTickets"></tbody>
           </table>
+        </div>
+        </div>
+
+        <!-- Reporte de PQRS -->
+        <div data-admin-panel="reporte" hidden>
+          <form class="pq-report-bar" id="reportFilters">
+            <div class="pq-presets" role="group" aria-label="Periodo">
+              <button type="button" class="pq-chip" data-preset="mes">Este mes</button>
+              <button type="button" class="pq-chip" data-preset="30">Últimos 30 días</button>
+              <button type="button" class="pq-chip" data-preset="anio">Este año</button>
+              <button type="button" class="pq-chip active" data-preset="todo">Todo</button>
+            </div>
+            <div class="pq-report-dates">
+              <label class="pq-field"><span>Desde</span><input type="date" name="desde"></label>
+              <label class="pq-field"><span>Hasta</span><input type="date" name="hasta"></label>
+            </div>
+            <div class="pq-report-actions">
+              <button type="button" class="pq-btn pq-btn-outline pq-btn-sm" id="reportCsv">
+                <i class="fa-solid fa-file-excel"></i> Descargar Excel
+              </button>
+              <button type="button" class="pq-btn pq-btn-gold pq-btn-sm" id="reportPrint">
+                <i class="fa-solid fa-print"></i> Imprimir / PDF
+              </button>
+            </div>
+          </form>
+
+          <div class="pq-report" id="reportBody">
+            <header class="pq-report-print-head">
+              <img src="assets/logos/byf-logo-dark.png" alt="B&amp;F">
+              <div>
+                <strong>Reporte de PQRS y garantías</strong>
+                <span id="reportPeriodo"></span>
+              </div>
+            </header>
+            <div class="pq-kpis" id="reportKpis"></div>
+            <div class="pq-report-grid" id="reportCharts"></div>
+          </div>
         </div>
       </div>
     </section>

@@ -4,6 +4,7 @@
 const db = require('../config/db');
 const auth = require('../utils/auth');
 const uploads = require('../utils/uploads');
+const mailer = require('../utils/mailer');
 
 const TIPOS = ['peticion', 'queja', 'reclamo'];
 const ESTADOS = ['radicado', 'en_revision', 'respondido', 'cerrado'];
@@ -41,6 +42,21 @@ const handle = fn => async (req, res) => {
     });
   }
 };
+
+async function cuentaDe(usuarioId) {
+  const rows = await db.query('SELECT id, nombre, email FROM usuarios WHERE id = ?', [usuarioId]);
+  return rows[0] || null;
+}
+
+/** Aviso por correo sin afectar la respuesta si algo falla. */
+async function avisar(fn) {
+  if (!mailer.enabled()) return;
+  try {
+    await fn();
+  } catch (error) {
+    console.error('[Correo]', error.message);
+  }
+}
 
 function publicUser(u) {
   return { id: u.id, rol: u.rol, nombre: u.nombre, documento: u.documento, email: u.email, telefono: u.telefono };
@@ -189,6 +205,10 @@ const crearTicket = handle(async (req, res) => {
       return { id: ticketId, codigo };
     });
     res.status(201).json({ success: true, message: 'Solicitud radicada.', data: ticket });
+    avisar(async () => {
+      const [creado] = await db.query('SELECT * FROM tickets WHERE id = ?', [ticket.id]);
+      mailer.ticketRadicado(creado, await cuentaDe(req.user.id));
+    });
   } catch (error) {
     if (ticketId) uploads.removeTicketFolder(ticketId);
     throw error;
@@ -291,6 +311,11 @@ const responder = handle(async (req, res) => {
     await tx.query('UPDATE tickets SET estado = ?, actualizado_en = CURRENT_TIMESTAMP WHERE id = ?', [nuevoEstado, ticket.id]);
   });
   res.status(201).json({ success: true, message: 'Mensaje enviado.', data: { estado: nuevoEstado } });
+  avisar(async () => {
+    const cliente = await cuentaDe(ticket.usuario_id);
+    if (req.user.rol === 'admin') mailer.respuestaAdmin(ticket, cliente, mensaje, nuevoEstado);
+    else mailer.mensajeCliente(ticket, cliente, mensaje);
+  });
 });
 
 const cambiarEstado = handle(async (req, res) => {
@@ -298,6 +323,9 @@ const cambiarEstado = handle(async (req, res) => {
   if (!ESTADOS.includes(req.body.estado)) throw fail(400, 'Estado no válido.');
   await db.query('UPDATE tickets SET estado = ?, actualizado_en = CURRENT_TIMESTAMP WHERE id = ?', [req.body.estado, ticket.id]);
   res.json({ success: true, data: { estado: req.body.estado } });
+  if (req.body.estado !== ticket.estado) {
+    avisar(async () => mailer.cambioEstado(ticket, await cuentaDe(ticket.usuario_id), req.body.estado));
+  }
 });
 
 const verAdjunto = handle(async (req, res) => {
@@ -323,6 +351,139 @@ const resumen = handle(async (req, res) => {
   res.json({ success: true, data });
 });
 
+/* ---------------------------------------------------------------- reporte */
+
+// Zona horaria para mostrar fechas en reportes y Excel (el servidor del hosting usa UTC)
+const TIME_ZONE = process.env.APP_TIMEZONE || 'America/Bogota';
+
+/**
+ * Convierte el filtro de fecha en un instante exacto.
+ * El navegador envía el inicio/fin del día en hora local como ISO (2026-11-01T05:00:00.000Z).
+ * Se pasa a MySQL como Date para que mysql2 lo convierta a la misma zona en que guarda los datos.
+ */
+function filtroFecha(value) {
+  if (!value || !/^\d{4}-\d{2}-\d{2}(T[\d:.]+Z)?$/.test(value)) return null;
+  const d = new Date(value.length === 10 ? `${value}T00:00:00` : value);
+  return isNaN(d) ? null : d;
+}
+
+/** Tickets de un rango de fechas (ambos extremos incluidos). */
+async function ticketsDelRango(query) {
+  const where = [];
+  const params = [];
+  const desde = filtroFecha(query.desde);
+  const hasta = filtroFecha(query.hasta);
+  if (desde) {
+    where.push('t.creado_en >= ?');
+    params.push(desde);
+  }
+  if (hasta) {
+    where.push('t.creado_en <= ?');
+    params.push(hasta);
+  }
+  return db.query(
+    `SELECT t.*, u.email AS email_cuenta, u.telefono AS telefono_cuenta,
+            (SELECT MIN(r.creado_en) FROM ticket_respuestas r
+              WHERE r.ticket_id = t.id AND r.autor_rol = 'admin') AS primera_respuesta,
+            (SELECT COUNT(*) FROM ticket_adjuntos a WHERE a.ticket_id = t.id) AS total_fotos
+       FROM tickets t JOIN usuarios u ON u.id = t.usuario_id
+      ${where.length ? 'WHERE ' + where.join(' AND ') : ''}
+      ORDER BY t.creado_en, t.id`,
+    params
+  );
+}
+
+/** Partes de una fecha en la zona horaria de la empresa: { y, m, d, h, min } */
+function partesLocales(date) {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+    timeZone: TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+  }).formatToParts(date).map(p => [p.type, p.value]));
+  return { y: parts.year, m: parts.month, d: parts.day, h: parts.hour, min: parts.minute };
+}
+
+function toDate(value) {
+  if (value instanceof Date) return value;
+  if (!value) return null;
+  const d = new Date(String(value).replace(' ', 'T'));
+  return isNaN(d) ? null : d;
+}
+
+function contar(lista, clave, orden) {
+  const mapa = new Map();
+  for (const item of lista) {
+    const k = clave(item);
+    if (k) mapa.set(k, (mapa.get(k) || 0) + 1);
+  }
+  const salida = [...mapa].map(([etiqueta, total]) => ({ etiqueta, total }));
+  return orden ? salida.sort(orden) : salida.sort((a, b) => b.total - a.total);
+}
+
+const reporte = handle(async (req, res) => {
+  const tickets = await ticketsDelRango(req.query);
+  const horas = [];
+  for (const t of tickets) {
+    const inicio = toDate(t.creado_en);
+    const resp = toDate(t.primera_respuesta);
+    if (inicio && resp) horas.push((resp - inicio) / 3600000);
+  }
+  const mes = t => {
+    const d = toDate(t.creado_en);
+    if (!d) return null;
+    const p = partesLocales(d);
+    return `${p.y}-${p.m}`;
+  };
+  const normal = v => (v ? String(v).trim().toLowerCase().replace(/^\p{Ll}/u, c => c.toUpperCase()) : null);
+
+  res.json({
+    success: true,
+    data: {
+      total: tickets.length,
+      porEstado: ESTADOS.map(e => ({ etiqueta: e, total: tickets.filter(t => t.estado === e).length })),
+      porTipo: TIPOS.map(e => ({ etiqueta: e, total: tickets.filter(t => t.tipo === e).length })),
+      porMes: contar(tickets, mes, (a, b) => a.etiqueta.localeCompare(b.etiqueta)),
+      porAsunto: contar(tickets, t => normal(t.asunto)).slice(0, 8),
+      porPrenda: contar(tickets, t => normal(t.prenda)).slice(0, 8),
+      porCliente: contar(tickets, t => t.cliente).slice(0, 8),
+      respondidos: horas.length,
+      sinResponder: tickets.filter(t => !t.primera_respuesta && t.estado !== 'cerrado').length,
+      horasPromedioRespuesta: horas.length ? horas.reduce((a, b) => a + b, 0) / horas.length : null
+    }
+  });
+});
+
+/** Descarga en CSV compatible con Excel (separador ; y BOM para tildes). */
+const exportar = handle(async (req, res) => {
+  const tickets = await ticketsDelRango(req.query);
+  const NOMBRES_TIPO = { peticion: 'Petición', queja: 'Queja', reclamo: 'Reclamo' };
+  const NOMBRES_ESTADO = { radicado: 'Radicado', en_revision: 'En revisión', respondido: 'Respondido', cerrado: 'Cerrado' };
+  const fecha = v => {
+    const d = toDate(v);
+    if (!d) return '';
+    const p = partesLocales(d);
+    return `${p.y}-${p.m}-${p.d} ${p.h}:${p.min}`;
+  };
+  const celda = v => {
+    let txt = String(v ?? '');
+    if (/^[=+\-@\t\r]/.test(txt)) txt = "'" + txt; // evita fórmulas al abrir en Excel
+    return /[;"\n\r]/.test(txt) ? `"${txt.replace(/"/g, '""')}"` : txt;
+  };
+  const columnas = [
+    ['Ticket', t => t.codigo], ['Fecha radicado', t => fecha(t.creado_en)], ['Estado', t => NOMBRES_ESTADO[t.estado]],
+    ['Tipo', t => NOMBRES_TIPO[t.tipo]], ['Cliente', t => t.cliente], ['Correo', t => t.email_cuenta],
+    ['Teléfono', t => t.telefono_contacto || t.telefono_cuenta], ['Número de pedido', t => t.numero_pedido],
+    ['Asunto', t => t.asunto], ['Prenda', t => t.prenda], ['Talla', t => t.talla], ['Descripción', t => t.descripcion],
+    ['Fotos', t => t.total_fotos], ['Dirección', t => t.direccion], ['Ciudad', t => t.ciudad],
+    ['Especificaciones de recogida', t => t.especificaciones_recogida], ['Especificaciones de entrega', t => t.especificaciones_entrega],
+    ['Primera respuesta', t => fecha(t.primera_respuesta)], ['Última actualización', t => fecha(t.actualizado_en)]
+  ];
+  const lineas = [columnas.map(c => c[0]).join(';')];
+  for (const t of tickets) lineas.push(columnas.map(c => celda(c[1](t))).join(';'));
+  const nombre = `pqrs-byf-${new Date().toISOString().slice(0, 10)}.csv`;
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="${nombre}"`);
+  res.send('﻿' + lineas.join('\r\n'));
+});
+
 /** Responde 503 si MySQL no está conectado. */
 function requireDb(req, res, next) {
   if (!db.isReady()) {
@@ -337,5 +498,5 @@ function requireDb(req, res, next) {
 module.exports = {
   estado, registro, login, yo, configurarAdmin,
   crearTicket, listarTickets, verTicket, actualizarLogistica,
-  responder, cambiarEstado, verAdjunto, resumen, requireDb
+  responder, cambiarEstado, verAdjunto, resumen, reporte, exportar, requireDb
 };

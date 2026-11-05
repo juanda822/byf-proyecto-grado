@@ -26,5 +26,7 @@ router.get('/tickets/:id/adjuntos/:adjuntoId', requireAuth(), pqrs.verAdjunto);
 
 // Panel del administrador
 router.get('/admin/resumen', requireAuth('admin'), pqrs.resumen);
+router.get('/admin/reporte', requireAuth('admin'), pqrs.reporte);
+router.get('/admin/exportar', requireAuth('admin'), pqrs.exportar);
 
 module.exports = router;
