@@ -1,0 +1,88 @@
+/* ==========================================================================
+   17-EMPLEO.CSS - TRABAJA CON NOSOTROS (usa los tokens de 16-pqrs)
+   ========================================================================== */
+
+
+
+.em-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.em-intro { position: sticky; top: 110px; }
+
+.em-points { display: grid; gap: 16px; margin: 28px 0 22px; }
+.em-points li { display: flex; gap: 14px; align-items: flex-start; }
+.em-points i {
+  flex: 0 0 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--pq-gold); background: rgba(212, 175, 55, 0.1); border: 1px solid var(--pq-line);
+}
+.em-points strong { display: block; color: #fff; font-family: var(--font-subheading); font-size: 0.92rem; }
+.em-points div { color: var(--pq-text-dim); font-size: 0.86rem; }
+
+.em-note { font-size: 0.82rem; color: var(--pq-text-dim); display: flex; gap: 8px; }
+.em-note i { color: var(--pq-gold); margin-top: 3px; }
+
+.em-card { padding: 30px 32px 34px; }
+
+.em-section-title {
+  font-family: var(--font-subheading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--pq-gold);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--pq-line);
+  margin-top: 8px;
+}
+
+.em-radios { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
+.em-radios legend {
+  font-family: var(--font-subheading); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.6px;
+  text-transform: uppercase; color: var(--pq-text-soft); margin-bottom: 10px;
+}
+.em-radios label, .em-check { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 0.92rem; color: var(--pq-text); }
+.em-radios input, .em-check input { accent-color: var(--pq-gold); width: 18px; height: 18px; margin-top: 2px; flex: 0 0 18px; }
+.em-check { font-size: 0.86rem; color: var(--pq-text-soft); line-height: 1.5; }
+.em-check a { color: var(--pq-gold); text-decoration: underline; }
+.em-check.invalid span { color: var(--pq-danger); }
+
+.em-drop { padding: 26px 12px; }
+.em-drop.invalid { border-color: var(--pq-danger); }
+
+.em-file {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px;
+  border: 1px solid var(--pq-line); background: rgba(212, 175, 55, 0.06); font-size: 0.9rem;
+}
+.em-file > i { color: var(--pq-gold); font-size: 1.3rem; }
+.em-file span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.em-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.em-closed { text-align: center; padding: 40px 20px; }
+.em-closed > i { font-size: 2.4rem; color: var(--pq-gold); margin-bottom: 16px; }
+.em-closed h2 { font-family: var(--font-heading); color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+.em-closed p { color: var(--pq-text-soft); margin: 0 auto 22px; max-width: 420px; }
+
+.em-done { padding: 30px 10px; box-shadow: none; }
+
+/* Política de privacidad */
+.em-legal { max-width: 860px; }
+.em-legal h2 { font-family: var(--font-subheading); color: var(--pq-gold); font-size: 1.05rem; margin: 26px 0 8px; }
+.em-legal p, .em-legal li { color: var(--pq-text-soft); font-size: 0.95rem; line-height: 1.7; }
+.em-legal ul { list-style: disc; padding-left: 22px; display: grid; gap: 4px; }
+
+@media (max-width: 960px) {
+  .em-grid { grid-template-columns: 1fr; gap: 28px; }
+  .em-intro { position: static; }
+}
+
+@media (max-width: 680px) {
+  .em-card { padding: 22px 18px; }
+  .pq-brand-uniforms { height: 34px; }
+  .pq-header-actions .byf-pqrs-btn { padding: 6px 10px; }
+}

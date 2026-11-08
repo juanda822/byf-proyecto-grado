@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trabaja con nosotros | B&amp;F Uniforms</title>
+  <meta name="description" content="Postúlate para trabajar en Diseños ByF: confección, bordado, estampación, diseño, ventas, logística y más. Envía tu hoja de vida en línea.">
+  <link rel="icon" type="image/png" href="assets/logos/byf-hero-emblem.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/00-global/global.css">
+  <link rel="stylesheet" href="css/16-pqrs/pqrs.css">
+  <link rel="stylesheet" href="css/17-empleo/empleo.css">
+</head>
+
+<body class="pqrs-body">
+
+  <header class="pq-header">
+    <div class="pq-container pq-header-inner">
+      <a href="index.html" class="pq-brand" title="Volver al sitio de B&amp;F">
+        <img src="assets/logos/byf-uniforms-white.png" alt="B&amp;F Uniforms" class="pq-brand-logo pq-brand-uniforms">
+        <span class="pq-brand-divider" aria-hidden="true"></span>
+        <span class="pq-brand-text">
+          <strong>Trabaja con nosotros</strong>
+          <small>Únete al equipo de Diseños ByF</small>
+        </span>
+      </a>
+      <div class="pq-header-actions">
+        <a href="pqrs.html" class="byf-pqrs-btn"><i class="fa-solid fa-user"></i> Inicia sesión</a>
+        <a href="index.html" class="pq-btn pq-btn-outline pq-btn-sm pq-back">
+          <i class="fa-solid fa-arrow-left"></i> <span>Volver al sitio</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pq-main">
+    <div class="pq-container em-grid">
+
+      <aside class="em-intro">
+        <span class="pq-eyebrow">Diseños ByF · Bogotá</span>
+        <h1 class="pq-title" data-texto="trabaja_titulo">Trabaja con nosotros</h1>
+        <p class="pq-lead">
+          En Diseños ByF buscamos personas comprometidas, responsables y con ganas de crecer.
+          <span data-texto="trabaja_intro">Completa el formulario y envíanos tu hoja de vida para futuras oportunidades laborales.</span>
+        </p>
+        <ul class="em-points">
+          <li><i class="fa-solid fa-shirt"></i><div><strong>Producción textil</strong>Confección, corte, bordado, estampación, DTF, planchado y terminación.</div></li>
+          <li><i class="fa-solid fa-pen-ruler"></i><div><strong>Diseño y ventas</strong>Diseño textil y atención a nuestros clientes empresariales.</div></li>
+          <li><i class="fa-solid fa-truck"></i><div><strong>Logística y apoyo</strong>Bodega, reparto, contabilidad y supervisión.</div></li>
+        </ul>
+        <p class="em-note"><i class="fa-solid fa-circle-info"></i> Solo aparecen los cargos para los que estamos recibiendo hojas de vida en este momento.</p>
+      </aside>
+
+      <section class="pq-card em-card">
+
+        <form class="pq-form" id="formEmpleo" novalidate>
+          <h2 class="em-section-title">Información personal</h2>
+          <label class="pq-field">
+            <span>Nombre completo *</span>
+            <input type="text" name="nombre" autocomplete="name" maxlength="150" required placeholder="Escribe tu nombre">
+          </label>
+          <div class="pq-row">
+            <label class="pq-field">
+              <span>Correo electrónico *</span>
+              <input type="email" name="email" autocomplete="email" maxlength="190" required placeholder="correo@ejemplo.com">
+            </label>
+            <label class="pq-field">
+              <span>Teléfono de contacto *</span>
+              <input type="tel" name="telefono" autocomplete="tel" maxlength="40" required placeholder="300 000 0000">
+            </label>
+          </div>
+
+          <h2 class="em-section-title">Información laboral</h2>
+          <label class="pq-field">
+            <span>¿En qué cargo te gustaría trabajar? *</span>
+            <select name="cargoId" id="cargoSelect" required>
+              <option value="">Cargando cargos…</option>
+            </select>
+          </label>
+
+          <fieldset class="em-radios">
+            <legend>¿Tienes experiencia en el área? *</legend>
+            <label><input type="radio" name="experiencia" value="sin_experiencia" checked> <span>No tengo experiencia</span></label>
+            <label><input type="radio" name="experiencia" value="menos_1"> <span>Menos de 1 año</span></label>
+            <label><input type="radio" name="experiencia" value="entre_1_3"> <span>Entre 1 y 3 años</span></label>
+            <label><input type="radio" name="experiencia" value="mas_3"> <span>Más de 3 años</span></label>
+          </fieldset>
+
+          <label class="pq-field">
+            <span>Cuéntanos brevemente sobre ti</span>
+            <textarea name="descripcion" rows="4" maxlength="3000" placeholder="Describe tus habilidades, conocimientos y experiencia."></textarea>
+          </label>
+
+          <div class="pq-field">
+            <span>Adjuntar hoja de vida *</span>
+            <label class="pq-dropzone em-drop" id="cvDrop">
+              <input type="file" id="cvInput" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Seleccionar archivo</span>
+              <small>PDF o Word · máximo 5 MB</small>
+            </label>
+            <div class="em-file" id="cvFile" hidden>
+              <i class="fa-solid fa-file-lines"></i>
+              <span id="cvName"></span>
+              <button type="button" class="pq-icon-btn" id="cvRemove" aria-label="Quitar archivo"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+          </div>
+
+          <!-- Campo trampa contra robots: las personas no lo ven -->
+          <label class="em-hp" aria-hidden="true">Sitio web <input type="text" name="sitio" tabindex="-1" autocomplete="off"></label>
+
+          <label class="em-check">
+            <input type="checkbox" name="autorizaDatos">
+            <span>Autorizo el tratamiento de mis datos personales para procesos de selección laboral, conforme a la
+              <a href="politica-privacidad.html" target="_blank" rel="noopener">política de privacidad</a>. *</span>
+          </label>
+
+          <p class="pq-form-error" data-error></p>
+          <button type="submit" class="pq-btn pq-btn-gold pq-btn-block">
+            <i class="fa-solid fa-paper-plane"></i> Enviar postulación
+          </button>
+        </form>
+
+        <div class="em-closed" id="empleoCerrado" hidden>
+          <i class="fa-solid fa-door-closed"></i>
+          <h2>No tenemos convocatorias abiertas</h2>
+          <p>En este momento no estamos recibiendo hojas de vida. Vuelve pronto: publicamos los cargos disponibles en esta página.</p>
+          <a href="index.html" class="pq-btn pq-btn-outline">Volver al sitio</a>
+        </div>
+
+        <div class="pq-done em-done" id="empleoListo" hidden>
+          <div class="pq-done-badge"><i class="fa-solid fa-check"></i></div>
+          <h2>¡Gracias por postularte!</h2>
+          <p>Recibimos tu hoja de vida con el código <strong id="empleoCodigo"></strong>. Si tu perfil se ajusta a una vacante, nos comunicaremos contigo. También te enviamos una confirmación a tu correo.</p>
+          <a href="index.html" class="pq-btn pq-btn-gold">Volver al sitio</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="pq-toast" id="pqToast" role="status" aria-live="polite"></div>
+  <script src="js/empleo.js"></script>
+</body>
+
+</html>

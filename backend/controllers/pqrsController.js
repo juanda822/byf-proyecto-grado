@@ -7,6 +7,7 @@ const uploads = require('../utils/uploads');
 const mailer = require('../utils/mailer');
 
 const TIPOS = ['peticion', 'queja', 'reclamo'];
+const CATEGORIAS = ['pqrs', 'garantia'];
 const ESTADOS = ['radicado', 'en_revision', 'respondido', 'cerrado'];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -165,35 +166,41 @@ const configurarAdmin = handle(async (req, res) => {
 
 const crearTicket = handle(async (req, res) => {
   const body = req.body || {};
+  const categoria = body.categoria === 'garantia' ? 'garantia' : 'pqrs';
+  const garantia = categoria === 'garantia';
   const cliente = clean(body.cliente, 150);
-  const numeroPedido = clean(body.numeroPedido, 40);
-  const tipo = clean(body.tipo, 20).toLowerCase();
-  const asunto = clean(body.asunto, 150);
+  const numeroPedido = optional(body.numeroPedido, 40);
+  const tipo = garantia ? 'reclamo' : clean(body.tipo, 20).toLowerCase();
+  const asunto = clean(body.asunto, 150) || (garantia ? 'Garantía' : '');
   const descripcion = clean(body.descripcion, 5000);
   const prenda = optional(body.prenda, 100);
   const talla = optional(body.talla, 30);
 
   if (cliente.length < 2) throw fail(400, 'Escribe el nombre del cliente.');
-  if (!numeroPedido) throw fail(400, 'Escribe el número de pedido.');
+  if (garantia && !numeroPedido) throw fail(400, 'Escribe el número de pedido de la prenda.');
   if (!TIPOS.includes(tipo)) throw fail(400, 'Selecciona si es una petición, queja o reclamo.');
-  if (asunto.length < 3) throw fail(400, 'Indica el asunto de tu solicitud (por ejemplo: Garantía).');
+  if (asunto.length < 3) throw fail(400, 'Indica el asunto de tu solicitud.');
+  if (garantia && !prenda) throw fail(400, 'Indica la prenda que presenta el defecto.');
   if (descripcion.length < 10) throw fail(400, 'Describe el motivo con un poco más de detalle.');
 
   const fotos = [
-    ...uploads.parsePhotos(body.fotosPrelavado, 'prelavado', 'prelavado'),
-    ...uploads.parsePhotos(body.fotosDefecto, 'defecto', 'la parte defectuosa')
+    ...(garantia ? uploads.parsePhotos(body.fotosPrelavado, 'prelavado', 'prelavado') : []),
+    ...uploads.parsePhotos(body.fotosDefecto, 'defecto', garantia ? 'la parte defectuosa' : 'soporte')
   ];
+  if (garantia && !fotos.some(f => f.categoria === 'defecto')) {
+    throw fail(400, 'Adjunta al menos una foto de la parte defectuosa de la prenda.');
+  }
 
   let ticketId = null;
   try {
     const ticket = await db.transaction(async tx => {
       const result = await tx.query(
-        `INSERT INTO tickets (usuario_id, cliente, numero_pedido, tipo, asunto, prenda, talla, descripcion)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [req.user.id, cliente, numeroPedido, tipo, asunto, prenda, talla, descripcion]
+        `INSERT INTO tickets (usuario_id, categoria, cliente, numero_pedido, tipo, asunto, prenda, talla, descripcion)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [req.user.id, categoria, cliente, numeroPedido, tipo, asunto, prenda, talla, descripcion]
       );
       ticketId = result.insertId;
-      const codigo = `PQR-${new Date().getFullYear()}-${String(ticketId).padStart(5, '0')}`;
+      const codigo = `${garantia ? 'GAR' : 'PQR'}-${new Date().getFullYear()}-${String(ticketId).padStart(5, '0')}`;
       await tx.query('UPDATE tickets SET codigo = ? WHERE id = ?', [codigo, ticketId]);
 
       for (const foto of uploads.savePhotos(ticketId, fotos)) {
@@ -202,7 +209,7 @@ const crearTicket = handle(async (req, res) => {
           [ticketId, foto.categoria, foto.nombre, foto.archivo, foto.mime, foto.buffer.length]
         );
       }
-      return { id: ticketId, codigo };
+      return { id: ticketId, codigo, categoria };
     });
     res.status(201).json({ success: true, message: 'Solicitud radicada.', data: ticket });
     avisar(async () => {
@@ -226,6 +233,10 @@ const listarTickets = handle(async (req, res) => {
     where.push('t.estado = ?');
     params.push(req.query.estado);
   }
+  if (CATEGORIAS.includes(req.query.categoria)) {
+    where.push('t.categoria = ?');
+    params.push(req.query.categoria);
+  }
   if (TIPOS.includes(req.query.tipo)) {
     where.push('t.tipo = ?');
     params.push(req.query.tipo);
@@ -237,7 +248,7 @@ const listarTickets = handle(async (req, res) => {
     params.push(like, like, like, like);
   }
   const rows = await db.query(
-    `SELECT t.id, t.codigo, t.cliente, t.numero_pedido, t.tipo, t.asunto, t.prenda, t.talla, t.estado,
+    `SELECT t.id, t.codigo, t.categoria, t.cliente, t.numero_pedido, t.tipo, t.asunto, t.prenda, t.talla, t.estado,
             t.creado_en, t.actualizado_en, u.email AS email_cuenta,
             (SELECT COUNT(*) FROM ticket_respuestas r WHERE r.ticket_id = t.id) AS total_respuestas
        FROM tickets t
@@ -341,7 +352,11 @@ const verAdjunto = handle(async (req, res) => {
 });
 
 const resumen = handle(async (req, res) => {
-  const rows = await db.query('SELECT estado, COUNT(*) AS total FROM tickets GROUP BY estado');
+  const cat = CATEGORIAS.includes(req.query.categoria) ? req.query.categoria : null;
+  const rows = await db.query(
+    `SELECT estado, COUNT(*) AS total FROM tickets ${cat ? 'WHERE categoria = ?' : ''} GROUP BY estado`,
+    cat ? [cat] : []
+  );
   const data = { total: 0 };
   for (const e of ESTADOS) data[e] = 0;
   for (const row of rows) {
@@ -380,6 +395,10 @@ async function ticketsDelRango(query) {
   if (hasta) {
     where.push('t.creado_en <= ?');
     params.push(hasta);
+  }
+  if (CATEGORIAS.includes(query.categoria)) {
+    where.push('t.categoria = ?');
+    params.push(query.categoria);
   }
   return db.query(
     `SELECT t.*, u.email AS email_cuenta, u.telefono AS telefono_cuenta,
@@ -468,7 +487,7 @@ const exportar = handle(async (req, res) => {
     return /[;"\n\r]/.test(txt) ? `"${txt.replace(/"/g, '""')}"` : txt;
   };
   const columnas = [
-    ['Ticket', t => t.codigo], ['Fecha radicado', t => fecha(t.creado_en)], ['Estado', t => NOMBRES_ESTADO[t.estado]],
+    ['Ticket', t => t.codigo], ['Categoría', t => (t.categoria === 'garantia' ? 'Garantía' : 'PQRS')], ['Fecha radicado', t => fecha(t.creado_en)], ['Estado', t => NOMBRES_ESTADO[t.estado]],
     ['Tipo', t => NOMBRES_TIPO[t.tipo]], ['Cliente', t => t.cliente], ['Correo', t => t.email_cuenta],
     ['Teléfono', t => t.telefono_contacto || t.telefono_cuenta], ['Número de pedido', t => t.numero_pedido],
     ['Asunto', t => t.asunto], ['Prenda', t => t.prenda], ['Talla', t => t.talla], ['Descripción', t => t.descripcion],
@@ -482,6 +501,57 @@ const exportar = handle(async (req, res) => {
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
   res.setHeader('Content-Disposition', `attachment; filename="${nombre}"`);
   res.send('﻿' + lineas.join('\r\n'));
+});
+
+/* ------------------------------------------------- perfil y panel inicial */
+
+const actualizarPerfil = handle(async (req, res) => {
+  const nombre = clean(req.body.nombre, 150);
+  if (nombre.length < 3) throw fail(400, 'Escribe tu nombre o el de tu empresa.');
+  await db.query('UPDATE usuarios SET nombre = ?, documento = ?, telefono = ? WHERE id = ?',
+    [nombre, optional(req.body.documento, 40), optional(req.body.telefono, 40), req.user.id]);
+  const [u] = await db.query('SELECT * FROM usuarios WHERE id = ?', [req.user.id]);
+  res.json({ success: true, message: 'Datos actualizados.', data: publicUser(u) });
+});
+
+const cambiarClave = handle(async (req, res) => {
+  const [u] = await db.query('SELECT * FROM usuarios WHERE id = ?', [req.user.id]);
+  if (!u || !auth.verifyPassword(String(req.body.actual || ''), u.password_hash)) {
+    throw fail(400, 'La contraseña actual no es correcta.');
+  }
+  validatePassword(req.body.nueva);
+  await db.query('UPDATE usuarios SET password_hash = ? WHERE id = ?', [auth.hashPassword(req.body.nueva), u.id]);
+  res.json({ success: true, message: 'Contraseña actualizada.' });
+});
+
+/** Contadores para los botones del panel del administrador. */
+const panelAdmin = handle(async (req, res) => {
+  const [t] = await db.query(
+    `SELECT SUM(categoria = 'pqrs' AND estado = 'radicado') AS pqrs,
+            SUM(categoria = 'garantia' AND estado = 'radicado') AS garantias
+       FROM tickets`
+  );
+  const [h] = await db.query("SELECT COUNT(*) AS n FROM hojas_vida WHERE estado = 'nueva'");
+  const [c] = await db.query('SELECT SUM(activo = 1) AS activos, COUNT(*) AS total FROM cargos');
+  res.json({
+    success: true,
+    data: {
+      pqrsNuevas: Number(t.pqrs) || 0,
+      garantiasNuevas: Number(t.garantias) || 0,
+      hojasNuevas: Number(h.n) || 0,
+      cargosActivos: Number(c.activos) || 0,
+      cargosTotal: Number(c.total) || 0
+    }
+  });
+});
+
+/** Contadores para los botones del panel del cliente. */
+const panelCliente = handle(async (req, res) => {
+  const [t] = await db.query(
+    "SELECT COUNT(*) AS total, SUM(estado = 'respondido') AS respondidas FROM tickets WHERE usuario_id = ?",
+    [req.user.id]
+  );
+  res.json({ success: true, data: { total: Number(t.total) || 0, respondidas: Number(t.respondidas) || 0 } });
 });
 
 /** Responde 503 si MySQL no está conectado. */
@@ -498,5 +568,6 @@ function requireDb(req, res, next) {
 module.exports = {
   estado, registro, login, yo, configurarAdmin,
   crearTicket, listarTickets, verTicket, actualizarLogistica,
-  responder, cambiarEstado, verAdjunto, resumen, reporte, exportar, requireDb
+  responder, cambiarEstado, verAdjunto, resumen, reporte, exportar, requireDb,
+  actualizarPerfil, cambiarClave, panelAdmin, panelCliente
 };

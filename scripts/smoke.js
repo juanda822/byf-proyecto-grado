@@ -23,7 +23,7 @@ async function run() {
       resources.add(decodeURI(new URL(value, `http://local${source}`).pathname));
     }
   }
-  for (const page of ['index.html', 'uniformes.html', 'reflectivo.html', 'printbordados.html', 'pqrs.html']) {
+  for (const page of ['index.html', 'uniformes.html', 'reflectivo.html', 'printbordados.html', 'pqrs.html', 'trabaja-con-nosotros.html', 'politica-privacidad.html']) {
     const response = await fetch(`${base}/${page}`);
     assert.equal(response.status, 200, page);
     assert.match(response.headers.get('content-type'), /text\/html/);

@@ -283,6 +283,8 @@
   justify-content: center;
 }
 
+.pq-steps-intro li > span i { font-size: 0.85rem; }
+
 .pq-steps-intro strong { display: block; color: #fff; font-family: var(--font-subheading); font-size: 0.92rem; }
 .pq-steps-intro div { color: var(--pq-text-dim); font-size: 0.86rem; }
 
@@ -693,8 +695,191 @@
 .pq-table tbody tr:hover { background: rgba(212, 175, 55, 0.05); }
 .pq-table tbody tr:last-child td { border-bottom: none; }
 .pq-table .pq-ticket-code { font-size: 0.88rem; white-space: nowrap; }
+.pq-table td[data-label="Radicado"] { white-space: nowrap; }
 .pq-table small { display: block; color: var(--pq-text-dim); font-size: 0.76rem; }
 .pq-table td.pq-empty-cell { text-align: center; color: var(--pq-text-dim); padding: 48px 18px; cursor: default; }
+
+/* ------------------------------------------------------- paneles de inicio */
+.pq-brand-uniforms { height: 46px; }
+
+.pq-dash-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 22px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--pq-line);
+}
+
+.pq-dash-sub { color: var(--pq-text-soft); margin-top: 6px; }
+.pq-dash-sub strong { color: #fff; }
+.pq-dash-icon { font-size: 1.6rem; color: var(--pq-gold); margin-top: 8px; }
+
+.pq-tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+.pq-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 150px;
+  padding: 26px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--pq-line);
+  background: linear-gradient(180deg, rgba(22, 46, 80, 0.85), rgba(15, 30, 54, 0.92));
+  color: var(--pq-text);
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.pq-tile:hover { transform: translateY(-3px); border-color: var(--pq-gold); box-shadow: 0 16px 40px -18px rgba(212, 175, 55, 0.45); }
+.pq-tile > i { font-size: 1.7rem; color: var(--pq-gold); margin-bottom: 4px; }
+.pq-tile strong { font-family: var(--font-subheading); font-size: 1rem; color: #fff; }
+.pq-tile small { color: var(--pq-text-dim); font-size: 0.82rem; }
+
+.pq-tile-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--pq-gold);
+  color: var(--pq-navy-900);
+  font-weight: 800;
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.18);
+}
+
+.pq-section-head { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 22px; }
+.pq-page-head .pq-section-head { margin-bottom: 0; }
+.pq-section-head .pq-title { display: flex; align-items: center; gap: 12px; margin: 0; }
+
+.pq-back-panel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--pq-gold);
+  font-family: var(--font-subheading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.pq-back-panel:hover { text-decoration: underline; }
+
+.pq-profile-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; align-items: start; }
+
+/* Cargos */
+.pq-cargos-card { padding: 24px 26px; }
+.pq-cargos-head { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; margin-bottom: 18px; }
+.pq-cargos-head p { color: var(--pq-text-soft); font-size: 0.9rem; max-width: 620px; }
+.pq-cargos-head strong { color: #fff; }
+.pq-cargos-bulk { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.pq-cargos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 28px; }
+.pq-cargos h3 {
+  grid-column: 1 / -1;
+  font-family: var(--font-subheading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--pq-gold);
+  margin: 14px 0 4px;
+}
+
+.pq-cargo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--pq-line-soft);
+}
+
+.pq-cargo-name { font-size: 0.92rem; }
+.pq-cargo-name small { display: block; color: var(--pq-text-dim); font-size: 0.76rem; }
+.pq-cargo.off .pq-cargo-name { color: var(--pq-text-dim); }
+
+.pq-switch { position: relative; width: 46px; height: 26px; flex: 0 0 46px; }
+.pq-switch input { position: absolute; opacity: 0; inset: 0; cursor: pointer; z-index: 1; margin: 0; }
+.pq-switch span {
+  position: absolute; inset: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14); transition: background 0.2s;
+}
+.pq-switch span::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; transition: transform 0.2s;
+}
+.pq-switch input:checked + span { background: var(--pq-gold); border-color: var(--pq-gold); }
+.pq-switch input:checked + span::after { transform: translateX(20px); background: var(--pq-navy-900); }
+.pq-switch input:focus-visible + span { outline: 2px solid var(--pq-gold); outline-offset: 2px; }
+
+.pq-cargo-new {
+  display: grid;
+  grid-template-columns: 1fr 200px auto;
+  gap: 12px;
+  align-items: end;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--pq-line);
+}
+
+/* Estados de hojas de vida */
+.pq-badge-nueva { color: #93c5fd; }
+.pq-badge-revisada { color: #fbbf24; }
+.pq-badge-preseleccionada { color: #4ade80; }
+.pq-badge-descartada { color: #94a3b8; }
+
+/* Noticias */
+.pq-news-admin { display: grid; grid-template-columns: 1fr 1.1fr; gap: 18px; align-items: start; }
+.pq-news-drop { min-height: 150px; overflow: hidden; }
+.pq-news-drop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35; }
+.pq-news-drop i, .pq-news-drop span, .pq-news-drop small { position: relative; }
+.pq-visible-check { margin-top: 4px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.9rem; color: var(--pq-text-soft); }
+.pq-visible-check input { accent-color: var(--pq-gold); width: 18px; height: 18px; }
+.pq-news-list { display: grid; gap: 12px; }
+
+.pq-news-item {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--pq-line-soft);
+  background: rgba(22, 46, 80, 0.55);
+}
+
+.pq-news-item.off { opacity: 0.55; }
+.pq-news-item img { width: 96px; height: 72px; object-fit: cover; border-radius: 8px; background: var(--pq-navy-900); }
+.pq-news-item strong { display: block; color: #fff; font-size: 0.92rem; }
+.pq-news-item small { color: var(--pq-text-dim); font-size: 0.78rem; }
+.pq-news-actions { display: flex; gap: 6px; }
+
+@media (max-width: 960px) {
+  .pq-profile-grid, .pq-news-admin { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 680px) {
+  .pq-tiles { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pq-tile { min-height: 120px; padding: 18px 10px; }
+  .pq-tile small { display: none; }
+  .pq-brand-uniforms { height: 34px; }
+  .pq-cargos { grid-template-columns: 1fr; }
+  .pq-cargos-head { flex-direction: column; }
+  .pq-cargo-new { grid-template-columns: 1fr; }
+  .pq-news-item { grid-template-columns: 72px 1fr; }
+  .pq-news-item img { width: 72px; height: 56px; }
+  .pq-news-actions { grid-column: 1 / -1; justify-content: flex-end; }
+}
 
 /* ---------------------------------------------------------------- reporte */
 .pq-head-actions { display: flex; align-items: center; gap: 12px; }
@@ -791,6 +976,7 @@
   body.pq-printing .pq-page-head,
   body.pq-printing .pq-report-bar,
   body.pq-printing [data-admin-panel="tickets"],
+  body.pq-printing .pq-section-head,
   body.pq-printing .pq-toast,
   body.pq-printing .pq-drawer { display: none !important; }
   body.pq-printing .pq-main { padding: 0; }
@@ -986,7 +1172,7 @@
   .pq-card { padding: 22px 18px; }
   .pq-container { padding: 0 16px; }
   .pq-row { grid-template-columns: 1fr; }
-  .pq-brand-divider, .pq-brand-text small, .pq-back span, .pq-session-name { display: none; }
+  .pq-brand-divider, .pq-brand-text, .pq-back span, .pq-session-name { display: none; }
   .pq-brand-logo { height: 32px; }
   .pq-brand-text strong { font-size: 0.9rem; white-space: nowrap; }
   .pq-header-actions { gap: 8px; }

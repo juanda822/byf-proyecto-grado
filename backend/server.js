@@ -17,6 +17,8 @@ const newsletterRoutes = require('./routes/newsletterRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const clientsRoutes = require('./routes/clientsRoutes');
 const pqrsRoutes = require('./routes/pqrsRoutes');
+const empleoRoutes = require('./routes/empleoRoutes');
+const contenidoRoutes = require('./routes/contenidoRoutes');
 const db = require('./config/db');
 
 const app = express();
@@ -29,6 +31,8 @@ app.set('trust proxy', 1);
 app.use(cors());
 // Las PQRS llevan fotos en base64: límite de cuerpo mayor solo para esa ruta.
 app.use('/api/pqrs', express.json({ limit: '60mb' }));
+app.use('/api/empleo', express.json({ limit: '10mb' }));
+app.use('/api/contenido', express.json({ limit: '12mb' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,6 +51,8 @@ app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/clients', clientsRoutes);
 app.use('/api/pqrs', pqrsRoutes);
+app.use('/api/empleo', empleoRoutes);
+app.use('/api/contenido', contenidoRoutes);
 
 // Endpoint de estado y resumen general para el proyecto de grado
 app.get('/api/health', (req, res) => {
@@ -63,6 +69,8 @@ app.get('/api/health', (req, res) => {
       '/api/contact',
       '/api/clients',
       '/api/pqrs',
+      '/api/empleo',
+      '/api/contenido',
       '/api/stats'
     ]
   });

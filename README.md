@@ -10,7 +10,9 @@ frontend/
   uniformes.html             Línea de uniformes
   reflectivo.html            Línea reflectiva
   printbordados.html         Línea Print & Bordados
-  pqrs.html                  Centro de PQRS y garantías (clientes y administrador)
+  pqrs.html                  Inicia sesión: paneles del cliente y del administrador
+  trabaja-con-nosotros.html  Formulario de hojas de vida
+  politica-privacidad.html   Política de tratamiento de datos (Ley 1581)
   css/00-global/ … 14-reflectivo/  Estilos por sección
   js/                        Interacciones y formularios
   assets/                    Imágenes, logos y catálogos únicos
@@ -81,9 +83,23 @@ La comprobación valida páginas, recursos CSS/JS, catálogos, API y rechazo de 
 
 Las rutas inexistentes responden 404; no devuelven HTML como si fuera una imagen o un script.
 
+## Trabaja con nosotros
+
+La franja dorada de la página principal lleva a `trabaja-con-nosotros.html`, donde cualquier persona envía su hoja de vida (PDF o Word, máximo 5 MB) para uno de los cargos activos, con autorización de tratamiento de datos. Cada postulación genera un código `HV-2026-00001`, llega al panel del administrador (*Hojas de vida*) y por correo, con la hoja de vida adjunta. Desde la pestaña *Cargos* el administrador activa solo los cargos que necesita; si todos están inactivos, el formulario se cierra.
+
+| Método | Ruta | Uso |
+| --- | --- | --- |
+| GET | `/api/empleo/cargos` | Cargos activos |
+| POST | `/api/empleo/postulaciones` | Enviar hoja de vida (máximo 5 por hora por conexión) |
+| GET, PATCH, DELETE | `/api/empleo/admin/hojas-vida[/:id]` | Listar, cambiar estado y notas, eliminar (admin) |
+| GET | `/api/empleo/admin/hojas-vida/:id/archivo` | Descargar la hoja de vida (admin) |
+| GET, POST, PATCH | `/api/empleo/admin/cargos[/:id]` | Cargos: listar, crear, activar o desactivar (admin) |
+| GET, PUT | `/api/contenido/textos`, `/api/contenido/admin/textos` | Textos de «Trabaja con nosotros» |
+| GET, POST, PUT, PATCH, DELETE | `/api/contenido/noticias`, `/api/contenido/admin/noticias[/:id]` | Noticias de la página principal |
+
 ## Módulo PQRS y garantías (MySQL)
 
-El botón dorado **PQRS** (arriba a la derecha en todas las páginas) abre `pqrs.html`:
+El botón dorado **Inicia sesión** (arriba a la derecha en todas las páginas) abre `pqrs.html`. Después de ingresar, el administrador ve su panel (Gestionar PQRS, Gestionar garantías, Hojas de vida y Administrar contenido) y el cliente el suyo (Crear PQRS, Mis solicitudes, Solicitar garantía y Mi perfil):
 
 - **Cliente:** se registra, ingresa y radica su petición, queja o reclamo: cliente, número de pedido, tipo (lista desplegable), asunto (por ejemplo, Garantía), prenda y talla si aplican, descripción del motivo, fotos del prelavado y fotos de la parte defectuosa. Al enviar se genera un ticket (`PQR-2026-00001`) y pasa al paso 2, donde puede anexar dirección, ciudad, teléfono y especificaciones de recogida y entrega (o hacerlo después). En *Mis solicitudes* ve el estado, las respuestas y puede escribir mensajes.
 - **Administrador:** ve todas las PQRS con contadores por estado, buscador y filtros; abre cada ticket con sus fotos y datos de recogida, responde al cliente y cambia el estado (Radicado → En revisión → Respondido → Cerrado).
@@ -101,6 +117,8 @@ El botón dorado **PQRS** (arriba a la derecha en todas las páginas) abre `pqrs
    - Desde la terminal: `cd backend && npm run crear-admin` (también sirve para restablecer la contraseña).
 
 Para activar los correos, crea una cuenta gratuita en [Brevo](https://www.brevo.com), verifica un remitente (*Senders*) y genera una clave de API (*SMTP & API → API Keys*). Luego define en `.env` (o en las variables de Railway) `BREVO_API_KEY`, `MAIL_FROM` (el remitente verificado), `ADMIN_NOTIFY_EMAIL` y `SITE_URL`. Se usa la API de Brevo y no SMTP porque Railway bloquea el correo por SMTP. Sin esas variables el sitio funciona igual, solo que sin avisos.
+
+Tablas nuevas: `cargos`, `hojas_vida`, `contenido` y `noticias`. La columna `tickets.categoria` separa las PQRS de las garantías; las bases creadas antes se actualizan solas al iniciar el servidor.
 
 Tablas: `usuarios` (clientes y administradores, contraseñas con scrypt), `tickets`, `ticket_adjuntos` (fotos guardadas en `backend/uploads/pqrs/`, fuera de la carpeta pública y servidas solo a su dueño y al administrador) y `ticket_respuestas`. Las fotos se reducen en el navegador a 1600 px antes de enviarse; se aceptan JPG, PNG y WEBP, máximo 6 por sección.
 

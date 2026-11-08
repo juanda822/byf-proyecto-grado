@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="css/06-clientes/clientes.css">
   <link rel="stylesheet" href="css/07-noticias/noticias.css">
   <link rel="stylesheet" href="css/08-newsletter/newsletter.css">
+  <link rel="stylesheet" href="css/08-newsletter/trabaja.css">
   <link rel="stylesheet" href="css/09-contacto/contacto.css">
   <link rel="stylesheet" href="css/10-footer/footer.css">
   <link rel="stylesheet" href="css/11-modals/modals.css">
@@ -47,10 +48,10 @@
         </div>
         <div class="top-bar-links">
           <a href="#contacto"><i class="fa-solid fa-headset"></i> Soporte Corporativo</a>
-          <a href="#newsletter"><i class="fa-regular fa-envelope"></i> Newsletter</a>
+          <a href="trabaja-con-nosotros.html"><i class="fa-solid fa-briefcase"></i> Trabaja con nosotros</a>
           <a href="#" class="trigger-quote-modal" data-service="Cotización General"><i
               class="fa-solid fa-file-invoice-dollar"></i> Cotizar en Línea</a>
-          <a href="pqrs.html" class="byf-pqrs-btn" title="Peticiones, quejas, reclamos y garantías"><i class="fa-solid fa-headset"></i> PQRS</a>
+          <a href="pqrs.html" class="byf-pqrs-btn" title="Clientes y administrador: PQRS, garantías y más"><i class="fa-solid fa-user"></i> Inicia sesión</a>
         </div>
       </div>
     </div>
@@ -508,7 +509,7 @@
         </div>
       </div>
 
-      <div class="news-grid">
+      <div class="news-grid" id="newsGrid">
 
         <!-- Noticia 1 -->
         <article class="news-card">
@@ -570,30 +571,27 @@
   </section>
 
   <!-- ====================================================================
-       SECCIÓN 8: CAPTACIÓN / NEWSLETTER (I)
-       Franja horizontal amarilla de suscripción conectada a API REST
+       SECCIÓN 8: TRABAJA CON NOSOTROS (I)
+       Franja dorada que lleva al formulario de hojas de vida
        ==================================================================== -->
-  <section class="newsletter-section" id="newsletter">
+  <section class="newsletter-section trabaja-section" id="trabaja">
     <div class="container newsletter-container">
 
-      <!-- Columna Izquierda: Logo B&F Oficial -->
+      <!-- Columna Izquierda: Logo B&F Uniforms -->
       <div class="newsletter-brand-wrap">
-        <img src="assets/logos/byf-logo-dark.png" alt="B&F Logo Oficial" class="newsletter-logo">
+        <img src="assets/logos/byf-uniforms-dark.png" alt="B&amp;F Uniforms" class="newsletter-logo trabaja-logo">
       </div>
 
-      <!-- Columna Derecha: Formulario y textos de Captación -->
-      <div class="newsletter-content-wrap">
-        <h3 class="newsletter-title">Suscríbete a nuestro boletín</h3>
-        <p class="newsletter-subtitle">Recibe en tu correo nuestras últimas colecciones, descuentos mayoristas y
-          novedades en dotaciones textiles.</p>
-
-        <!-- Formulario funcional conectado a backend /api/newsletter -->
-        <form class="newsletter-form" id="newsletterForm">
-          <input type="email" id="newsletterEmail" class="newsletter-input"
-            placeholder="Ingresa tu correo electrónico aquí..." required>
-          <button type="submit" class="newsletter-submit-btn">Suscribirme</button>
-        </form>
-        <div id="newsletterFeedback" class="newsletter-feedback"></div>
+      <!-- Columna Derecha: texto y botón -->
+      <div class="newsletter-content-wrap trabaja-content">
+        <div>
+          <h3 class="newsletter-title" data-texto="trabaja_titulo">Trabaja con nosotros</h3>
+          <p class="newsletter-subtitle" data-texto="trabaja_texto">En Diseños ByF buscamos personas comprometidas,
+            responsables y con ganas de crecer. Si quieres hacer parte de nuestro equipo, déjanos tu hoja de vida.</p>
+        </div>
+        <a href="trabaja-con-nosotros.html" class="trabaja-btn">
+          <i class="fa-solid fa-briefcase" aria-hidden="true"></i> Quiero trabajar con ustedes
+        </a>
       </div>
 
     </div>
@@ -896,7 +894,7 @@
        ==================================================================== -->
   <script src="js/modals.js"></script>
   <script src="js/navigation.js"></script>
-  <script src="js/newsletter.js"></script>
+  <script src="js/contenido.js"></script>
   <script src="js/contact.js"></script>
   <script src="js/main.js"></script>
 

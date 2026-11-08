@@ -20,7 +20,7 @@ function siteUrl() {
 }
 
 /** Plantilla HTML con los colores de B&F (azul oscuro y dorado). */
-function layout({ titulo, intro, filas = [], mensaje, boton }) {
+function layout({ titulo, intro, filas = [], mensaje, boton, pagina = 'pqrs.html', etiqueta = 'CENTRO PQRS', pie }) {
   const rows = filas
     .filter(([, v]) => v)
     .map(([k, v]) => `
@@ -33,23 +33,23 @@ function layout({ titulo, intro, filas = [], mensaje, boton }) {
     <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden">
       <tr><td style="background:#0f1e36;padding:22px 28px;border-bottom:3px solid #d4af37">
         <span style="font-family:Georgia,serif;font-size:22px;color:#ffffff;letter-spacing:1px">B&amp;F</span>
-        <span style="color:#d4af37;font-size:13px;letter-spacing:2px;margin-left:10px">CENTRO PQRS</span>
+        <span style="color:#d4af37;font-size:13px;letter-spacing:2px;margin-left:10px">${esc(etiqueta)}</span>
       </td></tr>
       <tr><td style="padding:28px">
         <h1 style="margin:0 0 12px;font-family:Georgia,serif;font-size:22px;color:#0f1e36">${esc(titulo)}</h1>
         <p style="margin:0 0 18px;color:#334155;font-size:15px;line-height:1.5">${esc(intro)}</p>
         ${rows ? `<table cellpadding="0" cellspacing="0" style="width:100%;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;margin-bottom:18px">${rows}</table>` : ''}
         ${mensaje ? `<div style="background:#fbf7e9;border-left:4px solid #d4af37;padding:14px 16px;color:#0f1e36;font-size:14px;line-height:1.5;white-space:pre-wrap;margin-bottom:18px">${esc(mensaje)}</div>` : ''}
-        ${boton && siteUrl() ? `<a href="${esc(siteUrl())}/pqrs.html" style="display:inline-block;background:#d4af37;color:#0f1e36;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:8px;font-size:14px">${esc(boton)}</a>` : ''}
+        ${boton && siteUrl() ? `<a href="${esc(siteUrl())}/${pagina}" style="display:inline-block;background:#d4af37;color:#0f1e36;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:8px;font-size:14px">${esc(boton)}</a>` : ''}
       </td></tr>
       <tr><td style="background:#f8fafc;padding:16px 28px;color:#8193ad;font-size:12px">
-        Este es un mensaje automático del Centro PQRS de B&amp;F. No respondas a este correo; escríbenos desde tu ticket.
+        ${pie ? esc(pie) : 'Este es un mensaje automático del Centro PQRS de B&amp;F. No respondas a este correo; escríbenos desde tu ticket.'}
       </td></tr>
     </table>
   </td></tr></table></body></html>`;
 }
 
-async function send({ to, toName, subject, html }) {
+async function send({ to, toName, subject, html, attachments }) {
   if (!enabled() || !to) return false;
   try {
     const response = await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -63,9 +63,10 @@ async function send({ to, toName, subject, html }) {
         sender: { email: process.env.MAIL_FROM, name: process.env.MAIL_FROM_NAME || 'B&F Centro PQRS' },
         to: [{ email: to, name: toName || undefined }],
         subject,
-        htmlContent: html
+        htmlContent: html,
+        ...(attachments && attachments.length ? { attachment: attachments } : {})
       }),
-      signal: AbortSignal.timeout(10000)
+      signal: AbortSignal.timeout(20000)
     });
     if (!response.ok) {
       console.error(`[Correo] Brevo respondió ${response.status}: ${(await response.text()).slice(0, 300)}`);
@@ -114,7 +115,7 @@ function ticketRadicado(ticket, cliente) {
   if (admin) {
     fire(send({
       to: admin,
-      subject: `Nueva PQRS ${ticket.codigo} · ${TIPOS[ticket.tipo]} · ${ticket.cliente}`,
+      subject: `${ticket.categoria === 'garantia' ? 'Nueva solicitud de garantía' : `Nueva PQRS · ${TIPOS[ticket.tipo]}`} ${ticket.codigo} · ${ticket.cliente}`,
       html: layout({
         titulo: 'Nueva solicitud radicada',
         intro: `${cliente.nombre} (${cliente.email}) radicó una nueva solicitud.`,
@@ -175,4 +176,51 @@ function cambioEstado(ticket, cliente, estado) {
   }));
 }
 
-module.exports = { enabled, ticketRadicado, respuestaAdmin, mensajeCliente, cambioEstado };
+const EXPERIENCIA = { sin_experiencia: 'Sin experiencia', menos_1: 'Menos de 1 año', entre_1_3: 'Entre 1 y 3 años', mas_3: 'Más de 3 años' };
+
+/** Nueva hoja de vida: aviso a la empresa (con el archivo adjunto) y confirmación al aspirante. */
+function hojaVidaRecibida(hv, archivo) {
+  if (!enabled()) return;
+  const filas = [
+    ['Código', hv.codigo],
+    ['Nombre', hv.nombre],
+    ['Cargo', hv.cargo_nombre],
+    ['Experiencia', EXPERIENCIA[hv.experiencia]],
+    ['Correo', hv.email],
+    ['Teléfono', hv.telefono]
+  ];
+  const admin = process.env.ADMIN_NOTIFY_EMAIL;
+  if (admin) {
+    const pequeño = archivo && archivo.buffer.length <= 4 * 1024 * 1024;
+    fire(send({
+      to: admin,
+      subject: `Nueva hoja de vida ${hv.codigo} · ${hv.cargo_nombre} · ${hv.nombre}`,
+      html: layout({
+        titulo: 'Nueva hoja de vida recibida',
+        intro: pequeño
+          ? `${hv.nombre} se postuló para ${hv.cargo_nombre}. La hoja de vida va adjunta a este correo y también está en el panel del administrador.`
+          : `${hv.nombre} se postuló para ${hv.cargo_nombre}. Descarga la hoja de vida desde el panel del administrador.`,
+        filas,
+        mensaje: hv.descripcion,
+        boton: 'Abrir el panel',
+        etiqueta: 'TRABAJA CON NOSOTROS',
+        pie: 'Aviso automático del sitio web de B&F. Trata estos datos personales según la Ley 1581 de 2012.'
+      }),
+      attachments: pequeño ? [{ name: archivo.nombre, content: archivo.buffer.toString('base64') }] : undefined
+    }));
+  }
+  fire(send({
+    to: hv.email,
+    toName: hv.nombre,
+    subject: `Recibimos tu hoja de vida · ${hv.cargo_nombre}`,
+    html: layout({
+      titulo: `Gracias, ${hv.nombre.split(' ')[0]}`,
+      intro: `Recibimos tu hoja de vida para el cargo de ${hv.cargo_nombre}. Si tu perfil se ajusta a una vacante, nuestro equipo se comunicará contigo.`,
+      filas: [['Código', hv.codigo], ['Cargo', hv.cargo_nombre]],
+      etiqueta: 'TRABAJA CON NOSOTROS',
+      pie: 'Mensaje automático del sitio web de B&F. Puedes pedir la eliminación de tus datos escribiendo a la empresa.'
+    })
+  }));
+}
+
+module.exports = { enabled, ticketRadicado, respuestaAdmin, mensajeCliente, cambioEstado, hojaVidaRecibida };

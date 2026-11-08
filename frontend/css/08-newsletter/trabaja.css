@@ -1,0 +1,50 @@
+/* ==========================================================================
+   TRABAJA CON NOSOTROS - franja dorada de la página principal
+   (reemplaza el boletín; reutiliza la base de 08-newsletter.css)
+   ========================================================================== */
+
+.trabaja-logo { height: 78px; }
+
+.trabaja-content {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  max-width: 820px;
+}
+
+.trabaja-content .newsletter-subtitle { margin-bottom: 0; max-width: 520px; }
+
+.trabaja-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 26px;
+  border-radius: var(--radius-sm);
+  background-color: #0f172a;
+  color: #ffffff;
+  font-family: var(--font-subheading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.trabaja-btn:hover {
+  color: #ffffff;
+  background-color: #1f3c66;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.3);
+}
+
+@media (max-width: 900px) {
+  .trabaja-content { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+@media (max-width: 600px) {
+  .trabaja-logo { height: 58px; }
+  .trabaja-btn { width: 100%; justify-content: center; }
+}

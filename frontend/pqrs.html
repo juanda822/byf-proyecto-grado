@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PQRS y Garantías | B&amp;F</title>
+  <title>Inicia sesión | B&amp;F Uniforms</title>
   <meta name="description" content="Centro de peticiones, quejas, reclamos y garantías de B&F. Registra tu solicitud y haz seguimiento a tu ticket.">
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="assets/logos/byf-hero-emblem.png">
@@ -21,11 +21,11 @@
   <header class="pq-header">
     <div class="pq-container pq-header-inner">
       <a href="index.html" class="pq-brand" title="Volver al sitio de B&amp;F">
-        <img src="assets/logos/byf-logo-white.png" alt="B&amp;F" class="pq-brand-logo">
+        <img src="assets/logos/byf-uniforms-white.png" alt="B&amp;F Uniforms" class="pq-brand-logo pq-brand-uniforms">
         <span class="pq-brand-divider" aria-hidden="true"></span>
         <span class="pq-brand-text">
-          <strong>Centro PQRS</strong>
-          <small>Peticiones · Quejas · Reclamos · Garantías</small>
+          <strong>Mi cuenta</strong>
+          <small>Clientes · Administración</small>
         </span>
       </a>
 
@@ -55,17 +55,17 @@
       <div class="pq-container pq-auth-grid">
 
         <div class="pq-auth-intro">
-          <span class="pq-eyebrow">Servicio al cliente B&amp;F</span>
-          <h1 class="pq-title">Gestiona tu garantía <em>en línea</em></h1>
+          <span class="pq-eyebrow">Portal de clientes B&amp;F Uniforms</span>
+          <h1 class="pq-title">Inicia <em>sesión</em></h1>
           <p class="pq-lead">
-            ¿Una prenda de tu dotación llegó con un defecto? Crea tu cuenta, radica tu petición, queja
-            o reclamo con fotos y nosotros coordinamos la recogida y la entrega.
+            Desde tu cuenta puedes radicar peticiones, quejas y reclamos, solicitar la garantía de una prenda
+            y hacer seguimiento a cada solicitud hasta su solución.
           </p>
           <ol class="pq-steps-intro">
-            <li><span>1</span><div><strong>Regístrate</strong>Con los datos de tu empresa o persona.</div></li>
-            <li><span>2</span><div><strong>Radica tu PQR</strong>Pedido, prenda, talla, motivo y fotos.</div></li>
-            <li><span>3</span><div><strong>Agenda la recogida</strong>Dirección y especificaciones de entrega.</div></li>
-            <li><span>4</span><div><strong>Recibe respuesta</strong>Sigue tu ticket hasta su solución.</div></li>
+            <li><span><i class="fa-solid fa-comments"></i></span><div><strong>Crear PQRS</strong>Peticiones, quejas y reclamos sobre tus pedidos.</div></li>
+            <li><span><i class="fa-solid fa-shield-halved"></i></span><div><strong>Solicitar garantía</strong>Prenda, talla, fotos del defecto y recogida.</div></li>
+            <li><span><i class="fa-solid fa-list-check"></i></span><div><strong>Mis solicitudes</strong>Estado y respuestas de cada ticket.</div></li>
+            <li><span><i class="fa-solid fa-user"></i></span><div><strong>Mi perfil</strong>Tus datos de contacto y tu contraseña.</div></li>
           </ol>
         </div>
 
@@ -174,32 +174,125 @@
          ================================================================== -->
     <section class="pq-view" id="viewCliente" hidden>
       <div class="pq-container">
-        <div class="pq-page-head">
-          <div>
-            <span class="pq-eyebrow">Mi cuenta</span>
-            <h1 class="pq-title pq-title-sm">Hola, <span id="clienteNombre"></span></h1>
+
+        <!-- Panel inicial del cliente -->
+        <div data-client-panel="inicio">
+          <div class="pq-dash-head">
+            <div>
+              <span class="pq-eyebrow">Portal del cliente</span>
+              <h1 class="pq-title pq-title-sm">Mi cuenta</h1>
+              <p class="pq-dash-sub">Hola, <strong id="clienteNombre"></strong>. ¿Qué quieres hacer hoy?</p>
+            </div>
+            <i class="fa-regular fa-user pq-dash-icon" aria-hidden="true"></i>
           </div>
-          <div class="pq-tabs pq-tabs-inline" role="tablist">
-            <button type="button" class="pq-tab active" data-client-tab="nueva">
-              <i class="fa-solid fa-plus"></i> Nueva PQR
+          <div class="pq-tiles">
+            <button type="button" class="pq-tile" data-client-go="nueva">
+              <i class="fa-solid fa-circle-plus"></i>
+              <strong>Crear PQRS</strong>
+              <small>Petición, queja o reclamo</small>
             </button>
-            <button type="button" class="pq-tab" data-client-tab="mis">
-              <i class="fa-solid fa-ticket"></i> Mis solicitudes <span class="pq-count" id="misCount">0</span>
+            <button type="button" class="pq-tile" data-client-go="mis">
+              <i class="fa-solid fa-clipboard-list"></i>
+              <strong>Mis solicitudes</strong>
+              <small id="tileMis">Estado y respuestas</small>
+              <span class="pq-tile-badge" id="badgeMis" hidden></span>
+            </button>
+            <button type="button" class="pq-tile" data-client-go="garantia">
+              <i class="fa-solid fa-shield-halved"></i>
+              <strong>Solicitar garantía</strong>
+              <small>Prenda con defecto</small>
+            </button>
+            <button type="button" class="pq-tile" data-client-go="perfil">
+              <i class="fa-solid fa-user-gear"></i>
+              <strong>Mi perfil</strong>
+              <small>Datos y contraseña</small>
             </button>
           </div>
         </div>
 
-        <!-- Nueva PQR: asistente en 3 pasos -->
-        <div data-client-panel="nueva">
+        <!-- Crear PQRS -->
+        <div data-client-panel="nueva" hidden>
+          <div class="pq-section-head"><button type="button" class="pq-back-panel" data-go-home><i class="fa-solid fa-arrow-left"></i> Volver al panel</button><h1 class="pq-title pq-title-sm">Crear PQRS</h1></div>
+          <form class="pq-card pq-form" id="formPqrs" novalidate>
+            <h2 class="pq-card-title"><i class="fa-solid fa-comments"></i> Datos de la solicitud</h2>
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>Cliente *</span>
+                <input type="text" name="cliente" required maxlength="150" placeholder="Ej: Andrés Carne de Res">
+              </label>
+              <label class="pq-field">
+                <span>Número de pedido <small>(si aplica)</small></span>
+                <input type="text" name="numeroPedido" maxlength="40" placeholder="Ej: 1526-1">
+              </label>
+            </div>
+            <div class="pq-row">
+              <label class="pq-field">
+                <span>Tipo de solicitud *</span>
+                <select name="tipo" required>
+                  <option value="">Selecciona una opción</option>
+                  <option value="peticion">Petición</option>
+                  <option value="queja">Queja</option>
+                  <option value="reclamo">Reclamo</option>
+                </select>
+              </label>
+              <label class="pq-field">
+                <span id="asuntoLabel">Asunto *</span>
+                <input type="text" name="asunto" required maxlength="150" list="asuntosSugeridos" placeholder="Ej: Cotización de chalecos">
+                <datalist id="asuntosSugeridos">
+                  <option value="Cotización"></option>
+                  <option value="Cambio de talla"></option>
+                  <option value="Prenda incompleta en el pedido"></option>
+                  <option value="Retraso en la entrega"></option>
+                  <option value="Facturación"></option>
+                  <option value="Atención recibida"></option>
+                </datalist>
+              </label>
+            </div>
+            <label class="pq-field">
+              <span>Descripción *</span>
+              <textarea name="descripcion" rows="5" required maxlength="5000" placeholder="Cuéntanos con detalle tu petición, queja o reclamo."></textarea>
+            </label>
+            <div class="pq-upload" data-upload="soporte">
+              <div class="pq-upload-head">
+                <strong><i class="fa-solid fa-paperclip"></i> Fotos de soporte <small>(opcional)</small></strong>
+                <small>Por ejemplo, una foto del pedido o de la factura</small>
+              </div>
+              <label class="pq-dropzone">
+                <input type="file" accept="image/jpeg,image/png,image/webp" multiple>
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Toca para subir o arrastra las fotos aquí</span>
+                <small>JPG, PNG o WEBP · máximo 6 fotos</small>
+              </label>
+              <div class="pq-thumbs"></div>
+            </div>
+            <p class="pq-form-error" data-error></p>
+            <div class="pq-form-actions">
+              <button type="submit" class="pq-btn pq-btn-gold">Enviar PQRS <i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+          </form>
+          <div class="pq-card pq-done" id="pqrsListo" hidden>
+            <div class="pq-done-badge"><i class="fa-solid fa-ticket"></i></div>
+            <h2>Ticket <span id="pqrsCodigo"></span></h2>
+            <p>Recibimos tu solicitud. Nuestro equipo la revisará y te responderá por este medio y por correo.</p>
+            <div class="pq-form-actions pq-center">
+              <button type="button" class="pq-btn pq-btn-outline" id="verPqrsCreada"><i class="fa-solid fa-eye"></i> Ver mi ticket</button>
+              <button type="button" class="pq-btn pq-btn-gold" id="nuevaPqrs"><i class="fa-solid fa-plus"></i> Crear otra</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Solicitar garantía: asistente en 3 pasos -->
+        <div data-client-panel="garantia" hidden>
+          <div class="pq-section-head"><button type="button" class="pq-back-panel" data-go-home><i class="fa-solid fa-arrow-left"></i> Volver al panel</button><h1 class="pq-title pq-title-sm">Solicitar garantía</h1></div>
           <ol class="pq-stepper" id="pqStepper">
-            <li class="active" data-step-dot="1"><span>1</span> Solicitud</li>
+            <li class="active" data-step-dot="1"><span>1</span> Prenda y defecto</li>
             <li data-step-dot="2"><span>2</span> Recogida y entrega</li>
             <li data-step-dot="3"><span>3</span> Ticket generado</li>
           </ol>
 
           <!-- Paso 1 -->
           <form class="pq-card pq-form" id="formTicket" data-step="1" novalidate>
-            <h2 class="pq-card-title"><i class="fa-solid fa-file-pen"></i> Datos de la solicitud</h2>
+            <h2 class="pq-card-title"><i class="fa-solid fa-shield-halved"></i> Datos de la garantía</h2>
 
             <div class="pq-row">
               <label class="pq-field">
@@ -212,36 +305,27 @@
               </label>
             </div>
 
-            <div class="pq-row">
-              <label class="pq-field">
-                <span>Tipo de solicitud *</span>
-                <select name="tipo" required>
-                  <option value="">Selecciona una opción</option>
-                  <option value="peticion">Petición</option>
-                  <option value="queja">Queja</option>
-                  <option value="reclamo">Reclamo</option>
-                </select>
-              </label>
-              <label class="pq-field">
-                <span id="asuntoLabel">Describa su petición, queja o reclamo *</span>
-                <input type="text" name="asunto" required maxlength="150" list="asuntosSugeridos" placeholder="Ej: Garantía">
-                <datalist id="asuntosSugeridos">
-                  <option value="Garantía"></option>
-                  <option value="Cambio de talla"></option>
-                  <option value="Prenda incompleta en el pedido"></option>
-                  <option value="Retraso en la entrega"></option>
-                  <option value="Error en el bordado o estampado"></option>
-                </datalist>
-              </label>
-            </div>
+            <label class="pq-field">
+              <span>Tipo de defecto *</span>
+              <select name="defecto" required>
+                <option value="">Selecciona una opción</option>
+                <option>Costura descosida</option>
+                <option>Defecto en la tela</option>
+                <option>Error en el bordado o estampado</option>
+                <option>Cremallera, botones o broches</option>
+                <option>Decoloración o encogimiento</option>
+                <option>Talla diferente a la solicitada</option>
+                <option>Otro</option>
+              </select>
+            </label>
 
             <div class="pq-row">
               <label class="pq-field">
-                <span>Prenda <small>(si aplica)</small></span>
-                <input type="text" name="prenda" maxlength="100" placeholder="Ej: Pantalón">
+                <span>Prenda *</span>
+                <input type="text" name="prenda" maxlength="100" required placeholder="Ej: Pantalón">
               </label>
               <label class="pq-field">
-                <span>Talla <small>(si aplica)</small></span>
+                <span>Talla</span>
                 <input type="text" name="talla" maxlength="30" placeholder="Ej: Talla 32">
               </label>
             </div>
@@ -269,7 +353,7 @@
 
               <div class="pq-upload" data-upload="defecto">
                 <div class="pq-upload-head">
-                  <strong><i class="fa-solid fa-magnifying-glass-plus"></i> Fotos de la parte defectuosa</strong>
+                  <strong><i class="fa-solid fa-magnifying-glass-plus"></i> Fotos de la parte defectuosa *</strong>
                   <small>Por ejemplo, la costura descosida de cerca</small>
                 </div>
                 <label class="pq-dropzone">
@@ -285,7 +369,7 @@
             <p class="pq-form-error" data-error></p>
             <div class="pq-form-actions">
               <button type="submit" class="pq-btn pq-btn-gold">
-                Enviar solicitud <i class="fa-solid fa-paper-plane"></i>
+                Enviar garantía <i class="fa-solid fa-paper-plane"></i>
               </button>
             </div>
           </form>
@@ -340,7 +424,7 @@
             <div class="pq-done-badge"><i class="fa-solid fa-ticket"></i></div>
             <h2>Ticket <span data-ticket-code></span></h2>
             <p>
-              Recibimos tu solicitud. Nuestro equipo la revisará y te responderá por este medio.
+              Recibimos tu solicitud de garantía. Nuestro equipo revisará las fotos y te responderá por este medio.
               Puedes consultar el estado en <strong>Mis solicitudes</strong>.
             </p>
             <div class="pq-form-actions pq-center">
@@ -348,15 +432,44 @@
                 <i class="fa-solid fa-eye"></i> Ver mi ticket
               </button>
               <button type="button" class="pq-btn pq-btn-gold" id="nuevaOtra">
-                <i class="fa-solid fa-plus"></i> Radicar otra
+                <i class="fa-solid fa-plus"></i> Solicitar otra garantía
               </button>
             </div>
           </div>
         </div>
 
+        </div>
+
         <!-- Mis solicitudes -->
         <div data-client-panel="mis" hidden>
+          <div class="pq-section-head"><button type="button" class="pq-back-panel" data-go-home><i class="fa-solid fa-arrow-left"></i> Volver al panel</button><h1 class="pq-title pq-title-sm">Mis solicitudes <span class="pq-count" id="misCount">0</span></h1></div>
           <div class="pq-ticket-list" id="clienteTickets"></div>
+        </div>
+
+        <!-- Mi perfil -->
+        <div data-client-panel="perfil" hidden>
+          <div class="pq-section-head"><button type="button" class="pq-back-panel" data-go-home><i class="fa-solid fa-arrow-left"></i> Volver al panel</button><h1 class="pq-title pq-title-sm">Mi perfil</h1></div>
+          <div class="pq-profile-grid">
+            <form class="pq-card pq-form" id="formPerfil" novalidate>
+              <h2 class="pq-card-title"><i class="fa-solid fa-id-card"></i> Mis datos</h2>
+              <label class="pq-field"><span>Cliente (persona o empresa) *</span><input type="text" name="nombre" maxlength="150" required></label>
+              <div class="pq-row">
+                <label class="pq-field"><span>NIT o cédula</span><input type="text" name="documento" maxlength="40"></label>
+                <label class="pq-field"><span>Teléfono</span><input type="tel" name="telefono" maxlength="40"></label>
+              </div>
+              <label class="pq-field"><span>Correo electrónico</span><input type="email" name="email" disabled></label>
+              <p class="pq-form-error" data-error></p>
+              <div class="pq-form-actions"><button type="submit" class="pq-btn pq-btn-gold"><i class="fa-solid fa-floppy-disk"></i> Guardar datos</button></div>
+            </form>
+            <form class="pq-card pq-form" id="formClave" novalidate>
+              <h2 class="pq-card-title"><i class="fa-solid fa-key"></i> Cambiar contraseña</h2>
+              <label class="pq-field"><span>Contraseña actual *</span><input type="password" name="actual" autocomplete="current-password" required></label>
+              <label class="pq-field"><span>Nueva contraseña *</span><input type="password" name="nueva" autocomplete="new-password" minlength="8" required placeholder="Mínimo 8 caracteres"></label>
+              <label class="pq-field"><span>Confirmar nueva contraseña *</span><input type="password" name="nueva2" autocomplete="new-password" minlength="8" required></label>
+              <p class="pq-form-error" data-error></p>
+              <div class="pq-form-actions"><button type="submit" class="pq-btn pq-btn-outline"><i class="fa-solid fa-key"></i> Cambiar contraseña</button></div>
+            </form>
+          </div>
         </div>
       </div>
     </section>
@@ -366,10 +479,49 @@
          ================================================================== -->
     <section class="pq-view" id="viewAdmin" hidden>
       <div class="pq-container">
+        <!-- Panel inicial del administrador -->
+        <div data-admin-section="inicio">
+          <div class="pq-dash-head">
+            <div>
+              <span class="pq-eyebrow">B&amp;F Uniforms</span>
+              <h1 class="pq-title pq-title-sm">Panel administrativo</h1>
+              <p class="pq-dash-sub">Gestión interna de Diseños ByF</p>
+            </div>
+            <i class="fa-solid fa-shield-halved pq-dash-icon" aria-hidden="true"></i>
+          </div>
+          <div class="pq-tiles">
+            <button type="button" class="pq-tile" data-admin-go="pqrs">
+              <i class="fa-solid fa-comments"></i>
+              <strong>Gestionar PQRS</strong>
+              <small>Peticiones, quejas y reclamos</small>
+              <span class="pq-tile-badge" data-badge="pqrsNuevas" hidden></span>
+            </button>
+            <button type="button" class="pq-tile" data-admin-go="garantia">
+              <i class="fa-solid fa-shirt"></i>
+              <strong>Gestionar garantías</strong>
+              <small>Prendas con defecto</small>
+              <span class="pq-tile-badge" data-badge="garantiasNuevas" hidden></span>
+            </button>
+            <button type="button" class="pq-tile" data-admin-go="hojas">
+              <i class="fa-regular fa-copy"></i>
+              <strong>Hojas de vida</strong>
+              <small id="tileCargos">Postulaciones y cargos</small>
+              <span class="pq-tile-badge" data-badge="hojasNuevas" hidden></span>
+            </button>
+            <button type="button" class="pq-tile" data-admin-go="contenido">
+              <i class="fa-regular fa-pen-to-square"></i>
+              <strong>Administrar contenido</strong>
+              <small>Textos y noticias del sitio</small>
+            </button>
+          </div>
+        </div>
+
+        <!-- Gestionar PQRS / garantías -->
+        <div data-admin-section="tickets" hidden>
         <div class="pq-page-head">
-          <div>
-            <span class="pq-eyebrow">Panel del administrador</span>
-            <h1 class="pq-title pq-title-sm">Gestión de PQRS</h1>
+          <div class="pq-section-head">
+            <button type="button" class="pq-back-panel" data-go-home><i class="fa-solid fa-arrow-left"></i> Volver al panel</button>
+            <h1 class="pq-title pq-title-sm" id="adminTicketsTitle">Gestionar PQRS</h1>
           </div>
           <div class="pq-head-actions">
             <div class="pq-tabs pq-tabs-inline" role="tablist">
@@ -422,7 +574,7 @@
               <option value="cerrado">Cerrado</option>
             </select>
           </label>
-          <label class="pq-field">
+          <label class="pq-field" id="filtroTipo">
             <span class="pq-sr">Tipo</span>
             <select name="tipo">
               <option value="">Todos los tipos</option>
@@ -487,6 +639,140 @@
             <div class="pq-report-grid" id="reportCharts"></div>
           </div>
         </div>
+        </div>
+
+        <!-- Hojas de vida -->
+        <div data-admin-section="hojas" hidden>
+          <div class="pq-page-head">
+            <div class="pq-section-head">
+              <button type="button" class="pq-back-panel" data-go-home><i class="fa-solid fa-arrow-left"></i> Volver al panel</button>
+              <h1 class="pq-title pq-title-sm">Hojas de vida</h1>
+            </div>
+            <div class="pq-tabs pq-tabs-inline" role="tablist">
+              <button type="button" class="pq-tab active" data-hv-tab="lista"><i class="fa-regular fa-copy"></i> Postulaciones</button>
+              <button type="button" class="pq-tab" data-hv-tab="cargos"><i class="fa-solid fa-toggle-on"></i> Cargos</button>
+            </div>
+          </div>
+
+          <div data-hv-panel="lista">
+            <form class="pq-filters" id="hvFilters">
+              <label class="pq-field pq-field-search">
+                <span class="pq-sr">Buscar</span>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="search" name="q" placeholder="Buscar por código, nombre, correo o cargo">
+              </label>
+              <label class="pq-field">
+                <span class="pq-sr">Estado</span>
+                <select name="estado">
+                  <option value="">Todos los estados</option>
+                  <option value="nueva">Nuevas</option>
+                  <option value="revisada">Revisadas</option>
+                  <option value="preseleccionada">Preseleccionadas</option>
+                  <option value="descartada">Descartadas</option>
+                </select>
+              </label>
+              <label class="pq-field">
+                <span class="pq-sr">Cargo</span>
+                <select name="cargo" id="hvFiltroCargo"><option value="">Todos los cargos</option></select>
+              </label>
+            </form>
+            <div class="pq-card pq-table-card">
+              <table class="pq-table">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Aspirante</th>
+                    <th>Cargo</th>
+                    <th>Experiencia</th>
+                    <th>Estado</th>
+                    <th>Recibida</th>
+                    <th><span class="pq-sr">Acciones</span></th>
+                  </tr>
+                </thead>
+                <tbody id="hvTabla"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div data-hv-panel="cargos" hidden>
+            <div class="pq-card pq-cargos-card">
+              <div class="pq-cargos-head">
+                <p>Activa solo los cargos para los que necesitas personal. Los cargos inactivos no aparecen en la página <strong>Trabaja con nosotros</strong>; si todos están inactivos, el formulario se cierra.</p>
+                <div class="pq-cargos-bulk">
+                  <button type="button" class="pq-btn pq-btn-ghost pq-btn-sm" data-cargos-todos="1">Activar todos</button>
+                  <button type="button" class="pq-btn pq-btn-ghost pq-btn-sm" data-cargos-todos="0">Desactivar todos</button>
+                </div>
+              </div>
+              <div class="pq-cargos" id="cargosLista"></div>
+              <form class="pq-cargo-new" id="formCargo" novalidate>
+                <label class="pq-field"><span>Nuevo cargo</span><input type="text" name="nombre" maxlength="120" placeholder="Ej: Patronista"></label>
+                <label class="pq-field"><span>Área</span>
+                  <select name="area">
+                    <option>Producción</option><option>Diseño</option><option>Comercial</option><option>Logística</option><option>Administrativa</option>
+                  </select>
+                </label>
+                <button type="submit" class="pq-btn pq-btn-gold pq-btn-sm"><i class="fa-solid fa-plus"></i> Agregar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Administrar contenido -->
+        <div data-admin-section="contenido" hidden>
+          <div class="pq-page-head">
+            <div class="pq-section-head">
+              <button type="button" class="pq-back-panel" data-go-home><i class="fa-solid fa-arrow-left"></i> Volver al panel</button>
+              <h1 class="pq-title pq-title-sm">Administrar contenido</h1>
+            </div>
+            <div class="pq-tabs pq-tabs-inline" role="tablist">
+              <button type="button" class="pq-tab active" data-ct-tab="textos"><i class="fa-solid fa-font"></i> Textos</button>
+              <button type="button" class="pq-tab" data-ct-tab="noticias"><i class="fa-regular fa-newspaper"></i> Noticias</button>
+            </div>
+          </div>
+
+          <div data-ct-panel="textos">
+            <form class="pq-card pq-form" id="formTextos" novalidate>
+              <h2 class="pq-card-title"><i class="fa-solid fa-briefcase"></i> Sección «Trabaja con nosotros»</h2>
+              <label class="pq-field"><span>Título</span><input type="text" name="trabaja_titulo" maxlength="80" required></label>
+              <label class="pq-field"><span>Texto en la página principal</span><textarea name="trabaja_texto" rows="3" maxlength="400" required></textarea></label>
+              <label class="pq-field"><span>Texto del formulario de postulación</span><textarea name="trabaja_intro" rows="3" maxlength="400" required></textarea></label>
+              <p class="pq-form-error" data-error></p>
+              <div class="pq-form-actions">
+                <a href="index.html#trabaja" target="_blank" class="pq-btn pq-btn-ghost"><i class="fa-solid fa-up-right-from-square"></i> Ver en el sitio</a>
+                <button type="submit" class="pq-btn pq-btn-gold"><i class="fa-solid fa-floppy-disk"></i> Guardar textos</button>
+              </div>
+            </form>
+          </div>
+
+          <div data-ct-panel="noticias" hidden>
+            <div class="pq-news-admin">
+              <form class="pq-card pq-form" id="formNoticia" novalidate>
+                <h2 class="pq-card-title"><i class="fa-regular fa-newspaper"></i> <span id="noticiaFormTitulo">Nueva noticia</span></h2>
+                <input type="hidden" name="id">
+                <label class="pq-field"><span>Título *</span><input type="text" name="titulo" maxlength="160" required></label>
+                <label class="pq-field"><span>Fecha *</span><input type="date" name="fecha" required></label>
+                <label class="pq-field"><span>Texto *</span><textarea name="resumen" rows="5" maxlength="2000" required></textarea></label>
+                <div class="pq-field">
+                  <span>Imagen *</span>
+                  <label class="pq-dropzone pq-news-drop">
+                    <input type="file" id="noticiaImagen" accept="image/jpeg,image/png,image/webp">
+                    <img id="noticiaPreview" alt="" hidden>
+                    <i class="fa-regular fa-image"></i>
+                    <span>Seleccionar imagen</span>
+                    <small>JPG, PNG o WEBP</small>
+                  </label>
+                </div>
+                <label class="em-check pq-visible-check"><input type="checkbox" name="visible" checked> <span>Mostrar en la página principal</span></label>
+                <p class="pq-form-error" data-error></p>
+                <div class="pq-form-actions">
+                  <button type="button" class="pq-btn pq-btn-ghost" id="noticiaCancelar" hidden>Cancelar</button>
+                  <button type="submit" class="pq-btn pq-btn-gold"><i class="fa-solid fa-floppy-disk"></i> Guardar noticia</button>
+                </div>
+              </form>
+              <div class="pq-news-list" id="noticiasLista"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -518,6 +804,21 @@
       <i class="fa-solid fa-xmark"></i>
     </button>
     <img alt="">
+  </div>
+
+  <!-- Detalle de una hoja de vida -->
+  <div class="pq-drawer" id="hvDrawer" hidden>
+    <div class="pq-drawer-backdrop" data-close-hv></div>
+    <aside class="pq-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="hvTitle">
+      <header class="pq-drawer-head">
+        <div>
+          <span class="pq-eyebrow" id="hvCargo"></span>
+          <h2 id="hvTitle"></h2>
+        </div>
+        <button type="button" class="pq-icon-btn" data-close-hv aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </header>
+      <div class="pq-drawer-body" id="hvBody"></div>
+    </aside>
   </div>
 
   <div class="pq-toast" id="pqToast" role="status" aria-live="polite"></div>

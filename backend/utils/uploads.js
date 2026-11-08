@@ -8,7 +8,8 @@ const path = require('path');
 const crypto = require('crypto');
 
 // En hosting (Railway) apunta UPLOAD_DIR a un volumen permanente, por ejemplo /data/uploads
-const UPLOAD_ROOT = path.join(process.env.UPLOAD_DIR || path.join(__dirname, '..', 'uploads'), 'pqrs');
+const BASE_ROOT = process.env.UPLOAD_DIR || path.join(__dirname, '..', 'uploads');
+const UPLOAD_ROOT = path.join(BASE_ROOT, 'pqrs');
 const MAX_BYTES = 6 * 1024 * 1024;       // 6 MB por foto
 const MAX_PER_CATEGORY = 6;
 
@@ -64,8 +65,64 @@ function photoPath(ticketId, archivo) {
   return path.join(UPLOAD_ROOT, String(ticketId), path.basename(archivo));
 }
 
+/* ---------------------------------------------------- hojas de vida y noticias */
+
+const DOC_MAX_BYTES = 5 * 1024 * 1024; // 5 MB
+const DOC_TYPES = [
+  { mime: 'application/pdf', ext: 'pdf', test: b => b.slice(0, 5).toString() === '%PDF-' },
+  { mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', ext: 'docx',
+    test: b => b[0] === 0x50 && b[1] === 0x4b && b.includes(Buffer.from('word/')) },
+  { mime: 'application/msword', ext: 'doc',
+    test: b => b.slice(0, 8).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1])) }
+];
+
+function decodeDataUrl(value, etiqueta) {
+  const match = /^data:[^;,]*;base64,(.+)$/i.exec(String(value || ''));
+  if (!match) throw badRequest(`Adjunta ${etiqueta}.`);
+  return Buffer.from(match[1], 'base64');
+}
+
+function safeName(name, fallback) {
+  return String(name || fallback).replace(/[\\/:*?"<>|\u0000-\u001f]/g, '_').slice(0, 200);
+}
+
+/** Hoja de vida en PDF o Word (máximo 5 MB), validada por su contenido real. */
+function parseDocument(file) {
+  const buffer = decodeDataUrl(file && file.datos, 'tu hoja de vida');
+  if (buffer.length > DOC_MAX_BYTES) throw badRequest('La hoja de vida supera los 5 MB.');
+  const type = DOC_TYPES.find(t => buffer.length > 8 && t.test(buffer));
+  if (!type) throw badRequest('La hoja de vida debe estar en PDF o Word (.doc o .docx).');
+  return { buffer, mime: type.mime, ext: type.ext, nombre: safeName(file.nombre, `hoja-de-vida.${type.ext}`) };
+}
+
+/** Imagen de una noticia (JPG, PNG o WEBP, máximo 6 MB). */
+function parseImage(file) {
+  const [photo] = parsePhotos([file], 'defecto', 'la noticia');
+  return photo;
+}
+
+/** Guarda un archivo en una subcarpeta (hojas-vida, noticias) y devuelve su nombre. */
+function saveFile(folder, id, ext, buffer) {
+  const dir = path.join(BASE_ROOT, folder, String(id));
+  fs.mkdirSync(dir, { recursive: true });
+  const archivo = `${crypto.randomBytes(10).toString('hex')}.${ext}`;
+  fs.writeFileSync(path.join(dir, archivo), buffer);
+  return archivo;
+}
+
+function filePath(folder, id, archivo) {
+  return path.join(BASE_ROOT, folder, String(id), path.basename(archivo));
+}
+
+function removeFolder(folder, id) {
+  fs.rmSync(path.join(BASE_ROOT, folder, String(id)), { recursive: true, force: true });
+}
+
 function badRequest(message) {
   return Object.assign(new Error(message), { status: 400 });
 }
 
-module.exports = { parsePhotos, savePhotos, removeTicketFolder, photoPath, MAX_PER_CATEGORY };
+module.exports = {
+  parsePhotos, savePhotos, removeTicketFolder, photoPath, MAX_PER_CATEGORY,
+  parseDocument, parseImage, saveFile, filePath, removeFolder
+};

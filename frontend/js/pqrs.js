@@ -21,7 +21,8 @@
     user: null,
     status: null,
     lastTicket: null,
-    fotos: { prelavado: [], defecto: [] },
+    fotos: { prelavado: [], defecto: [], soporte: [] },
+    categoria: 'pqrs',
     objectUrls: []
   };
 
@@ -68,7 +69,8 @@
     if (state.token) headers.Authorization = `Bearer ${state.token}`;
     let response;
     try {
-      response = await fetch(API + path, { method, headers, body: body !== undefined ? JSON.stringify(body) : undefined });
+      const url = path.startsWith('@') ? '/api' + path.slice(1) : API + path;
+      response = await fetch(url, { method, headers, body: body !== undefined ? JSON.stringify(body) : undefined });
     } catch {
       throw new Error('No hay conexión con el servidor. Revisa tu internet e inténtalo de nuevo.');
     }
@@ -134,13 +136,18 @@
     renderSession();
     if (state.user.rol === 'admin') {
       showView('viewAdmin');
-      $('[data-admin-tab="tickets"]').click();
+      goAdmin('inicio');
     } else {
       $('#clienteNombre').textContent = state.user.nombre;
       showView('viewCliente');
-      resetWizard();
-      loadClientTickets();
+      goClient('inicio');
     }
+  }
+
+  /** Vuelve al panel inicial del rol actual. */
+  function goHome() {
+    if (state.user?.rol === 'admin') goAdmin('inicio');
+    else goClient('inicio');
   }
 
   function logout(notify = true) {
@@ -277,32 +284,77 @@
   /* ------------------------------------------------------- panel cliente */
 
   function initClient() {
-    $$('[data-client-tab]').forEach(tab => tab.addEventListener('click', () => switchClientTab(tab.dataset.clientTab)));
-
-    const form = $('#formTicket');
-    form.elements.tipo.addEventListener('change', () => {
-      const label = TIPOS[form.elements.tipo.value];
-      $('#asuntoLabel').textContent = label ? `Describa su ${label.toLowerCase()} *` : 'Describa su petición, queja o reclamo *';
-    });
-
+    $$('[data-client-go]').forEach(btn => btn.addEventListener('click', () => goClient(btn.dataset.clientGo)));
+    $$('[data-go-home]').forEach(btn => btn.addEventListener('click', goHome));
     $$('[data-upload]').forEach(initUpload);
 
+    /* --- Crear PQRS --- */
+    const fp = $('#formPqrs');
+    fp.elements.tipo.addEventListener('change', () => {
+      const label = TIPOS[fp.elements.tipo.value];
+      $('#asuntoLabel').textContent = label ? `Asunto de tu ${label.toLowerCase()} *` : 'Asunto *';
+    });
+    fp.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = formData(fp);
+      setError(fp);
+      const missing = ['cliente', 'tipo', 'asunto', 'descripcion'].filter(k => !String(data[k] || '').trim());
+      if (missing.length) {
+        setError(fp, 'Completa los campos obligatorios (*).');
+        return markInvalid(fp, missing);
+      }
+      if (data.descripcion.trim().length < 10) {
+        setError(fp, 'Describe tu solicitud con un poco más de detalle.');
+        return markInvalid(fp, ['descripcion']);
+      }
+      markInvalid(fp, []);
+      const body = { ...data, categoria: 'pqrs', fotosDefecto: state.fotos.soporte.map(f => ({ nombre: f.nombre, datos: f.datos })) };
+      try {
+        const res = await withBusy($('button[type=submit]', fp), () => api('/tickets', { method: 'POST', body }));
+        state.lastTicket = res.data;
+        $('#pqrsCodigo').textContent = res.data.codigo;
+        fp.hidden = true;
+        $('#pqrsListo').hidden = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (error) {
+        setError(fp, error.message);
+      }
+    });
+    $('#nuevaPqrs').addEventListener('click', resetPqrs);
+    $('#verPqrsCreada').addEventListener('click', () => {
+      goClient('mis');
+      openTicket(state.lastTicket.id);
+    });
+
+    /* --- Solicitar garantía (asistente de 3 pasos) --- */
+    const form = $('#formTicket');
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const data = formData(form);
       setError(form);
-      const missing = ['cliente', 'numeroPedido', 'tipo', 'asunto', 'descripcion'].filter(k => !String(data[k] || '').trim());
+      const missing = ['cliente', 'numeroPedido', 'defecto', 'prenda', 'descripcion'].filter(k => !String(data[k] || '').trim());
       if (missing.length) {
         setError(form, 'Completa los campos obligatorios (*).');
         return markInvalid(form, missing);
       }
       if (data.descripcion.trim().length < 10) {
-        setError(form, 'Describe el motivo con un poco más de detalle.');
+        setError(form, 'Describe el defecto con un poco más de detalle.');
         return markInvalid(form, ['descripcion']);
+      }
+      if (!state.fotos.defecto.length) {
+        setError(form, 'Adjunta al menos una foto de la parte defectuosa de la prenda.');
+        $('[data-upload="defecto"] .pq-dropzone').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
       }
       markInvalid(form, []);
       const body = {
-        ...data,
+        categoria: 'garantia',
+        cliente: data.cliente,
+        numeroPedido: data.numeroPedido,
+        asunto: `Garantía: ${data.defecto}`,
+        prenda: data.prenda,
+        talla: data.talla,
+        descripcion: data.descripcion,
         fotosPrelavado: state.fotos.prelavado.map(f => ({ nombre: f.nombre, datos: f.datos })),
         fotosDefecto: state.fotos.defecto.map(f => ({ nombre: f.nombre, datos: f.datos }))
       };
@@ -314,7 +366,6 @@
         logistica.reset();
         logistica.elements.telefonoContacto.value = state.user.telefono || '';
         goStep(2);
-        loadClientTickets();
       } catch (error) {
         setError(form, error.message);
       }
@@ -336,15 +387,100 @@
     $('#skipLogistica').addEventListener('click', () => goStep(3));
     $('#nuevaOtra').addEventListener('click', resetWizard);
     $('#verTicketCreado').addEventListener('click', () => {
-      switchClientTab('mis');
+      goClient('mis');
       openTicket(state.lastTicket.id);
+    });
+
+    /* --- Mi perfil --- */
+    const fperfil = $('#formPerfil');
+    fperfil.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = formData(fperfil);
+      setError(fperfil);
+      if (String(data.nombre || '').trim().length < 3) {
+        setError(fperfil, 'Escribe tu nombre o el de tu empresa.');
+        return markInvalid(fperfil, ['nombre']);
+      }
+      try {
+        const res = await withBusy($('button[type=submit]', fperfil), () => api('/auth/perfil', { method: 'PATCH', body: data }));
+        state.user = res.data;
+        renderSession();
+        $('#clienteNombre').textContent = state.user.nombre;
+        toast('Tus datos quedaron actualizados.');
+      } catch (error) {
+        setError(fperfil, error.message);
+      }
+    });
+    const fclave = $('#formClave');
+    fclave.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = formData(fclave);
+      setError(fclave);
+      const missing = ['actual', 'nueva', 'nueva2'].filter(k => !data[k]);
+      if (missing.length) {
+        setError(fclave, 'Completa los tres campos.');
+        return markInvalid(fclave, missing);
+      }
+      if (data.nueva.length < 8) {
+        setError(fclave, 'La nueva contraseña debe tener al menos 8 caracteres.');
+        return markInvalid(fclave, ['nueva']);
+      }
+      if (data.nueva !== data.nueva2) {
+        setError(fclave, 'Las contraseñas nuevas no coinciden.');
+        return markInvalid(fclave, ['nueva2']);
+      }
+      try {
+        await withBusy($('button[type=submit]', fclave), () =>
+          api('/auth/clave', { method: 'POST', body: { actual: data.actual, nueva: data.nueva } }));
+        fclave.reset();
+        toast('Tu contraseña fue actualizada.');
+      } catch (error) {
+        setError(fclave, error.message);
+      }
     });
   }
 
-  function switchClientTab(name) {
-    $$('[data-client-tab]').forEach(t => t.classList.toggle('active', t.dataset.clientTab === name));
+  function goClient(name) {
     $$('[data-client-panel]').forEach(p => { p.hidden = p.dataset.clientPanel !== name; });
+    window.scrollTo({ top: 0 });
+    if (name === 'inicio') loadClientPanel();
     if (name === 'mis') loadClientTickets();
+    if (name === 'nueva') resetPqrs();
+    if (name === 'garantia') resetWizard();
+    if (name === 'perfil') fillPerfil();
+  }
+
+  async function loadClientPanel() {
+    try {
+      const { data } = await api('/cliente/panel');
+      const badgeEl = $('#badgeMis');
+      badgeEl.hidden = !data.respondidas;
+      badgeEl.textContent = data.respondidas;
+      badgeEl.title = `${data.respondidas} con respuesta de B&F`;
+      $('#tileMis').textContent = data.total ? `${data.total} solicitud(es)` : 'Estado y respuestas';
+    } catch { /* el panel funciona sin contadores */ }
+  }
+
+  function fillPerfil() {
+    const f = $('#formPerfil');
+    markInvalid(f, []);
+    setError(f);
+    ['nombre', 'documento', 'telefono', 'email'].forEach(k => { f.elements[k].value = state.user[k] || ''; });
+    $('#formClave').reset();
+    setError($('#formClave'));
+  }
+
+  function resetPqrs() {
+    const fp = $('#formPqrs');
+    fp.reset();
+    fp.hidden = false;
+    $('#pqrsListo').hidden = true;
+    markInvalid(fp, []);
+    setError(fp);
+    fp.elements.cliente.value = state.user?.nombre || '';
+    fp.elements.tipo.dispatchEvent(new Event('change'));
+    state.fotos.soporte = [];
+    renderThumbs($('[data-upload="soporte"]'));
   }
 
   function goStep(step) {
@@ -363,9 +499,9 @@
     markInvalid(form, []);
     setError(form);
     form.elements.cliente.value = state.user?.nombre || '';
-    form.elements.tipo.dispatchEvent(new Event('change'));
-    state.fotos = { prelavado: [], defecto: [] };
-    $$('[data-upload]').forEach(renderThumbs);
+    state.fotos.prelavado = [];
+    state.fotos.defecto = [];
+    $$('[data-upload="prelavado"], [data-upload="defecto"]').forEach(renderThumbs);
     state.lastTicket = null;
     goStep(1);
   }
@@ -384,8 +520,8 @@
         <button type="button" class="pq-ticket-item" data-open-ticket="${t.id}">
           <span class="pq-ticket-code">${esc(t.codigo)}</span>
           <span class="pq-ticket-main">
-            <strong>${esc(TIPOS[t.tipo])} · ${esc(t.asunto)}</strong>
-            <small>Pedido ${esc(t.numero_pedido)}${t.prenda ? ' · ' + esc(t.prenda) : ''}${t.talla ? ' · ' + esc(t.talla) : ''}</small>
+            <strong>${t.categoria === 'garantia' ? 'Garantía' : esc(TIPOS[t.tipo])} · ${esc(t.asunto.replace(/^Garantía: /, ''))}</strong>
+            <small>${[t.numero_pedido ? 'Pedido ' + esc(t.numero_pedido) : '', esc(t.prenda || ''), esc(t.talla || '')].filter(Boolean).join(' · ') || 'Sin pedido asociado'}</small>
           </span>
           <span class="pq-ticket-side">
             ${badge(t.estado)}
@@ -492,6 +628,9 @@
       if ($('[data-admin-panel="reporte"]').hidden) loadAdmin();
       else loadReport();
     });
+    $$('[data-admin-go]').forEach(btn => btn.addEventListener('click', () => goAdmin(btn.dataset.adminGo)));
+    initHojas();
+    initContenido();
     initReport();
     $('#adminTickets').addEventListener('click', e => {
       const row = e.target.closest('[data-open-ticket]');
@@ -568,6 +707,7 @@
   function reportParams() {
     const form = $('#reportFilters');
     const params = new URLSearchParams();
+    params.set('categoria', state.categoria);
     const { desde, hasta } = { desde: form.elements.desde.value, hasta: form.elements.hasta.value };
     if (desde) params.set('desde', new Date(`${desde}T00:00:00`).toISOString());
     if (hasta) params.set('hasta', new Date(`${hasta}T23:59:59.999`).toISOString());
@@ -647,7 +787,7 @@
 
   async function loadAdminStats() {
     try {
-      const { data } = await api('/admin/resumen');
+      const { data } = await api('/admin/resumen?categoria=' + state.categoria);
       $$('[data-stat]').forEach(el => { el.textContent = data[el.dataset.stat] ?? 0; });
     } catch (error) {
       toast(error.message, true);
@@ -656,7 +796,7 @@
 
   async function loadAdminTickets() {
     const filters = $('#adminFilters');
-    const params = new URLSearchParams();
+    const params = new URLSearchParams({ categoria: state.categoria });
     ['q', 'estado', 'tipo'].forEach(k => { if (filters.elements[k].value) params.set(k, filters.elements[k].value.trim()); });
     $$('[data-filter-estado]').forEach(b => b.classList.toggle('active', b.dataset.filterEstado === filters.elements.estado.value));
     const body = $('#adminTickets');
@@ -670,7 +810,7 @@
         <tr data-open-ticket="${t.id}" tabindex="0">
           <td><span class="pq-ticket-code">${esc(t.codigo)}</span></td>
           <td data-label="Cliente">${esc(t.cliente)}<small>${esc(t.email_cuenta)}</small></td>
-          <td data-label="Pedido">${esc(t.numero_pedido)}</td>
+          <td data-label="Pedido">${esc(t.numero_pedido || '—')}</td>
           <td data-label="Tipo"><span class="pq-type">${esc(TIPOS[t.tipo])}</span></td>
           <td data-label="Asunto">${esc(t.asunto)}${t.prenda ? `<small>${esc(t.prenda)}${t.talla ? ' · ' + esc(t.talla) : ''}</small>` : ''}</td>
           <td>${badge(t.estado)}</td>
@@ -735,7 +875,8 @@
     const isAdmin = state.user.rol === 'admin';
     const cerrado = t.estado === 'cerrado';
     $('#drawerTitle').textContent = t.codigo;
-    $('#drawerTipo').innerHTML = `${esc(TIPOS[t.tipo])} · ${badge(t.estado)}`;
+    const esGarantia = t.categoria === 'garantia';
+    $('#drawerTipo').innerHTML = `${esGarantia ? 'Garantía' : esc(TIPOS[t.tipo])} · ${badge(t.estado)}`;
 
     const fotosDe = cat => t.adjuntos.filter(a => a.categoria === cat);
     const gallery = (cat, label) => {
@@ -753,8 +894,8 @@
         <h3>Datos de la solicitud</h3>
         <dl class="pq-dl">
           <div><dt>Cliente</dt><dd>${esc(t.cliente)}</dd></div>
-          <div><dt>Número de pedido</dt><dd>${esc(t.numero_pedido)}</dd></div>
-          <div><dt>Tipo</dt><dd>${esc(TIPOS[t.tipo])}</dd></div>
+          <div><dt>Número de pedido</dt><dd>${esc(t.numero_pedido || 'No aplica')}</dd></div>
+          <div><dt>Tipo</dt><dd>${esGarantia ? 'Garantía' : esc(TIPOS[t.tipo])}</dd></div>
           <div><dt>Asunto</dt><dd>${esc(t.asunto)}</dd></div>
           <div><dt>Prenda</dt><dd>${esc(t.prenda || 'No aplica')}</dd></div>
           <div><dt>Talla</dt><dd>${esc(t.talla || 'No aplica')}</dd></div>
@@ -770,14 +911,19 @@
         <div class="pq-desc">${esc(t.descripcion)}</div>
       </section>
 
+      ${esGarantia ? `
       <section class="pq-section">
         <h3>Fotos</h3>
         ${gallery('prelavado', 'Prelavado')}
         <div style="height:14px"></div>
         ${gallery('defecto', 'Parte defectuosa')}
-      </section>
+      </section>` : (t.adjuntos.length ? `
+      <section class="pq-section">
+        <h3>Fotos de soporte</h3>
+        ${gallery('defecto', 'Adjuntas por el cliente')}
+      </section>` : '')}
 
-      <section class="pq-section" id="logisticaSection">
+      ${esGarantia || hasLogistics ? `<section class="pq-section" id="logisticaSection">
         <h3>Recogida y entrega
           ${!cerrado ? `<button type="button" class="pq-link" id="editLogistica"><i class="fa-solid fa-pen"></i> ${hasLogistics ? 'Editar' : 'Agregar datos'}</button>` : ''}
         </h3>
@@ -791,7 +937,7 @@
             <div class="full"><dt>Especificaciones de entrega</dt><dd class="pq-desc">${esc(t.especificaciones_entrega || '—')}</dd></div>
           </dl>` : '<p class="pq-muted">Aún no se han registrado datos de recogida y entrega.</p>'}
         </div>
-      </section>
+      </section>` : ''}
 
       <section class="pq-section">
         <h3>Respuestas y seguimiento</h3>
@@ -934,6 +1080,437 @@
   function refreshLists() {
     if (state.user.rol === 'admin') loadAdmin();
     else loadClientTickets();
+  }
+
+  /* ------------------------------------------------ navegación del administrador */
+
+  function goAdmin(name) {
+    const section = name === 'pqrs' || name === 'garantia' ? 'tickets' : name;
+    $$('[data-admin-section]').forEach(p => { p.hidden = p.dataset.adminSection !== section; });
+    window.scrollTo({ top: 0 });
+    if (section === 'inicio') return loadAdminPanel();
+    if (section === 'tickets') {
+      state.categoria = name;
+      const g = name === 'garantia';
+      $('#adminTicketsTitle').textContent = g ? 'Gestionar garantías' : 'Gestionar PQRS';
+      $('#filtroTipo').hidden = g;
+      $('#adminFilters').reset();
+      $('.pq-report-print-head strong').textContent = g ? 'Reporte de garantías' : 'Reporte de PQRS';
+      $('[data-admin-tab="tickets"]').click();
+    }
+    if (section === 'hojas') {
+      $('[data-hv-tab="lista"]').click();
+      loadCargos();
+    }
+    if (section === 'contenido') {
+      $('[data-ct-tab="textos"]').click();
+    }
+  }
+
+  async function loadAdminPanel() {
+    try {
+      const { data } = await api('/admin/panel');
+      $$('[data-badge]').forEach(b => {
+        const n = data[b.dataset.badge] || 0;
+        b.hidden = !n;
+        b.textContent = n;
+        b.title = `${n} sin revisar`;
+      });
+      $('#tileCargos').textContent = `${data.cargosActivos} de ${data.cargosTotal} cargos abiertos`;
+    } catch { /* el panel funciona sin contadores */ }
+  }
+
+  /* -------------------------------------------------------------- hojas de vida */
+
+  const EXPERIENCIA = { sin_experiencia: 'Sin experiencia', menos_1: 'Menos de 1 año', entre_1_3: 'Entre 1 y 3 años', mas_3: 'Más de 3 años' };
+  const ESTADOS_HV = { nueva: 'Nueva', revisada: 'Revisada', preseleccionada: 'Preseleccionada', descartada: 'Descartada' };
+  const hvBadge = e => `<span class="pq-badge pq-badge-${esc(e)}">${esc(ESTADOS_HV[e] || e)}</span>`;
+  let hvTimer;
+
+  function initHojas() {
+    $$('[data-hv-tab]').forEach(tab => tab.addEventListener('click', () => {
+      $$('[data-hv-tab]').forEach(t => t.classList.toggle('active', t === tab));
+      $$('[data-hv-panel]').forEach(p => { p.hidden = p.dataset.hvPanel !== tab.dataset.hvTab; });
+      if (tab.dataset.hvTab === 'lista') loadHojas();
+      else loadCargos();
+    }));
+    const filters = $('#hvFilters');
+    filters.addEventListener('submit', e => e.preventDefault());
+    filters.addEventListener('input', e => {
+      clearTimeout(hvTimer);
+      hvTimer = setTimeout(loadHojas, e.target.name === 'q' ? 300 : 0);
+    });
+    $('#hvTabla').addEventListener('click', e => {
+      const row = e.target.closest('[data-open-hv]');
+      if (row) openHoja(row.dataset.openHv);
+    });
+    $('#hvTabla').addEventListener('keydown', e => {
+      const row = e.target.closest('[data-open-hv]');
+      if (row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openHoja(row.dataset.openHv); }
+    });
+    $$('[data-close-hv]').forEach(el => el.addEventListener('click', closeHoja));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#hvDrawer').hidden) closeHoja(); });
+
+    $('#cargosLista').addEventListener('change', async e => {
+      const input = e.target.closest('[data-cargo]');
+      if (!input) return;
+      try {
+        await api(`@/empleo/admin/cargos/${input.dataset.cargo}`, { method: 'PATCH', body: { activo: input.checked } });
+        input.closest('.pq-cargo').classList.toggle('off', !input.checked);
+        toast(input.checked ? 'Cargo activado: ya aparece en el formulario.' : 'Cargo desactivado: ya no recibe hojas de vida.');
+      } catch (error) {
+        input.checked = !input.checked;
+        toast(error.message, true);
+      }
+    });
+    $$('[data-cargos-todos]').forEach(btn => btn.addEventListener('click', async () => {
+      try {
+        await withBusy(btn, () => api('@/empleo/admin/cargos', { method: 'PATCH', body: { activo: btn.dataset.cargosTodos === '1' } }));
+        loadCargos();
+      } catch (error) {
+        toast(error.message, true);
+      }
+    }));
+    const fc = $('#formCargo');
+    fc.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = formData(fc);
+      if (String(data.nombre || '').trim().length < 3) return markInvalid(fc, ['nombre']);
+      try {
+        await withBusy($('button[type=submit]', fc), () => api('@/empleo/admin/cargos', { method: 'POST', body: data }));
+        fc.reset();
+        toast('Cargo agregado y activo.');
+        loadCargos();
+      } catch (error) {
+        toast(error.message, true);
+      }
+    });
+  }
+
+  async function loadCargos() {
+    try {
+      const { data } = await api('@/empleo/admin/cargos');
+      const sel = $('#hvFiltroCargo');
+      const actual = sel.value;
+      sel.innerHTML = '<option value="">Todos los cargos</option>' +
+        data.map(c => `<option value="${c.id}">${esc(c.nombre)}</option>`).join('');
+      sel.value = actual;
+      const areas = {};
+      data.forEach(c => { (areas[c.area] = areas[c.area] || []).push(c); });
+      $('#cargosLista').innerHTML = Object.entries(areas).map(([area, list]) => `
+        <h3>${esc(area)}</h3>
+        ${list.map(c => `
+          <label class="pq-cargo ${c.activo ? '' : 'off'}">
+            <span class="pq-cargo-name">${esc(c.nombre)}
+              <small>${Number(c.total)} hoja(s) de vida${Number(c.nuevas) ? ` · ${c.nuevas} nueva(s)` : ''}</small></span>
+            <span class="pq-switch"><input type="checkbox" data-cargo="${c.id}" ${c.activo ? 'checked' : ''} aria-label="Recibir hojas de vida para ${esc(c.nombre)}"><span></span></span>
+          </label>`).join('')}`).join('');
+    } catch (error) {
+      $('#cargosLista').innerHTML = `<p class="pq-muted">${esc(error.message)}</p>`;
+    }
+  }
+
+  async function loadHojas() {
+    const f = $('#hvFilters');
+    const params = new URLSearchParams();
+    ['q', 'estado', 'cargo'].forEach(k => { if (f.elements[k].value) params.set(k, f.elements[k].value.trim()); });
+    const body = $('#hvTabla');
+    try {
+      const { data } = await api('@/empleo/admin/hojas-vida?' + params);
+      if (!data.length) {
+        body.innerHTML = '<tr><td class="pq-empty-cell" colspan="7">No hay hojas de vida con estos filtros.</td></tr>';
+        return;
+      }
+      body.innerHTML = data.map(h => `
+        <tr data-open-hv="${h.id}" tabindex="0">
+          <td><span class="pq-ticket-code">${esc(h.codigo)}</span></td>
+          <td data-label="Aspirante">${esc(h.nombre)}<small>${esc(h.email)} · ${esc(h.telefono)}</small></td>
+          <td data-label="Cargo">${esc(h.cargo_nombre)}</td>
+          <td data-label="Experiencia">${esc(EXPERIENCIA[h.experiencia])}</td>
+          <td>${hvBadge(h.estado)}</td>
+          <td data-label="Recibida">${fecha(h.creado_en)}</td>
+          <td><i class="fa-solid fa-chevron-right" style="color:var(--pq-gold)"></i></td>
+        </tr>`).join('');
+    } catch (error) {
+      body.innerHTML = `<tr><td class="pq-empty-cell" colspan="7">${esc(error.message)}</td></tr>`;
+    }
+  }
+
+  function closeHoja() {
+    $('#hvDrawer').hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  async function openHoja(id) {
+    $('#hvDrawer').hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('#hvTitle').textContent = 'Cargando…';
+    $('#hvCargo').textContent = '';
+    const bodyEl = $('#hvBody');
+    bodyEl.innerHTML = '<div style="display:flex;justify-content:center;padding:40px"><span class="pq-spinner"></span></div>';
+    try {
+      const { data: h } = await api(`@/empleo/admin/hojas-vida/${id}`);
+      $('#hvTitle').textContent = h.nombre;
+      $('#hvCargo').innerHTML = `${esc(h.codigo)} · ${hvBadge(h.estado)}`;
+      bodyEl.innerHTML = `
+        <section class="pq-section">
+          <h3>Datos del aspirante</h3>
+          <dl class="pq-dl">
+            <div><dt>Cargo</dt><dd>${esc(h.cargo_nombre)}</dd></div>
+            <div><dt>Experiencia</dt><dd>${esc(EXPERIENCIA[h.experiencia])}</dd></div>
+            <div><dt>Correo</dt><dd><a class="pq-link" href="mailto:${esc(h.email)}">${esc(h.email)}</a></dd></div>
+            <div><dt>Teléfono</dt><dd><a class="pq-link" href="tel:${esc(h.telefono.replace(/\s/g, ''))}">${esc(h.telefono)}</a></dd></div>
+            <div><dt>Recibida</dt><dd>${fecha(h.creado_en, true)}</dd></div>
+            <div><dt>Autorizó datos</dt><dd>${fecha(h.autoriza_datos, true)}</dd></div>
+          </dl>
+        </section>
+        <section class="pq-section">
+          <h3>Sobre el aspirante</h3>
+          <div class="pq-desc">${esc(h.descripcion || 'No escribió una descripción.')}</div>
+        </section>
+        <section class="pq-section">
+          <h3>Hoja de vida</h3>
+          <button type="button" class="pq-btn pq-btn-gold" id="hvDescargar">
+            <i class="fa-solid fa-download"></i> Descargar ${esc(h.nombre_original)}
+          </button>
+        </section>
+        <section class="pq-section">
+          <h3>Seguimiento</h3>
+          <form class="pq-reply" id="hvForm" novalidate>
+            <label class="pq-field"><span>Notas internas</span>
+              <textarea name="notas" rows="3" maxlength="3000" placeholder="Ej: Llamar el lunes para entrevista.">${esc(h.notas || '')}</textarea>
+            </label>
+            <div class="pq-reply-actions">
+              <label class="pq-field"><span>Estado</span>
+                <select name="estado">${Object.entries(ESTADOS_HV).map(([k, v]) => `<option value="${k}" ${k === h.estado ? 'selected' : ''}>${v}</option>`).join('')}</select>
+              </label>
+              <button type="submit" class="pq-btn pq-btn-gold"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+            </div>
+          </form>
+        </section>
+        <section class="pq-section">
+          <h3>Eliminar</h3>
+          <p class="pq-muted" style="margin-bottom:10px">Borra la postulación y el archivo de forma definitiva, por ejemplo si el aspirante lo pide.</p>
+          <button type="button" class="pq-btn pq-btn-danger pq-btn-sm" id="hvEliminar"><i class="fa-solid fa-trash"></i> Eliminar hoja de vida</button>
+        </section>`;
+      $('#hvDescargar').addEventListener('click', async e => {
+        try {
+          await withBusy(e.currentTarget, async () => {
+            const res = await fetch(`/api/empleo/admin/hojas-vida/${h.id}/archivo`, { headers: { Authorization: `Bearer ${state.token}` } });
+            if (!res.ok) throw new Error('No se pudo descargar el archivo.');
+            const url = URL.createObjectURL(await res.blob());
+            const a = Object.assign(document.createElement('a'), { href: url, download: h.nombre_original });
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 2000);
+          });
+          if (h.estado === 'nueva') { loadHojas(); openHoja(h.id); }
+        } catch (error) {
+          toast(error.message, true);
+        }
+      });
+      $('#hvForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const f = e.currentTarget;
+        try {
+          await withBusy($('button[type=submit]', f), () => api(`@/empleo/admin/hojas-vida/${h.id}`, { method: 'PATCH', body: formData(f) }));
+          toast('Seguimiento guardado.');
+          loadHojas();
+          openHoja(h.id);
+        } catch (error) {
+          toast(error.message, true);
+        }
+      });
+      const del = $('#hvEliminar');
+      del.addEventListener('click', async () => {
+        if (del.dataset.confirm !== '1') {
+          del.dataset.confirm = '1';
+          del.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Haz clic otra vez para confirmar';
+          setTimeout(() => { if (del.isConnected) { del.dataset.confirm = ''; del.innerHTML = '<i class="fa-solid fa-trash"></i> Eliminar hoja de vida'; } }, 4000);
+          return;
+        }
+        try {
+          await withBusy(del, () => api(`@/empleo/admin/hojas-vida/${h.id}`, { method: 'DELETE' }));
+          closeHoja();
+          toast('Hoja de vida eliminada.');
+          loadHojas();
+        } catch (error) {
+          toast(error.message, true);
+        }
+      });
+    } catch (error) {
+      bodyEl.innerHTML = `<p class="pq-muted">${esc(error.message)}</p>`;
+    }
+  }
+
+  /* ------------------------------------------------------------- contenido */
+
+  let noticiaImagen = null;
+  let noticiasCache = [];
+
+  function initContenido() {
+    $$('[data-ct-tab]').forEach(tab => tab.addEventListener('click', () => {
+      $$('[data-ct-tab]').forEach(t => t.classList.toggle('active', t === tab));
+      $$('[data-ct-panel]').forEach(p => { p.hidden = p.dataset.ctPanel !== tab.dataset.ctTab; });
+      if (tab.dataset.ctTab === 'textos') loadTextos();
+      else { resetNoticia(); loadNoticias(); }
+    }));
+
+    const ft = $('#formTextos');
+    ft.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = formData(ft);
+      setError(ft);
+      const missing = Object.keys(data).filter(k => !String(data[k]).trim());
+      if (missing.length) {
+        setError(ft, 'Ningún texto puede quedar vacío.');
+        return markInvalid(ft, missing);
+      }
+      try {
+        await withBusy($('button[type=submit]', ft), () => api('@/contenido/admin/textos', { method: 'PUT', body: data }));
+        toast('Textos guardados. Ya se ven en el sitio.');
+      } catch (error) {
+        setError(ft, error.message);
+      }
+    });
+
+    const fn = $('#formNoticia');
+    $('#noticiaImagen').addEventListener('change', async e => {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return toast('La imagen debe ser JPG, PNG o WEBP.', true);
+      try {
+        noticiaImagen = { nombre: file.name, datos: await compressImage(file) };
+        const prev = $('#noticiaPreview');
+        prev.src = noticiaImagen.datos;
+        prev.hidden = false;
+      } catch {
+        toast('No se pudo leer la imagen.', true);
+      }
+    });
+    $('#noticiaCancelar').addEventListener('click', resetNoticia);
+    fn.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = formData(fn);
+      setError(fn);
+      const missing = ['titulo', 'fecha', 'resumen'].filter(k => !String(data[k] || '').trim());
+      if (missing.length) {
+        setError(fn, 'Completa los campos obligatorios (*).');
+        return markInvalid(fn, missing);
+      }
+      if (!data.id && !noticiaImagen) return setError(fn, 'Agrega una imagen para la noticia.');
+      const body = { titulo: data.titulo, fecha: data.fecha, resumen: data.resumen, visible: fn.elements.visible.checked, imagen: noticiaImagen || undefined };
+      try {
+        await withBusy($('button[type=submit]', fn), () => data.id
+          ? api(`@/contenido/admin/noticias/${data.id}`, { method: 'PUT', body })
+          : api('@/contenido/admin/noticias', { method: 'POST', body }));
+        toast(data.id ? 'Noticia actualizada.' : 'Noticia publicada.');
+        resetNoticia();
+        loadNoticias();
+      } catch (error) {
+        setError(fn, error.message);
+      }
+    });
+
+    $('#noticiasLista').addEventListener('click', async e => {
+      const btn = e.target.closest('[data-news-action]');
+      if (!btn) return;
+      const n = noticiasCache.find(x => String(x.id) === btn.dataset.id);
+      if (!n) return;
+      const action = btn.dataset.newsAction;
+      if (action === 'editar') return editNoticia(n);
+      try {
+        if (action === 'visible') {
+          await api(`@/contenido/admin/noticias/${n.id}`, { method: 'PATCH', body: { visible: !n.visible } });
+          toast(n.visible ? 'Noticia oculta del sitio.' : 'Noticia visible en el sitio.');
+        }
+        if (action === 'eliminar') {
+          if (btn.dataset.confirm !== '1') {
+            btn.dataset.confirm = '1';
+            btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            btn.title = 'Haz clic otra vez para eliminar';
+            toast('Haz clic otra vez en el botón para eliminar la noticia.');
+            return;
+          }
+          await api(`@/contenido/admin/noticias/${n.id}`, { method: 'DELETE' });
+          toast('Noticia eliminada.');
+        }
+        loadNoticias();
+      } catch (error) {
+        toast(error.message, true);
+      }
+    });
+  }
+
+  async function loadTextos() {
+    try {
+      const { data } = await api('@/contenido/textos');
+      const ft = $('#formTextos');
+      Object.entries(data).forEach(([k, v]) => { if (ft.elements[k]) ft.elements[k].value = v; });
+    } catch (error) {
+      toast(error.message, true);
+    }
+  }
+
+  function resetNoticia() {
+    const fn = $('#formNoticia');
+    fn.reset();
+    fn.elements.id.value = '';
+    fn.elements.fecha.value = isoDay(new Date());
+    fn.elements.visible.checked = true;
+    noticiaImagen = null;
+    $('#noticiaPreview').hidden = true;
+    $('#noticiaFormTitulo').textContent = 'Nueva noticia';
+    $('#noticiaCancelar').hidden = true;
+    markInvalid(fn, []);
+    setError(fn);
+  }
+
+  function editNoticia(n) {
+    const fn = $('#formNoticia');
+    resetNoticia();
+    fn.elements.id.value = n.id;
+    fn.elements.titulo.value = n.titulo;
+    fn.elements.fecha.value = n.fecha;
+    fn.elements.resumen.value = n.resumen;
+    fn.elements.visible.checked = n.visible;
+    if (n.imagen) {
+      const prev = $('#noticiaPreview');
+      prev.src = n.imagen + (n.imagen.includes('?') ? '&' : '?') + 'admin=1';
+      prev.hidden = false;
+    }
+    $('#noticiaFormTitulo').textContent = 'Editar noticia';
+    $('#noticiaCancelar').hidden = false;
+    fn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  async function loadNoticias() {
+    const box = $('#noticiasLista');
+    try {
+      const { data } = await api('@/contenido/admin/noticias');
+      noticiasCache = data;
+      if (!data.length) {
+        box.innerHTML = '<div class="pq-empty"><i class="fa-regular fa-newspaper"></i>Aún no hay noticias.</div>';
+        return;
+      }
+      box.innerHTML = data.map(n => `
+        <div class="pq-news-item ${n.visible ? '' : 'off'}">
+          ${n.imagen ? `<img src="${esc(n.imagen + (n.imagen.includes('?') ? '&' : '?') + 'admin=1')}" alt="">` : '<span></span>'}
+          <div>
+            <strong>${esc(n.titulo)}</strong>
+            <small>${fecha(n.fecha + 'T12:00:00')} · ${n.visible ? 'Visible en el sitio' : 'Oculta'}</small>
+          </div>
+          <div class="pq-news-actions">
+            <button type="button" class="pq-icon-btn" data-news-action="editar" data-id="${n.id}" title="Editar" aria-label="Editar"><i class="fa-solid fa-pen"></i></button>
+            <button type="button" class="pq-icon-btn" data-news-action="visible" data-id="${n.id}" title="${n.visible ? 'Ocultar' : 'Mostrar'}" aria-label="${n.visible ? 'Ocultar' : 'Mostrar'}"><i class="fa-regular ${n.visible ? 'fa-eye-slash' : 'fa-eye'}"></i></button>
+            <button type="button" class="pq-icon-btn" data-news-action="eliminar" data-id="${n.id}" title="Eliminar" aria-label="Eliminar"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>`).join('');
+    } catch (error) {
+      box.innerHTML = `<p class="pq-muted">${esc(error.message)}</p>`;
+    }
   }
 
   /* ---------------------------------------------------------------- inicio */

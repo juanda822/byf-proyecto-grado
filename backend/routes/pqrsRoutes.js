@@ -13,6 +13,9 @@ router.use(pqrs.requireDb);
 router.post('/auth/registro', pqrs.registro);
 router.post('/auth/login', pqrs.login);
 router.get('/auth/yo', requireAuth(), pqrs.yo);
+router.patch('/auth/perfil', requireAuth(), pqrs.actualizarPerfil);
+router.post('/auth/clave', requireAuth(), pqrs.cambiarClave);
+router.get('/cliente/panel', requireAuth('cliente'), pqrs.panelCliente);
 router.post('/admin/configurar', pqrs.configurarAdmin);
 
 // Tickets
@@ -25,6 +28,7 @@ router.patch('/tickets/:id/estado', requireAuth('admin'), pqrs.cambiarEstado);
 router.get('/tickets/:id/adjuntos/:adjuntoId', requireAuth(), pqrs.verAdjunto);
 
 // Panel del administrador
+router.get('/admin/panel', requireAuth('admin'), pqrs.panelAdmin);
 router.get('/admin/resumen', requireAuth('admin'), pqrs.resumen);
 router.get('/admin/reporte', requireAuth('admin'), pqrs.reporte);
 router.get('/admin/exportar', requireAuth('admin'), pqrs.exportar);
