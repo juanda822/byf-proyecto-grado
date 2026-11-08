@@ -107,6 +107,21 @@
     }
   }
 
+  /** NIT o cédula y teléfono del cliente (mismas reglas que el servidor). */
+  function contactoInvalido(form, data) {
+    if (!/^[0-9][0-9.\- ]{4,18}[0-9]$/.test(String(data.documento || '').trim())) {
+      setError(form, 'Escribe el NIT o la cédula (solo números, puntos o guion).');
+      markInvalid(form, ['documento']);
+      return true;
+    }
+    if (!/^\d{7,15}$/.test(String(data.telefono || '').replace(/[\s()+-]/g, ''))) {
+      setError(form, 'Escribe un teléfono válido (entre 7 y 15 dígitos).');
+      markInvalid(form, ['telefono']);
+      return true;
+    }
+    return false;
+  }
+
   function markInvalid(form, names) {
     $$('.pq-field', form).forEach(f => f.classList.remove('invalid'));
     names.forEach(name => {
@@ -222,11 +237,12 @@
       const form = e.currentTarget;
       const data = formData(form);
       setError(form);
-      const missing = ['nombre', 'email', 'password', 'password2'].filter(k => !String(data[k] || '').trim());
+      const missing = ['nombre', 'documento', 'telefono', 'email', 'password', 'password2'].filter(k => !String(data[k] || '').trim());
       if (missing.length) {
         setError(form, 'Completa los campos obligatorios (*).');
         return markInvalid(form, missing);
       }
+      if (contactoInvalido(form, data)) return;
       if (data.password.length < 8) {
         setError(form, 'La contraseña debe tener al menos 8 caracteres.');
         return markInvalid(form, ['password']);
@@ -401,6 +417,12 @@
         setError(fperfil, 'Escribe tu nombre o el de tu empresa.');
         return markInvalid(fperfil, ['nombre']);
       }
+      const faltan = ['documento', 'telefono'].filter(k => !String(data[k] || '').trim());
+      if (faltan.length) {
+        setError(fperfil, 'Completa los campos obligatorios (*).');
+        return markInvalid(fperfil, faltan);
+      }
+      if (contactoInvalido(fperfil, data)) return;
       try {
         const res = await withBusy($('button[type=submit]', fperfil), () => api('/auth/perfil', { method: 'PATCH', body: data }));
         state.user = res.data;

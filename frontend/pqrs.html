@@ -100,12 +100,12 @@
             </label>
             <div class="pq-row">
               <label class="pq-field">
-                <span>NIT o cédula</span>
-                <input type="text" name="documento" maxlength="40" placeholder="Ej: 900.123.456-7">
+                <span>NIT o cédula *</span>
+                <input type="text" name="documento" inputmode="numeric" required maxlength="20" placeholder="Ej: 900.123.456-7">
               </label>
               <label class="pq-field">
-                <span>Teléfono</span>
-                <input type="tel" name="telefono" autocomplete="tel" maxlength="40" placeholder="Ej: 312 345 6789">
+                <span>Teléfono *</span>
+                <input type="tel" name="telefono" autocomplete="tel" required maxlength="20" placeholder="Ej: 312 345 6789">
               </label>
             </div>
             <label class="pq-field">
@@ -454,8 +454,8 @@
               <h2 class="pq-card-title"><i class="fa-solid fa-id-card"></i> Mis datos</h2>
               <label class="pq-field"><span>Cliente (persona o empresa) *</span><input type="text" name="nombre" maxlength="150" required></label>
               <div class="pq-row">
-                <label class="pq-field"><span>NIT o cédula</span><input type="text" name="documento" maxlength="40"></label>
-                <label class="pq-field"><span>Teléfono</span><input type="tel" name="telefono" maxlength="40"></label>
+                <label class="pq-field"><span>NIT o cédula *</span><input type="text" name="documento" inputmode="numeric" maxlength="20" required></label>
+                <label class="pq-field"><span>Teléfono *</span><input type="tel" name="telefono" maxlength="20" required></label>
               </div>
               <label class="pq-field"><span>Correo electrónico</span><input type="email" name="email" disabled></label>
               <p class="pq-form-error" data-error></p>

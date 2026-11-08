@@ -63,6 +63,22 @@ function publicUser(u) {
   return { id: u.id, rol: u.rol, nombre: u.nombre, documento: u.documento, email: u.email, telefono: u.telefono };
 }
 
+const DOCUMENTO_RE = /^[0-9][0-9.\- ]{4,18}[0-9]$/;
+
+/** NIT o cédula y teléfono: obligatorios para los clientes. */
+function validarContacto(body) {
+  const documento = clean(body.documento, 40);
+  const telefono = clean(body.telefono, 40);
+  if (!DOCUMENTO_RE.test(documento)) {
+    throw fail(400, 'Escribe el NIT o la cédula (solo números, puntos o guion).');
+  }
+  const digitos = telefono.replace(/[\s()+-]/g, '');
+  if (!/^\d{7,15}$/.test(digitos)) {
+    throw fail(400, 'Escribe un teléfono válido (entre 7 y 15 dígitos).');
+  }
+  return { documento, telefono };
+}
+
 function validatePassword(password) {
   if (typeof password !== 'string' || password.length < 8) {
     throw fail(400, 'La contraseña debe tener al menos 8 caracteres.');
@@ -102,9 +118,8 @@ const estado = handle(async (req, res) => {
 const registro = handle(async (req, res) => {
   const nombre = clean(req.body.nombre, 150);
   const email = clean(req.body.email, 190).toLowerCase();
-  const documento = optional(req.body.documento, 40);
-  const telefono = optional(req.body.telefono, 40);
   if (nombre.length < 3) throw fail(400, 'Escribe el nombre del cliente o de la empresa.');
+  const { documento, telefono } = validarContacto(req.body);
   if (!EMAIL_RE.test(email)) throw fail(400, 'Escribe un correo electrónico válido.');
   validatePassword(req.body.password);
 
@@ -508,8 +523,11 @@ const exportar = handle(async (req, res) => {
 const actualizarPerfil = handle(async (req, res) => {
   const nombre = clean(req.body.nombre, 150);
   if (nombre.length < 3) throw fail(400, 'Escribe tu nombre o el de tu empresa.');
+  const contacto = req.user.rol === 'cliente'
+    ? validarContacto(req.body)
+    : { documento: optional(req.body.documento, 40), telefono: optional(req.body.telefono, 40) };
   await db.query('UPDATE usuarios SET nombre = ?, documento = ?, telefono = ? WHERE id = ?',
-    [nombre, optional(req.body.documento, 40), optional(req.body.telefono, 40), req.user.id]);
+    [nombre, contacto.documento, contacto.telefono, req.user.id]);
   const [u] = await db.query('SELECT * FROM usuarios WHERE id = ?', [req.user.id]);
   res.json({ success: true, message: 'Datos actualizados.', data: publicUser(u) });
 });
