@@ -11,9 +11,17 @@
   const TIPOS = { peticion: 'Petición', queja: 'Queja', reclamo: 'Reclamo' };
   const ESTADOS = { radicado: 'Radicado', en_revision: 'En revisión', respondido: 'Respondido', cerrado: 'Cerrado' };
 
+  const USER_KEY = 'byf_pqrs_user'; // nombre y rol para el encabezado de las demás páginas
+
   const storage = {
     get: () => { try { return localStorage.getItem(TOKEN_KEY); } catch { return null; } },
-    set: v => { try { v ? localStorage.setItem(TOKEN_KEY, v) : localStorage.removeItem(TOKEN_KEY); } catch { /* */ } }
+    set: v => {
+      try {
+        if (v) localStorage.setItem(TOKEN_KEY, v);
+        else { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY); }
+      } catch { /* */ }
+    },
+    setUser: u => { try { localStorage.setItem(USER_KEY, JSON.stringify({ nombre: u.nombre, rol: u.rol })); } catch { /* */ } }
   };
 
   const state = {
@@ -148,6 +156,7 @@
   function renderSession() {
     const box = $('#pqSession');
     if (!state.user) { box.hidden = true; return; }
+    storage.setUser(state.user);
     box.hidden = false;
     $('#pqSessionRole').textContent = state.user.rol === 'admin' ? 'Administrador' : 'Cliente';
     $('#pqSessionName').textContent = state.user.nombre;
