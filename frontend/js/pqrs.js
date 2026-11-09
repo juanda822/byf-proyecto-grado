@@ -23,7 +23,8 @@
     lastTicket: null,
     fotos: { prelavado: [], defecto: [], soporte: [] },
     categoria: 'pqrs',
-    objectUrls: []
+    objectUrls: [],
+    resetToken: null
   };
 
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -92,6 +93,11 @@
 
   function setError(form, message) {
     const el = $('[data-error]', form);
+    if (el) el.textContent = message || '';
+  }
+
+  function setOk(form, message) {
+    const el = $('[data-ok]', form);
     if (el) el.textContent = message || '';
   }
 
@@ -203,15 +209,30 @@
     }
   }
 
+  /** Muestra un formulario de acceso: login, registro, olvide o restablecer. */
+  function showAuthPanel(name) {
+    const tab = name === 'registro' ? 'registro' : 'login';
+    $$('[data-auth-tab]').forEach(t => {
+      const active = t.dataset.authTab === tab;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', String(active));
+    });
+    $$('[data-auth-panel]').forEach(p => {
+      p.hidden = p.dataset.authPanel !== name;
+      setError(p);
+      setOk(p);
+    });
+    // Lleva el correo escrito en Ingresar al formulario de recuperación
+    if (name === 'olvide') {
+      const email = $('#formLogin').elements.email.value;
+      if (email && !$('#formOlvide').elements.email.value) $('#formOlvide').elements.email.value = email;
+      $('#formOlvide').elements.email.focus();
+    }
+  }
+
   function initAuth() {
-    $$('[data-auth-tab]').forEach(tab => tab.addEventListener('click', () => {
-      $$('[data-auth-tab]').forEach(t => {
-        const active = t === tab;
-        t.classList.toggle('active', active);
-        t.setAttribute('aria-selected', String(active));
-      });
-      $$('[data-auth-panel]').forEach(p => { p.hidden = p.dataset.authPanel !== tab.dataset.authTab; });
-    }));
+    $$('[data-auth-tab]').forEach(tab => tab.addEventListener('click', () => showAuthPanel(tab.dataset.authTab)));
+    $$('[data-go-auth]').forEach(link => link.addEventListener('click', () => showAuthPanel(link.dataset.goAuth)));
 
     $('#formLogin').addEventListener('submit', async e => {
       e.preventDefault();
@@ -257,6 +278,54 @@
           api('/auth/registro', { method: 'POST', body: data }));
         form.reset();
         toast('¡Bienvenido! Tu cuenta fue creada.');
+        startSession(res.data);
+      } catch (error) {
+        setError(form, error.message);
+      }
+    });
+
+    $('#formOlvide').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const email = String(formData(form).email || '').trim();
+      setError(form);
+      setOk(form);
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        setError(form, 'Escribe un correo electrónico válido.');
+        return markInvalid(form, ['email']);
+      }
+      try {
+        const res = await withBusy($('button[type=submit]', form), () =>
+          api('/auth/olvide', { method: 'POST', body: { email } }));
+        setOk(form, res.message);
+      } catch (error) {
+        setError(form, error.message);
+      }
+    });
+
+    $('#formRestablecer').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const data = formData(form);
+      setError(form);
+      if (!state.resetToken) {
+        return setError(form, 'Abre de nuevo el enlace que te llegó al correo o pide uno nuevo.');
+      }
+      if (String(data.password || '').length < 8) {
+        setError(form, 'La contraseña debe tener al menos 8 caracteres.');
+        return markInvalid(form, ['password']);
+      }
+      if (data.password !== data.password2) {
+        setError(form, 'Las contraseñas no coinciden.');
+        return markInvalid(form, ['password2']);
+      }
+      markInvalid(form, []);
+      try {
+        const res = await withBusy($('button[type=submit]', form), () =>
+          api('/auth/restablecer', { method: 'POST', body: { token: state.resetToken, password: data.password } }));
+        state.resetToken = null;
+        form.reset();
+        toast('Tu contraseña fue actualizada.');
         startSession(res.data);
       } catch (error) {
         setError(form, error.message);
@@ -1545,7 +1614,18 @@
     // Al corregir un campo marcado en rojo se quita la marca
     document.addEventListener('input', e => e.target.closest?.('.pq-field')?.classList.remove('invalid'));
     document.addEventListener('change', e => e.target.closest?.('.pq-field')?.classList.remove('invalid'));
+    // Enlace del correo: pqrs.html#restablecer=<código>. Se quita de la barra de direcciones.
+    const reset = location.hash.match(/^#restablecer=([0-9a-f]{64})$/);
+    if (reset) {
+      state.resetToken = reset[1];
+      history.replaceState(null, '', location.pathname + location.search);
+    }
     await refreshStatus();
+    if (state.resetToken) {
+      showView('viewAuth');
+      showAuthPanel('restablecer');
+      return;
+    }
     if (state.token) {
       try {
         const { data } = await api('/auth/yo');
@@ -1558,7 +1638,7 @@
       }
     }
     showView('viewAuth');
-    if (location.hash === '#registro') $('[data-auth-tab="registro"]').click();
+    if (location.hash === '#registro') showAuthPanel('registro');
   }
 
   init();

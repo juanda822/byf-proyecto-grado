@@ -27,6 +27,20 @@ CREATE TABLE IF NOT EXISTS usuarios (
   UNIQUE KEY uq_usuarios_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Enlaces para restablecer la contraseña (se guarda solo el hash del código; vencen en 1 hora y sirven una vez)
+CREATE TABLE IF NOT EXISTS recuperaciones_clave (
+  id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  usuario_id  INT UNSIGNED NOT NULL,
+  token_hash  CHAR(64)     NOT NULL,
+  expira_en   DATETIME     NOT NULL,
+  usado_en    DATETIME     NULL,
+  creado_en   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_recuperaciones_token (token_hash),
+  KEY idx_recuperaciones_usuario (usuario_id),
+  CONSTRAINT fk_recuperaciones_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Cada PQR es un ticket
 CREATE TABLE IF NOT EXISTS tickets (
   id                         INT UNSIGNED NOT NULL AUTO_INCREMENT,

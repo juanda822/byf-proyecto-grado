@@ -71,6 +71,8 @@ La comprobación valida páginas, recursos CSS/JS, catálogos, API y rechazo de 
 | GET | `/api/pqrs/estado` | ¿Hay base de datos? ¿Ya existe administrador? |
 | POST | `/api/pqrs/auth/registro` | Registro de clientes |
 | POST | `/api/pqrs/auth/login` | Ingreso de clientes y administrador |
+| POST | `/api/pqrs/auth/olvide` | Envía al correo registrado un enlace para crear una contraseña nueva |
+| POST | `/api/pqrs/auth/restablecer` | Guarda la contraseña nueva con el código del enlace e inicia sesión |
 | POST | `/api/pqrs/admin/configurar` | Crea la cuenta del administrador (solo una vez) |
 | GET, POST | `/api/pqrs/tickets` | Listar tickets (el cliente ve los suyos, el admin todos) o radicar uno |
 | GET | `/api/pqrs/tickets/:id` | Detalle con fotos y respuestas |
@@ -105,6 +107,7 @@ El botón dorado **Inicia sesión** (arriba a la derecha en todas las páginas) 
 - **Administrador:** ve todas las PQRS con contadores por estado, buscador y filtros; abre cada ticket con sus fotos y datos de recogida, responde al cliente y cambia el estado (Radicado → En revisión → Respondido → Cerrado).
 
 - **Reporte:** en el panel del administrador, la pestaña *Reporte* muestra totales, tiempo promedio de primera respuesta y gráficas por estado, tipo, mes, motivo, prenda y cliente, con filtro de fechas. Se puede descargar en Excel (CSV) o imprimir / guardar como PDF.
+- **¿Olvidaste tu contraseña?:** en *Ingresar*, el cliente o el administrador escribe su correo registrado y recibe un enlace (`pqrs.html#restablecer=…`) para crear una contraseña nueva. El enlace vence en 1 hora, sirve una sola vez y pedir otro anula el anterior; en la base de datos solo se guarda su hash. La respuesta es la misma exista o no la cuenta, y se limita a 8 solicitudes cada 15 minutos por conexión. Requiere `BREVO_API_KEY`, `MAIL_FROM` y `SITE_URL`.
 - **Avisos por correo (opcional):** el cliente recibe un correo al radicar, cuando el administrador responde y cuando cambia el estado; B&F recibe un aviso de cada PQRS nueva y de cada mensaje de un cliente.
 
 ### Configuración

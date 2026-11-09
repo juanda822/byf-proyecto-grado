@@ -12,6 +12,8 @@ router.use(pqrs.requireDb);
 // Cuentas
 router.post('/auth/registro', pqrs.registro);
 router.post('/auth/login', pqrs.login);
+router.post('/auth/olvide', pqrs.olvideClave);
+router.post('/auth/restablecer', pqrs.restablecerClave);
 router.get('/auth/yo', requireAuth(), pqrs.yo);
 router.patch('/auth/perfil', requireAuth(), pqrs.actualizarPerfil);
 router.post('/auth/clave', requireAuth(), pqrs.cambiarClave);

@@ -403,6 +403,11 @@
 .pq-form-error { color: var(--pq-danger); font-size: 0.86rem; min-height: 0; }
 .pq-form-error:empty { display: none; }
 
+.pq-form-ok { color: var(--pq-ok); font-size: 0.86rem; line-height: 1.45; }
+.pq-form-ok:empty { display: none; }
+
+.pq-link-center { justify-self: center; justify-content: center; }
+
 .pq-form-actions { display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
 .pq-center { justify-content: center; }
 

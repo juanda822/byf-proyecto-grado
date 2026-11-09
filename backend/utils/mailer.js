@@ -20,7 +20,8 @@ function siteUrl() {
 }
 
 /** Plantilla HTML con los colores de B&F (azul oscuro y dorado). */
-function layout({ titulo, intro, filas = [], mensaje, boton, pagina = 'pqrs.html', etiqueta = 'CENTRO PQRS', pie }) {
+function layout({ titulo, intro, filas = [], mensaje, boton, pagina = 'pqrs.html', enlace, etiqueta = 'CENTRO PQRS', pie }) {
+  const href = enlace || (siteUrl() ? `${siteUrl()}/${pagina}` : '');
   const rows = filas
     .filter(([, v]) => v)
     .map(([k, v]) => `
@@ -40,7 +41,7 @@ function layout({ titulo, intro, filas = [], mensaje, boton, pagina = 'pqrs.html
         <p style="margin:0 0 18px;color:#334155;font-size:15px;line-height:1.5">${esc(intro)}</p>
         ${rows ? `<table cellpadding="0" cellspacing="0" style="width:100%;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;margin-bottom:18px">${rows}</table>` : ''}
         ${mensaje ? `<div style="background:#fbf7e9;border-left:4px solid #d4af37;padding:14px 16px;color:#0f1e36;font-size:14px;line-height:1.5;white-space:pre-wrap;margin-bottom:18px">${esc(mensaje)}</div>` : ''}
-        ${boton && siteUrl() ? `<a href="${esc(siteUrl())}/${pagina}" style="display:inline-block;background:#d4af37;color:#0f1e36;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:8px;font-size:14px">${esc(boton)}</a>` : ''}
+        ${boton && href ? `<a href="${esc(href)}" style="display:inline-block;background:#d4af37;color:#0f1e36;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:8px;font-size:14px">${esc(boton)}</a>` : ''}
       </td></tr>
       <tr><td style="background:#f8fafc;padding:16px 28px;color:#8193ad;font-size:12px">
         ${pie ? esc(pie) : 'Este es un mensaje automático del Centro PQRS de B&amp;F. No respondas a este correo; escríbenos desde tu ticket.'}
@@ -223,4 +224,24 @@ function hojaVidaRecibida(hv, archivo) {
   }));
 }
 
-module.exports = { enabled, ticketRadicado, respuestaAdmin, mensajeCliente, cambioEstado, hojaVidaRecibida };
+/**
+ * Enlace para restablecer la contraseña. Espera el envío (no usa fire)
+ * para poder avisar si el correo no salió.
+ */
+function recuperarClave(usuario, enlace, minutos) {
+  return send({
+    to: usuario.email,
+    toName: usuario.nombre,
+    subject: 'Restablece tu contraseña de B&F',
+    html: layout({
+      titulo: 'Restablece tu contraseña',
+      intro: `Hola, ${usuario.nombre}. Recibimos una solicitud para cambiar la contraseña de tu cuenta en B&F. Usa el botón para crear una nueva. El enlace vence en ${minutos} minutos y sirve una sola vez.`,
+      boton: 'Crear nueva contraseña',
+      enlace,
+      etiqueta: 'MI CUENTA',
+      pie: 'Si no pediste este cambio, ignora este correo: tu contraseña actual sigue funcionando.'
+    })
+  });
+}
+
+module.exports = { enabled, recuperarClave, ticketRadicado, respuestaAdmin, mensajeCliente, cambioEstado, hojaVidaRecibida };

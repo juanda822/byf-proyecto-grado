@@ -1,6 +1,7 @@
 /**
  * Módulo PQRS de B&F: cuentas, tickets de garantía, fotos y respuestas.
  */
+const crypto = require('crypto');
 const db = require('../config/db');
 const auth = require('../utils/auth');
 const uploads = require('../utils/uploads');
@@ -152,6 +153,80 @@ const yo = handle(async (req, res) => {
   const rows = await db.query('SELECT * FROM usuarios WHERE id = ?', [req.user.id]);
   if (!rows[0]) throw fail(401, 'Tu sesión expiró. Ingresa de nuevo.');
   res.json({ success: true, data: publicUser(rows[0]) });
+});
+
+/* ------------------------------------------------ recuperar contraseña */
+
+const RESET_MINUTOS = 60;
+const hashToken = token => crypto.createHash('sha256').update(token).digest('hex');
+
+/**
+ * Envía al correo registrado un enlace para crear una contraseña nueva.
+ * Responde lo mismo exista o no la cuenta, para no revelar qué correos están registrados.
+ */
+const olvideClave = handle(async (req, res) => {
+  const email = clean(req.body.email, 190).toLowerCase();
+  if (!EMAIL_RE.test(email)) throw fail(400, 'Escribe un correo electrónico válido.');
+
+  const key = `olvide|${req.ip}`;
+  if (auth.loginBlocked(key)) {
+    throw fail(429, 'Ya pediste varios enlaces. Espera unos minutos e inténtalo de nuevo.');
+  }
+  auth.registerFailedLogin(key);
+
+  const sitio = (process.env.SITE_URL || '').replace(/\/+$/, '');
+  if (!mailer.enabled() || !sitio) {
+    console.warn('[Clave] Recuperación no disponible: faltan BREVO_API_KEY, MAIL_FROM o SITE_URL.');
+    throw fail(503, 'La recuperación por correo no está disponible en este momento. Comunícate con B&F.');
+  }
+
+  const [user] = await db.query('SELECT id, nombre, email FROM usuarios WHERE email = ?', [email]);
+  if (user) {
+    const token = crypto.randomBytes(32).toString('hex');
+    // Un enlace nuevo anula los anteriores que no se usaron
+    await db.query('UPDATE recuperaciones_clave SET usado_en = NOW() WHERE usuario_id = ? AND usado_en IS NULL', [user.id]);
+    await db.query(
+      'INSERT INTO recuperaciones_clave (usuario_id, token_hash, expira_en) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL ? MINUTE))',
+      [user.id, hashToken(token), RESET_MINUTOS]
+    );
+    // El código va después de # para que no quede en los registros del servidor
+    const enlace = `${sitio}/pqrs.html#restablecer=${token}`;
+    mailer.recuperarClave(user, enlace, RESET_MINUTOS)
+      .then(ok => { if (!ok) console.error(`[Clave] No se pudo enviar el enlace a la cuenta ${user.id}`); })
+      .catch(error => console.error('[Clave]', error.message));
+  }
+
+  res.json({
+    success: true,
+    message: 'Si el correo está registrado, te enviamos un enlace para crear una nueva contraseña. Revisa también la carpeta de spam.'
+  });
+});
+
+/** Cambia la contraseña con el código del enlace y deja la sesión iniciada. */
+const restablecerClave = handle(async (req, res) => {
+  const token = clean(req.body.token, 64);
+  if (!/^[0-9a-f]{64}$/.test(token)) throw fail(400, 'El enlace no es válido. Pide uno nuevo.');
+  validatePassword(req.body.password);
+
+  const user = await db.transaction(async tx => {
+    const [fila] = await tx.query(
+      `SELECT r.id AS rid, u.* FROM recuperaciones_clave r
+         JOIN usuarios u ON u.id = r.usuario_id
+        WHERE r.token_hash = ? AND r.usado_en IS NULL AND r.expira_en > NOW()
+        FOR UPDATE`,
+      [hashToken(token)]
+    );
+    if (!fila) throw fail(400, 'El enlace ya se usó o venció. Pide uno nuevo.');
+    await tx.query('UPDATE usuarios SET password_hash = ? WHERE id = ?', [auth.hashPassword(req.body.password), fila.id]);
+    await tx.query('UPDATE recuperaciones_clave SET usado_en = NOW() WHERE usuario_id = ? AND usado_en IS NULL', [fila.id]);
+    return fila;
+  });
+
+  res.json({
+    success: true,
+    message: 'Tu contraseña fue actualizada.',
+    data: { token: auth.createToken(user), usuario: publicUser(user) }
+  });
 });
 
 /** Crea la cuenta del administrador. Solo funciona mientras no exista ninguno. */
@@ -584,7 +659,7 @@ function requireDb(req, res, next) {
 }
 
 module.exports = {
-  estado, registro, login, yo, configurarAdmin,
+  estado, registro, login, yo, configurarAdmin, olvideClave, restablecerClave,
   crearTicket, listarTickets, verTicket, actualizarLogistica,
   responder, cambiarEstado, verAdjunto, resumen, reporte, exportar, requireDb,
   actualizarPerfil, cambiarClave, panelAdmin, panelCliente
